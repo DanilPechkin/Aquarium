@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Aquarium Helper</string>
+    <string name="aquariums_top_bar_title">Aquariums</string>
+    <string name="search_icon">Search</string>
+    <string name="add_aquarium_fab">Add a new aquarium</string>
+    <string name="search_placeholder">Search…</string>
+    <string name="this_field_cant_be_blank">This field can\'t be blank</string>
+    <string name="should_be_numeric">Should be numeric</string>
+    <string name="add_aquarium_title">Add aquarium</string>
+    <string name="name_label">Name</string>
+    <string name="liters">Объём</string>
+    <string name="delete_button">Delete</string>
+    <string name="save_aquarium_button">Save aquarium</string>
+    <string name="content_back_arrow">Back</string>
+    <string name="description_label">Description</string>
+    <string name="notes_icon">Notes</string>
+    <string name="calculators_icon">Calculators</string>
+    <string name="main_aquarium_icon">Main</string>
+    <string name="dwellers_icon">Dwellers</string>
+    <string name="plants_icon">Plants</string>
+</resources>
