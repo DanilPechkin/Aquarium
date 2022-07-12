@@ -5,7 +5,7 @@ import com.danilp.aquariumhelper.domain.dweller.model.Dweller
 
 fun DwellerEntity.toDweller() = Dweller(
     id = id,
-    aquarium = aquarium,
+    aquariumId = aquariumId,
     name = name,
     genus = genus,
     amount = amount,
@@ -23,7 +23,7 @@ fun DwellerEntity.toDweller() = Dweller(
 
 fun Dweller.toDwellerEntity() = DwellerEntity(
     id = id,
-    aquarium = aquarium,
+    aquariumId = aquariumId,
     name = name,
     genus = genus,
     amount = amount,

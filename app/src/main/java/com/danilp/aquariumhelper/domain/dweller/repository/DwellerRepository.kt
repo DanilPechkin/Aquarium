@@ -13,7 +13,7 @@ interface DwellerRepository {
     suspend fun delete(dweller: Dweller)
 
     suspend fun searchDwellersByAquarium(
-        aquarium: String,
+        aquariumId: Int,
         query: String
     ): Flow<Resource<List<Dweller>>>
 

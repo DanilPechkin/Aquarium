@@ -31,12 +31,12 @@ class RoomDwellerRepository @Inject constructor(
     }
 
     override suspend fun searchDwellersByAquarium(
-        aquarium: String,
+        aquariumId: Int,
         query: String
     ): Flow<Resource<List<Dweller>>> =
         flow {
             emit(Resource.Loading(true))
-            val localDwellers = dao.searchDwellersByAquarium(aquarium, query)
+            val localDwellers = dao.searchDwellersByAquarium(aquariumId, query)
             emit(Resource.Success(
                 data = localDwellers.map { it.toDweller() }
             ))

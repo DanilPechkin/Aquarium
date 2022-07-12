@@ -2,7 +2,7 @@ package com.danilp.aquariumhelper.domain.dweller.model
 
 data class Dweller(
     var id: Int,
-    val aquarium: String,
+    val aquariumId: Int,
     val name: String,
     val genus: String,
     val amount: Int,
@@ -18,9 +18,9 @@ data class Dweller(
     val description: String
 ) {
     companion object {
-        fun createEmpty(aquarium: String): Dweller = Dweller(
+        fun createEmpty(aquariumId: Int): Dweller = Dweller(
             0,
-            aquarium,
+            aquariumId,
             "",
             "",
             1,

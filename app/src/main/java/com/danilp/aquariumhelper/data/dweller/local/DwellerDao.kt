@@ -20,10 +20,10 @@ interface DwellerDao {
         FROM dwellers
         WHERE (LOWER(genus) LIKE '%' || LOWER(:query) || '%' OR
         LOWER(name) LIKE '%' || LOWER(:query) || '%') AND
-        aquarium = :aquarium
+        aquariumId = :aquariumId
     """
     )
-    suspend fun searchDwellersByAquarium(aquarium: String, query: String): List<DwellerEntity>
+    suspend fun searchDwellersByAquarium(aquariumId: Int, query: String): List<DwellerEntity>
 
     @Query("SELECT * FROM dwellers WHERE id = :id")
     suspend fun findDwellerById(id: Int): DwellerEntity?

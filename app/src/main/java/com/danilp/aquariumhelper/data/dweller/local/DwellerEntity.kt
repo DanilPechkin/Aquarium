@@ -8,13 +8,13 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "dwellers",
     indices = [
-        Index("aquarium"),
+        Index("aquariumId"),
         Index("name")
     ]
 )
 data class DwellerEntity(
     @PrimaryKey(autoGenerate = true) var id: Int,
-    val aquarium: String,
+    val aquariumId: Int,
     val name: String,
     val genus: String,
     val amount: Int,
