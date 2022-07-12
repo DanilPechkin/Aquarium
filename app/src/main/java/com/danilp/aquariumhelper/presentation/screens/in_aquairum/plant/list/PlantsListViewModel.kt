@@ -3,24 +3,21 @@ package com.danilp.aquariumhelper.presentation.screens.in_aquairum.plant.list
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.domain.plant.repository.PlantRepository
+import com.danilp.aquariumhelper.presentation.screens.in_aquairum.in_aquarium_screen.InAquariumInfo
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-//TODO: откуда взять aquariumId?
 
 @HiltViewModel
 class PlantsListViewModel @Inject constructor(
     private val repository: PlantRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val inAquariumInfo: InAquariumInfo
 ) : ViewModel() {
 
     var state by mutableStateOf(PlantsListState())
@@ -29,8 +26,7 @@ class PlantsListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val aquariumId = savedStateHandle.get<Int>("aquariumId") ?: return@launch
-            state = state.copy(aquariumId = aquariumId)
+            state = state.copy(aquariumId = inAquariumInfo.getAquariumId())
             searchPlants()
         }
     }

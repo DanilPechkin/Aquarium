@@ -17,6 +17,6 @@ interface DwellerRepository {
         query: String
     ): Flow<Resource<List<Dweller>>>
 
-    suspend fun findDwllerById(id: Int): Flow<Resource<Dweller>>
+    suspend fun findDwellerById(id: Int): Flow<Resource<Dweller>>
 
 }

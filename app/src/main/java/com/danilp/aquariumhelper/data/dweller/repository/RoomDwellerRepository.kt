@@ -47,7 +47,7 @@ class RoomDwellerRepository @Inject constructor(
             }
         }
 
-    override suspend fun findDwllerById(id: Int): Flow<Resource<Dweller>> =
+    override suspend fun findDwellerById(id: Int): Flow<Resource<Dweller>> =
         flow {
             emit(Resource.Loading(true))
             val dweller = dao.findDwellerById(id)

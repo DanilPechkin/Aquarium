@@ -3,6 +3,7 @@ package com.danilp.aquariumhelper.di
 import android.app.Application
 import androidx.room.Room
 import com.danilp.aquariumhelper.data.AppDatabase
+import com.danilp.aquariumhelper.presentation.screens.in_aquairum.in_aquarium_screen.InAquariumInfo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,5 +20,9 @@ object AppModule {
         Room.databaseBuilder(app, AppDatabase::class.java, "aquarium.db")
             .fallbackToDestructiveMigration()
             .build()
+
+    @Provides
+    @Singleton
+    fun provideInAquariumInfo(): InAquariumInfo = InAquariumInfo()
 
 }
