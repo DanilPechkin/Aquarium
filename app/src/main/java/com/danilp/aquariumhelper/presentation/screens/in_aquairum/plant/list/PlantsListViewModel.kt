@@ -1,14 +1,16 @@
 package com.danilp.aquariumhelper.presentation.screens.in_aquairum.plant.list
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.plant.repository.PlantRepository
-import com.danilp.aquariumhelper.presentation.screens.in_aquairum.in_aquarium_screen.InAquariumInfo
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,8 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlantsListViewModel @Inject constructor(
-    private val repository: PlantRepository,
-    private val inAquariumInfo: InAquariumInfo
+    @ApplicationContext context: Context,
+    private val repository: PlantRepository
 ) : ViewModel() {
 
     var state by mutableStateOf(PlantsListState())
@@ -26,7 +28,16 @@ class PlantsListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            state = state.copy(aquariumId = inAquariumInfo.getAquariumId())
+            val sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.in_aquarium_info_shared_preferences_key),
+                Context.MODE_PRIVATE
+            )
+            state = state.copy(
+                aquariumId = sharedPreferences.getInt(
+                    context.getString(R.string.saved_aquarium_id_key),
+                    0
+                )
+            )
             searchPlants()
         }
     }

@@ -13,8 +13,6 @@ import com.danilp.aquariumhelper.presentation.screens.destinations.Destination
 import com.danilp.aquariumhelper.presentation.screens.startAppDestination
 import com.ramcosta.composedestinations.navigation.navigate
 
-//TODO make selected work
-
 @Composable
 fun AquariumBottomBar(
     navController: NavController,

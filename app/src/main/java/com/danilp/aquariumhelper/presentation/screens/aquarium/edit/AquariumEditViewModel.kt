@@ -10,7 +10,6 @@ import com.danilp.aquariumhelper.domain.aquairum.model.Aquarium
 import com.danilp.aquariumhelper.domain.aquairum.repository.AquariumRepository
 import com.danilp.aquariumhelper.domain.use_case.ValidateLiters
 import com.danilp.aquariumhelper.domain.use_case.ValidateName
-import com.danilp.aquariumhelper.presentation.screens.in_aquairum.in_aquarium_screen.InAquariumInfo
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -24,7 +23,6 @@ class AquariumEditViewModel @Inject constructor(
     private val repository: AquariumRepository,
     private val validateName: ValidateName,
     private val validateLiters: ValidateLiters,
-    private val inAquariumInfo: InAquariumInfo
 ) : ViewModel() {
 
     var state by mutableStateOf(AquariumEditState())
@@ -126,7 +124,6 @@ class AquariumEditViewModel @Inject constructor(
 
         viewModelScope.launch {
             insert(state.aquarium)
-            inAquariumInfo.setAquariumId(state.aquarium.id)
             validationEventChannel.send(ValidationEvent.Success)
         }
     }

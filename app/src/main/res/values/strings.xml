@@ -18,4 +18,6 @@
     <string name="main_aquarium_icon">Main</string>
     <string name="dwellers_icon">Dwellers</string>
     <string name="plants_icon">Plants</string>
+    <string name="in_aquarium_info_shared_preferences_key">InAquariumInfo</string>
+    <string name="saved_aquarium_id_key">aquarium_id</string>
 </resources>

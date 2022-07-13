@@ -113,8 +113,10 @@ fun AquariumList(
                             aquarium = aquarium,
                             modifier = Modifier
                                 .clickable {
+                                    viewModel.onEvent(
+                                        AquariumListEvent.OnAquariumClicked(aquarium.id)
+                                    )
                                     navigator.navigate(
-                                        //TODO: InAquariumScreenDestination()
                                         InAquariumScreenDestination()
                                     )
                                 }

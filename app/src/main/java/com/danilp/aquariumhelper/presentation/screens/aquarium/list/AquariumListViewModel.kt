@@ -1,31 +1,45 @@
 package com.danilp.aquariumhelper.presentation.screens.aquarium.list
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.danilp.aquariumhelper.domain.aquairum.model.Aquarium
+import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.aquairum.repository.AquariumRepository
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AquariumListViewModel @Inject constructor(
+    @ApplicationContext context: Context,
     private val repository: AquariumRepository
 ) : ViewModel() {
 
     var state by mutableStateOf(AquariumListState())
 
+    private var sharedPreferences: SharedPreferences? = null
+    private var aquariumIdKey: String = ""
+
     private var searchJob: Job? = null
 
     init {
-        searchAquariums()
+        viewModelScope.launch {
+            searchAquariums()
+
+            sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.in_aquarium_info_shared_preferences_key),
+                Context.MODE_PRIVATE
+            )
+            aquariumIdKey = context.getString(R.string.saved_aquarium_id_key)
+        }
     }
 
     fun onEvent(event: AquariumListEvent) {
@@ -39,6 +53,11 @@ class AquariumListViewModel @Inject constructor(
                 searchJob = viewModelScope.launch {
                     delay(500L)
                     searchAquariums()
+                }
+            }
+            is AquariumListEvent.OnAquariumClicked -> {
+                viewModelScope.launch {
+                    saveAquariumId(event.aquariumId)
                 }
             }
         }
@@ -69,6 +88,13 @@ class AquariumListViewModel @Inject constructor(
                         }
                     }
                 }
+        }
+    }
+
+    private fun saveAquariumId(id: Int){
+        with(sharedPreferences?.edit()) {
+            this?.putInt(aquariumIdKey, id) ?: return
+            commit()
         }
     }
 
