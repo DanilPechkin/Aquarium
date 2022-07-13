@@ -9,22 +9,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.danilp.aquariumhelper.presentation.screens.NavGraphs
 import com.danilp.aquariumhelper.presentation.screens.appCurrentDestinationAsState
+import com.danilp.aquariumhelper.presentation.screens.destinations.Destination
 import com.danilp.aquariumhelper.presentation.screens.startAppDestination
-import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.navigate
+
+//TODO make selected work
 
 @Composable
 fun AquariumBottomBar(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val currentDestination: Destination? = (navController.appCurrentDestinationAsState().value
-        ?: NavGraphs.root.startAppDestination) as Destination?
+    val currentDestination: Destination = navController.appCurrentDestinationAsState().value
+        ?:  NavGraphs.inAquarium.startAppDestination
+
 
     BottomAppBar {
         AquariumBottomBarDestination.values().forEach { destination ->
             NavigationBarItem(
-                selected = currentDestination == (destination.direction as Destination?),
+                selected = destination.direction == currentDestination,
                 onClick = {
                     navController.navigate(destination.direction) { launchSingleTop = true }
                 },

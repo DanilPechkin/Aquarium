@@ -17,17 +17,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
-import com.danilp.aquariumhelper.presentation.SearchField
+import com.danilp.aquariumhelper.presentation.screens.SearchField
 import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumEditDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.InAquariumScreenDestination
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalMaterial3Api::class)
+@RootNavGraph(start = true)
+@Destination
 @Composable
-@Destination(start = true)
 fun AquariumList(
     navigator: DestinationsNavigator,
     viewModel: AquariumListViewModel = hiltViewModel()
@@ -113,7 +115,7 @@ fun AquariumList(
                                 .clickable {
                                     navigator.navigate(
                                         //TODO: InAquariumScreenDestination()
-                                        AquariumEditDestination(aquarium.id)
+                                        InAquariumScreenDestination()
                                     )
                                 }
                         )

@@ -9,9 +9,11 @@ import androidx.navigation.compose.rememberNavController
 import com.danilp.aquariumhelper.presentation.screens.NavGraphs
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalMaterial3Api::class)
+@RootNavGraph
 @Destination
 @Composable
 fun InAquariumScreen(
@@ -26,7 +28,7 @@ fun InAquariumScreen(
     ) { paddingValues ->
         DestinationsNavHost(
             navController = navController,
-            navGraph = NavGraphs.root,
+            navGraph = NavGraphs.inAquarium,
             modifier = Modifier.padding(paddingValues)
         )
     }

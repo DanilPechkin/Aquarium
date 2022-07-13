@@ -14,12 +14,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
-import com.danilp.aquariumhelper.presentation.InfoFieldWithError
+import com.danilp.aquariumhelper.presentation.screens.InfoFieldWithError
 import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumListDestination
+import com.danilp.aquariumhelper.presentation.screens.destinations.InAquariumScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalMaterial3Api::class)
+@RootNavGraph
 @Destination
 @Composable
 fun AquariumEdit(
@@ -33,7 +36,7 @@ fun AquariumEdit(
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is AquariumEditViewModel.ValidationEvent.Success -> {
-                    navigator.navigate(AquariumListDestination)
+                    navigator.navigate(InAquariumScreenDestination)
                 }
             }
         }
