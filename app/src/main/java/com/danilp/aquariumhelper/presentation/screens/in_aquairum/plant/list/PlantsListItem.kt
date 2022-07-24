@@ -1,20 +1,21 @@
-package com.danilp.aquariumhelper.presentation.screens.aquarium.list
+package com.danilp.aquariumhelper.presentation.screens.in_aquairum.plant.list
 
-import androidx.compose.material3.*
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.danilp.aquariumhelper.domain.aquairum.model.Aquarium
+import com.danilp.aquariumhelper.domain.plant.model.Plant
 import com.danilp.aquariumhelper.presentation.screens.GridItem
 
 @Composable
-fun AquariumListItem(
-    aquarium: Aquarium,
+fun PlantsListItem(
+    plant: Plant,
     modifier: Modifier = Modifier
 ) {
     GridItem(
-        name = aquarium.name,
+        name = plant.name,
         //TODO: make message
-        message = "2 Уведомления",
+        message = "Здоровый",
         cardColors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),

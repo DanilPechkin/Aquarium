@@ -8,16 +8,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ValidateLiters @Inject constructor(
+class ValidateCO2 @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    fun execute(liters: String): ValidationResult =
-        if (liters.isBlank())
-            ValidationResult(
-                successful = false,
-                errorMessage = context.getString(R.string.this_field_cant_be_blank_validation_res)
-            )
-        else if (!liters.isDigitsOnly())
+    fun execute(CO2: String): ValidationResult =
+        if (!CO2.isDigitsOnly())
             ValidationResult(
                 successful = false,
                 errorMessage = context.getString(R.string.should_be_numeric_validation_res)

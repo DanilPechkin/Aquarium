@@ -1,15 +1,21 @@
 package com.danilp.aquariumhelper.presentation.screens
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -81,5 +87,37 @@ fun InfoFieldWithError(
             text = errorMessage,
             color = MaterialTheme.colorScheme.error
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun GridItem(
+    name: String,
+    message: String,
+    cardColors: CardColors,
+    //TODO: image
+    modifier: Modifier = Modifier
+) {
+    Card(
+        colors = cardColors,
+        shape = RoundedCornerShape(8.dp),
+        modifier = modifier
+    ) {
+        Image(
+            painter = painterResource(R.drawable.aquairum_pic),
+            contentDescription = name,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .fillMaxWidth()
+        )
+        Column(
+            modifier = Modifier.padding(top = 6.dp, start = 10.dp, bottom = 10.dp, end = 10.dp)
+        ) {
+            Text(text = name, style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(text = message, style = MaterialTheme.typography.labelMedium)
+        }
     }
 }

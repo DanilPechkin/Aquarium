@@ -89,10 +89,6 @@ class AquariumEditViewModel @Inject constructor(
         repository.insert(aquarium)
     }
 
-    private fun update(aquarium: Aquarium) = viewModelScope.launch {
-        repository.update(aquarium)
-    }
-
     private fun delete(aquarium: Aquarium) = viewModelScope.launch {
         repository.delete(aquarium)
     }
@@ -101,19 +97,19 @@ class AquariumEditViewModel @Inject constructor(
         val nameResult = validateName.execute(state.name)
         val litersResult = validateLiters.execute(state.liters)
 
-        state = state.copy(
-            nameError = nameResult.errorMessage,
-            litersError = litersResult.errorMessage
-        )
-
         val hasError = listOf(
             nameResult,
             litersResult
         ).any { it.errorMessage != null }
 
         if (hasError) {
+            state = state.copy(
+                nameError = nameResult.errorMessage,
+                litersError = litersResult.errorMessage
+            )
             return
         }
+
         state = state.copy(
             aquarium = state.aquarium.copy(
                 name = state.name,

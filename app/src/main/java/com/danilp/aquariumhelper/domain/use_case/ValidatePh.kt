@@ -7,14 +7,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ValidateName @Inject constructor(
+class ValidatePh @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    fun execute(name: String): ValidationResult =
-        if (name.isBlank())
+    fun execute(pH: String): ValidationResult =
+        if (pH.toDoubleOrNull() != null)
             ValidationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.this_field_cant_be_blank_validation_res)
+                errorMessage = context.getString(R.string.should_be_decimal_validation_res)
             )
         else
             ValidationResult(successful = true)

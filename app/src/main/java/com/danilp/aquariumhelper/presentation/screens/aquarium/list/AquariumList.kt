@@ -6,8 +6,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,7 +37,7 @@ fun AquariumList(
     val state = viewModel.state
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isRefreshing)
     var isSearchFieldVisible by rememberSaveable { mutableStateOf(false) }
-    val searchTextFocusRequester = remember { FocusRequester() }
+    val searchFieldFocusRequester = remember { FocusRequester() }
 
     Scaffold(
         topBar = {
@@ -59,8 +59,7 @@ fun AquariumList(
                         },
                         isSearchFieldVisible = isSearchFieldVisible,
                         hideSearchField = { isSearchFieldVisible = false },
-                        focusRequester = searchTextFocusRequester,
-                        modifier = Modifier
+                        focusRequester = searchFieldFocusRequester
                     )
 
                     IconButton(
@@ -69,7 +68,7 @@ fun AquariumList(
                         }
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Search, contentDescription = stringResource(
+                            imageVector = Icons.Rounded.Search, contentDescription = stringResource(
                                 R.string.search_icon
                             )
                         )
@@ -87,7 +86,7 @@ fun AquariumList(
                 }
             ) {
                 Icon(
-                    imageVector = Icons.Default.Add,
+                    imageVector = Icons.Rounded.Add,
                     contentDescription = stringResource(R.string.add_aquarium_fab)
                 )
             }

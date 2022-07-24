@@ -51,8 +51,10 @@ class RoomDwellerRepository @Inject constructor(
         flow {
             emit(Resource.Loading(true))
             val dweller = dao.findDwellerById(id)
-            emit(Resource.Success(
-                data = dweller?.toDweller()
-            ))
+            emit(
+                Resource.Success(
+                    data = dweller?.toDweller()
+                )
+            )
         }
 }

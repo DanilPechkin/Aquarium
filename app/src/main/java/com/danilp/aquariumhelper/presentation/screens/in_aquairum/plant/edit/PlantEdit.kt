@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.presentation.screens.aquarium.edit
+package com.danilp.aquariumhelper.presentation.screens.in_aquairum.plant.edit
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -14,28 +14,28 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
+import com.danilp.aquariumhelper.presentation.navigation.nav_graphs.InAquariumNavGraph
 import com.danilp.aquariumhelper.presentation.screens.InfoFieldWithError
-import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumListDestination
+import com.danilp.aquariumhelper.presentation.screens.destinations.PlantsListDestination
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalMaterial3Api::class)
-@RootNavGraph
+@InAquariumNavGraph
 @Destination
 @Composable
-fun AquariumEdit(
-    aquariumId: Int,
+fun PlantEdit(
+    plantId: Int,
     navigator: DestinationsNavigator,
-    viewModel: AquariumEditViewModel = hiltViewModel()
+    viewModel: PlantEditViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
 
     LaunchedEffect(key1 = LocalContext.current) {
         viewModel.validationEvents.collect { event ->
             when (event) {
-                is AquariumEditViewModel.ValidationEvent.Success -> {
-                    navigator.navigate(AquariumListDestination)
+                is PlantEditViewModel.ValidationEvent.Success -> {
+                    navigator.navigate(PlantsListDestination)
                 }
             }
         }
@@ -46,7 +46,7 @@ fun AquariumEdit(
             SmallTopAppBar(
                 title = {
                     Text(
-                        text = stringResource(R.string.edit_aquarium_title),
+                        text = stringResource(R.string.edit_plant_title),
                         maxLines = 1
                     )
                 },
@@ -64,13 +64,15 @@ fun AquariumEdit(
         }
     ) { paddingValues ->
         Column(
-            Modifier
+            modifier = Modifier
                 .padding(paddingValues)
                 .padding(16.dp)
+                .fillMaxSize()
         ) {
+
             InfoFieldWithError(
                 value = state.name,
-                onValueChange = { viewModel.onEvent(AquariumEditEvent.NameChanged(it)) },
+                onValueChange = { viewModel.onEvent(PlantEditEvent.NameChanged(it)) },
                 label = stringResource(R.string.name_label),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 errorMessage = state.nameError,
@@ -81,29 +83,33 @@ fun AquariumEdit(
             Spacer(modifier = Modifier.height(16.dp))
 
             InfoFieldWithError(
-                value = state.liters,
-                onValueChange = { viewModel.onEvent(AquariumEditEvent.LitersChanged(it)) },
-                label = stringResource(R.string.liters),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                errorMessage = state.litersError,
+                value = state.minTemperature,
+                onValueChange = { viewModel.onEvent(PlantEditEvent.MinTemperatureChanged(it)) },
+                label = "min t",
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                errorMessage = state.minTemperatureError,
                 maxLines = 1,
                 singleLine = true
             )
+
             Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedTextField(
-                value = state.description,
-                onValueChange = { viewModel.onEvent(AquariumEditEvent.DescriptionChanged(it)) },
-                label = {
-                    Text(text = stringResource(R.string.description_label))
-                }
+            InfoFieldWithError(
+                value = state.maxTemperature,
+                onValueChange = { viewModel.onEvent(PlantEditEvent.MaxTemperatureChanged(it)) },
+                label = "max t",
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                errorMessage = state.maxTemperatureError,
+                maxLines = 1,
+                singleLine = true
             )
+
             Row(
                 Modifier.padding(16.dp)
             ) {
                 Button(
                     onClick = {
-                        viewModel.onEvent(AquariumEditEvent.DeleteButtonPressed)
+                        viewModel.onEvent(PlantEditEvent.DeleteButtonPressed)
                     }
                 ) {
                     Text(text = stringResource(R.string.delete_button))
@@ -111,10 +117,10 @@ fun AquariumEdit(
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(
                     onClick = {
-                        viewModel.onEvent(AquariumEditEvent.InsertButtonPressed)
+                        viewModel.onEvent(PlantEditEvent.InsertButtonPressed)
                     }
                 ) {
-                    Text(text = stringResource(R.string.save_aquarium_button))
+                    Text(text = "Save Plant")
                 }
             }
         }

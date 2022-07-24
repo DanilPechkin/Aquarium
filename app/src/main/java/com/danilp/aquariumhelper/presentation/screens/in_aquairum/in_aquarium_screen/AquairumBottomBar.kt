@@ -21,8 +21,9 @@ fun AquariumBottomBar(
     val currentDestination: Destination = navController.appCurrentDestinationAsState().value
         ?:  NavGraphs.inAquarium.startAppDestination
 
-
-    BottomAppBar {
+    BottomAppBar(
+        modifier = modifier
+    ) {
         AquariumBottomBarDestination.values().forEach { destination ->
             NavigationBarItem(
                 selected = destination.direction == currentDestination,

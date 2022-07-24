@@ -4,14 +4,14 @@
     <string name="search_icon">Search</string>
     <string name="add_aquarium_fab">Add a new aquarium</string>
     <string name="search_placeholder">Search…</string>
-    <string name="this_field_cant_be_blank">This field can\'t be blank</string>
-    <string name="should_be_numeric">Should be numeric</string>
-    <string name="add_aquarium_title">Add aquarium</string>
+    <string name="this_field_cant_be_blank_validation_res">This field can\'t be blank</string>
+    <string name="should_be_numeric_validation_res">Should be numeric</string>
+    <string name="edit_aquarium_title">Edit aquarium</string>
     <string name="name_label">Name</string>
     <string name="liters">Объём</string>
     <string name="delete_button">Delete</string>
     <string name="save_aquarium_button">Save aquarium</string>
-    <string name="content_back_arrow">Back</string>
+    <string name="content_description_back_arrow">Navigate back</string>
     <string name="description_label">Description</string>
     <string name="notes_icon">Notes</string>
     <string name="calculators_icon">Calculators</string>
@@ -20,4 +20,9 @@
     <string name="plants_icon">Plants</string>
     <string name="in_aquarium_info_shared_preferences_key">InAquariumInfo</string>
     <string name="saved_aquarium_id_key">aquarium_id</string>
+    <string name="plants_title">Plants</string>
+    <string name="back_arrow_button">Back</string>
+    <string name="add_plant_button">Add new plant</string>
+    <string name="should_be_decimal_validation_res">Should be decimal</string>
+    <string name="edit_plant_title">Edit plant</string>
 </resources>
