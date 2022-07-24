@@ -33,4 +33,8 @@
     <string name="kh_label">kH</string>
     <string name="min_co2_label">Min CO2</string>
     <string name="illumination_label">Required illumination</string>
+    <string name="notes_title">Notes</string>
+    <string name="aquarium_title">Aquarium</string>
+    <string name="calculators_title">Calculators</string>
+    <string name="dwellers_title">Dwellers</string>
 </resources>
