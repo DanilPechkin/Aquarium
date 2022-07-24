@@ -11,7 +11,7 @@ class ValidateGh @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     fun execute(gH: String): ValidationResult =
-        if (gH.toDoubleOrNull() != null)
+        if (gH.toDoubleOrNull() == null)
             ValidationResult(
                 successful = false,
                 errorMessage = context.getString(R.string.should_be_decimal_validation_res)

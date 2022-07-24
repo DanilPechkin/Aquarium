@@ -11,7 +11,7 @@ class ValidatePh @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     fun execute(pH: String): ValidationResult =
-        if (pH.toDoubleOrNull() != null)
+        if (pH.toDoubleOrNull() == null)
             ValidationResult(
                 successful = false,
                 errorMessage = context.getString(R.string.should_be_decimal_validation_res)
