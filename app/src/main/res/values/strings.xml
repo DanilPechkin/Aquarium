@@ -37,4 +37,5 @@
     <string name="aquarium_title">Aquarium</string>
     <string name="calculators_title">Calculators</string>
     <string name="dwellers_title">Dwellers</string>
+    <string name="add_dweller_button">Add new dweller</string>
 </resources>

@@ -50,11 +50,7 @@ fun PlantsList(
                     )
                 },
                 navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            navigator.navigateUp()
-                        }
-                    ) {
+                    IconButton(onClick = { navigator.navigateUp() }) {
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = stringResource(R.string.back_arrow_button)
