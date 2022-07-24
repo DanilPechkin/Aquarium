@@ -27,4 +27,10 @@
     <string name="edit_plant_title">Edit plant</string>
     <string name="label_from">From</string>
     <string name="label_to">To</string>
+    <string name="temperature_label">Temperature</string>
+    <string name="ph_label">pH</string>
+    <string name="gh_label">gH</string>
+    <string name="kh_label">kH</string>
+    <string name="min_co2_label">Min CO2</string>
+    <string name="illumination_label">Required illumination</string>
 </resources>

@@ -100,28 +100,32 @@ fun InfoFieldWithError(
     onValueChange: (String) -> Unit,
     label: String,
     modifier: Modifier = Modifier,
+    textFielModifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     errorMessage: String? = null,
     maxLines: Int = Int.MAX_VALUE,
     singleLine: Boolean = false
 ) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = {
-            Text(text = label)
-        },
-        isError = errorMessage != null,
-        modifier = modifier,
-        keyboardOptions = keyboardOptions,
-        maxLines = maxLines,
-        singleLine = singleLine
-    )
-    if (errorMessage != null) {
-        Text(
-            text = errorMessage,
-            color = MaterialTheme.colorScheme.error
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = {
+                Text(text = label)
+            },
+            modifier = textFielModifier,
+            isError = errorMessage != null,
+            keyboardOptions = keyboardOptions,
+            maxLines = maxLines,
+            singleLine = singleLine
         )
+
+        if (errorMessage != null) {
+            Text(
+                text = errorMessage,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
     }
 }
 
