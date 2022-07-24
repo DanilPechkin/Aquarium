@@ -25,4 +25,6 @@
     <string name="add_plant_button">Add new plant</string>
     <string name="should_be_decimal_validation_res">Should be decimal</string>
     <string name="edit_plant_title">Edit plant</string>
+    <string name="label_from">From</string>
+    <string name="label_to">To</string>
 </resources>
