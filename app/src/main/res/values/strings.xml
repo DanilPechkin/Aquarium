@@ -8,7 +8,7 @@
     <string name="should_be_numeric_validation_res">Should be numeric</string>
     <string name="edit_aquarium_title">Edit aquarium</string>
     <string name="name_label">Name</string>
-    <string name="liters">Объём</string>
+    <string name="capacity_label">Capacity</string>
     <string name="delete_button">Delete</string>
     <string name="save_aquarium_button">Save aquarium</string>
     <string name="content_description_back_arrow">Navigate back</string>
@@ -38,4 +38,6 @@
     <string name="calculators_title">Calculators</string>
     <string name="dwellers_title">Dwellers</string>
     <string name="add_dweller_button">Add new dweller</string>
+    <string name="edit_dweller_title">Edit dweller</string>
+    <string name="amount_label">Amount</string>
 </resources>

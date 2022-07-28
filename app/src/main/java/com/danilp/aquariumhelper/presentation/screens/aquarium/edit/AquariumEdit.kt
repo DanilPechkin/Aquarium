@@ -83,7 +83,7 @@ fun AquariumEdit(
             InfoFieldWithError(
                 value = state.liters,
                 onValueChange = { viewModel.onEvent(AquariumEditEvent.LitersChanged(it)) },
-                label = stringResource(R.string.liters),
+                label = stringResource(R.string.capacity_label),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 errorMessage = state.litersError,
                 maxLines = 1,

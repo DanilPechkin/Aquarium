@@ -52,4 +52,9 @@ object UseCaseModule {
     @Singleton
     fun provideValidateIllumination(@ApplicationContext context: Context): ValidateIllumination =
         ValidateIllumination(context)
+
+    @Provides
+    @Singleton
+    fun provideValidateAmount(@ApplicationContext context: Context): ValidateAmount =
+        ValidateAmount(context)
 }

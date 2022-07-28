@@ -18,9 +18,9 @@ data class Dweller(
     val description: String
 ) {
     companion object {
-        fun createEmpty(aquariumId: Int): Dweller = Dweller(
+        fun createEmpty(): Dweller = Dweller(
             0,
-            aquariumId,
+            0,
             "",
             "",
             1,

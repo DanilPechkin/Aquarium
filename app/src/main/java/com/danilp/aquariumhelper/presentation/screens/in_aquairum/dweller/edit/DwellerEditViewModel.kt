@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.presentation.screens.in_aquairum.plant.edit
+package com.danilp.aquariumhelper.presentation.screens.in_aquairum.dweller.edit
 
 import android.content.Context
 import androidx.compose.runtime.getValue
@@ -8,8 +8,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.R
-import com.danilp.aquariumhelper.domain.plant.model.Plant
-import com.danilp.aquariumhelper.domain.plant.repository.PlantRepository
+import com.danilp.aquariumhelper.domain.dweller.model.Dweller
+import com.danilp.aquariumhelper.domain.dweller.repository.DwellerRepository
 import com.danilp.aquariumhelper.domain.use_case.*
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,12 +20,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PlantEditViewModel @Inject constructor(
+class DwellerEditViewModel @Inject constructor(
     @ApplicationContext context: Context,
+    private val repository: DwellerRepository,
     private val savedStateHandle: SavedStateHandle,
-    private val repository: PlantRepository,
-    private val validateIllumination: ValidateIllumination,
-    private val validateCO2: ValidateCO2,
+    private val validateAmount: ValidateAmount,
+    private val validateLiters: ValidateLiters,
     private val validateKh: ValidateKh,
     private val validateGh: ValidateGh,
     private val validatePh: ValidatePh,
@@ -33,22 +33,22 @@ class PlantEditViewModel @Inject constructor(
     private val validateName: ValidateName
 ) : ViewModel() {
 
-    var state by mutableStateOf(PlantEditState())
+    var state by mutableStateOf(DwellerEditState())
 
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
 
     init {
         viewModelScope.launch {
-            val id = savedStateHandle.get<Int>("plantId") ?: return@launch
+            val id = savedStateHandle.get<Int>("dwellerId") ?: return@launch
             state = state.copy(isLoading = true)
-            val plantInfoResult = repository.findPlantById(id)
+            val dwellerInfoResult = repository.findDwellerById(id)
 
-            plantInfoResult.collect { result ->
+            dwellerInfoResult.collect { result ->
                 state = when (result) {
                     is Resource.Success -> {
                         state.copy(
-                            plant = result.data ?: Plant.createEmpty(),
+                            dweller = result.data ?: Dweller.createEmpty(),
                             isLoading = false,
                             error = null
                         )
@@ -61,20 +61,21 @@ class PlantEditViewModel @Inject constructor(
                     }
                 }
             }
+
             state = state.copy(
-                name = state.plant.name,
-                genus = state.plant.genus,
-                minTemperature = if (state.plant.minTemperature == 0) "" else state.plant.minTemperature.toString(),
-                maxTemperature = if (state.plant.maxTemperature == 0) "" else state.plant.maxTemperature.toString(),
-                minPh = if (state.plant.minPh == 0.0) "" else state.plant.minPh.toString(),
-                maxPh = if (state.plant.maxPh == 0.0) "" else state.plant.maxPh.toString(),
-                minGh = if (state.plant.minGh == 0.0) "" else state.plant.minGh.toString(),
-                maxGh = if (state.plant.maxGh == 0.0) "" else state.plant.maxGh.toString(),
-                minKh = if (state.plant.minKh == 0.0) "" else state.plant.minKh.toString(),
-                maxKh = if (state.plant.maxKh == 0.0) "" else state.plant.maxKh.toString(),
-                minCO2 = if (state.plant.minCO2 == 0) "" else state.plant.minCO2.toString(),
-                minIllumination = if (state.plant.minIllumination == 0) "" else state.plant.minIllumination.toString(),
-                description = state.plant.description
+                name = state.dweller.name,
+                genus = state.dweller.genus,
+                amount = if (state.dweller.amount == 0) "" else state.dweller.amount.toString(),
+                minTemperature = if (state.dweller.minTemperature == 0) "" else state.dweller.minTemperature.toString(),
+                maxTemperature = if (state.dweller.maxTemperature == 0) "" else state.dweller.maxTemperature.toString(),
+                liters = if (state.dweller.liters == 0) "" else state.dweller.liters.toString(),
+                minPh = if (state.dweller.minPh == 0.0) "" else state.dweller.minPh.toString(),
+                maxPh = if (state.dweller.maxPh == 0.0) "" else state.dweller.maxPh.toString(),
+                minGh = if (state.dweller.minGh == 0.0) "" else state.dweller.minGh.toString(),
+                maxGh = if (state.dweller.maxGh == 0.0) "" else state.dweller.maxGh.toString(),
+                minKh = if (state.dweller.minKh == 0.0) "" else state.dweller.minKh.toString(),
+                maxKh = if (state.dweller.maxKh == 0.0) "" else state.dweller.maxKh.toString(),
+                description = state.dweller.description
             )
 
             val sharedPreferences = context.getSharedPreferences(
@@ -82,7 +83,7 @@ class PlantEditViewModel @Inject constructor(
                 Context.MODE_PRIVATE
             )
             state = state.copy(
-                plant = state.plant.copy(
+                dweller = state.dweller.copy(
                     aquariumId = sharedPreferences.getInt(
                         context.getString(R.string.saved_aquarium_id_key),
                         0
@@ -92,131 +93,131 @@ class PlantEditViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: PlantEditEvent) {
+    fun onEvent(event: DwellerEditEvent) {
         when (event) {
-            is PlantEditEvent.InsertButtonPressed -> {
+            is DwellerEditEvent.InsertButtonPressed -> {
                 submitData()
             }
-            is PlantEditEvent.DeleteButtonPressed -> {
+            is DwellerEditEvent.DeleteButtonPressed -> {
                 viewModelScope.launch {
-                    delete(state.plant)
+                    delete(state.dweller)
                     validationEventChannel.send(ValidationEvent.Success)
                 }
             }
-            is PlantEditEvent.NameChanged -> {
+            is DwellerEditEvent.NameChanged -> {
                 state = state.copy(name = event.name)
             }
-            is PlantEditEvent.GenusChanged -> {
+            is DwellerEditEvent.GenusChanged -> {
                 state = state.copy(genus = event.genus)
             }
-            is PlantEditEvent.MinTemperatureChanged -> {
+            is DwellerEditEvent.AmountChanged -> {
+                state = state.copy(amount = event.amount)
+            }
+            is DwellerEditEvent.MinTemperatureChanged -> {
                 state = state.copy(minTemperature = event.temp)
             }
-            is PlantEditEvent.MaxTemperatureChanged -> {
+            is DwellerEditEvent.MaxTemperatureChanged -> {
                 state = state.copy(maxTemperature = event.temp)
             }
-            is PlantEditEvent.MinPhChanged -> {
+            is DwellerEditEvent.LitersChanged -> {
+                state = state.copy(liters = event.liters)
+            }
+            is DwellerEditEvent.MinPhChanged -> {
                 state = state.copy(minPh = event.ph)
             }
-            is PlantEditEvent.MaxPhChanged -> {
+            is DwellerEditEvent.MaxPhChanged -> {
                 state = state.copy(maxPh = event.ph)
             }
-            is PlantEditEvent.MinGhChanged -> {
+            is DwellerEditEvent.MinGhChanged -> {
                 state = state.copy(minGh = event.gh)
             }
-            is PlantEditEvent.MaxGhChanged -> {
+            is DwellerEditEvent.MaxGhChanged -> {
                 state = state.copy(maxGh = event.gh)
             }
-            is PlantEditEvent.MinKhChanged -> {
+            is DwellerEditEvent.MinKhChanged -> {
                 state = state.copy(minKh = event.kh)
             }
-            is PlantEditEvent.MaxKhChanged -> {
+            is DwellerEditEvent.MaxKhChanged -> {
                 state = state.copy(maxKh = event.kh)
             }
-            is PlantEditEvent.MinCO2Changed -> {
-                state = state.copy(minCO2 = event.co2)
-            }
-            is PlantEditEvent.MinIlluminationChanged -> {
-                state = state.copy(minIllumination = event.illumination)
-            }
-            is PlantEditEvent.DescriptionChanged -> {
+            is DwellerEditEvent.DescriptionChanged -> {
                 state = state.copy(description = event.description)
             }
         }
     }
 
-    private fun insert(plant: Plant) = viewModelScope.launch {
-        repository.insert(plant)
+    private fun insert(dweller: Dweller) = viewModelScope.launch {
+        repository.insert(dweller)
     }
 
-    private fun delete(plant: Plant) = viewModelScope.launch {
-        repository.delete(plant)
+    private fun delete(dweller: Dweller) = viewModelScope.launch {
+        repository.delete(dweller)
     }
 
     private fun submitData() {
         val nameResult = validateName.execute(state.name)
+        val amountResult = validateAmount.execute(state.amount)
         val minTemperatureResult = validateTemperature.execute(state.minTemperature)
         val maxTemperatureResult = validateTemperature.execute(state.maxTemperature)
+        val litersResult = validateLiters.execute(state.liters)
         val minPhResult = validatePh.execute(state.minPh.ifEmpty { "0" })
         val maxPhResult = validatePh.execute(state.maxPh.ifEmpty { "0" })
         val minGhResult = validateGh.execute(state.minGh.ifEmpty { "0" })
         val maxGhResult = validateGh.execute(state.maxGh.ifEmpty { "0" })
         val minKhResult = validateKh.execute(state.minKh.ifEmpty { "0" })
         val maxKhResult = validateKh.execute(state.maxKh.ifEmpty { "0" })
-        val minCO2Result = validateCO2.execute(state.minCO2)
-        val minIlluminationResult = validateIllumination.execute(state.minIllumination)
 
         val hasError = listOf(
             nameResult,
+            amountResult,
             minTemperatureResult,
             maxTemperatureResult,
+            litersResult,
             minPhResult,
             maxPhResult,
             minGhResult,
             maxGhResult,
             minKhResult,
-            maxKhResult,
-            minCO2Result,
-            minIlluminationResult
+            maxKhResult
         ).any { it.errorMessage != null }
 
         if (hasError) {
             state = state.copy(
                 nameError = nameResult.errorMessage,
+                amountError = amountResult.errorMessage,
                 minTemperatureError = minTemperatureResult.errorMessage,
                 maxTemperatureError = maxTemperatureResult.errorMessage,
+                litersError = litersResult.errorMessage,
                 minPhError = minPhResult.errorMessage,
                 maxPhError = maxPhResult.errorMessage,
                 minGhError = minGhResult.errorMessage,
                 maxGhError = maxGhResult.errorMessage,
                 minKhError = minKhResult.errorMessage,
-                maxKhError = maxKhResult.errorMessage,
-                minCO2Error = minCO2Result.errorMessage,
-                minIlluminationError = minIlluminationResult.errorMessage
+                maxKhError = maxKhResult.errorMessage
             )
             return
         }
 
         viewModelScope.launch {
             state = state.copy(
-                plant = state.plant.copy(
+                dweller = state.dweller.copy(
                     name = state.name,
                     genus = state.genus,
+                    amount = state.amount.toInt(),
                     minTemperature = state.minTemperature.toInt(),
                     maxTemperature = state.maxTemperature.toInt(),
+                    liters = state.liters.toInt(),
                     minPh = state.minPh.toDoubleOrNull() ?: 0.0,
                     maxPh = state.maxPh.toDoubleOrNull() ?: 0.0,
                     minGh = state.minGh.toDoubleOrNull() ?: 0.0,
                     maxGh = state.maxGh.toDoubleOrNull() ?: 0.0,
                     minKh = state.minKh.toDoubleOrNull() ?: 0.0,
                     maxKh = state.maxKh.toDoubleOrNull() ?: 0.0,
-                    minIllumination = state.minIllumination.toIntOrNull() ?: 0,
-                    minCO2 = state.minCO2.toIntOrNull() ?: 0,
                     description = state.description
                 )
             )
 
-            insert(state.plant)
+            insert(state.dweller)
             validationEventChannel.send(ValidationEvent.Success)
         }
 
@@ -225,4 +226,5 @@ class PlantEditViewModel @Inject constructor(
     sealed class ValidationEvent {
         object Success : ValidationEvent()
     }
+
 }
