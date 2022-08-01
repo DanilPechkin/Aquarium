@@ -12,10 +12,10 @@ class ValidateIllumination @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     fun execute(illumination: String): ValidationResult =
-        if (!illumination.isDigitsOnly())
+        if (illumination.toDoubleOrNull() == null)
             ValidationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.should_be_numeric_validation_res)
+                errorMessage = context.getString(R.string.should_be_decimal_validation_res)
             )
         else
             ValidationResult(successful = true)

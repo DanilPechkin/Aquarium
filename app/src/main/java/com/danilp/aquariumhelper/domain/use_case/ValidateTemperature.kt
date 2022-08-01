@@ -17,10 +17,10 @@ class ValidateTemperature @Inject constructor(
                 successful = false,
                 errorMessage = context.getString(R.string.this_field_cant_be_blank_validation_res)
             )
-        else if (!temperature.isDigitsOnly())
+        else if (temperature.toDoubleOrNull() == null)
             ValidationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.should_be_numeric_validation_res)
+                errorMessage = context.getString(R.string.should_be_decimal_validation_res)
             )
         else
             ValidationResult(successful = true)

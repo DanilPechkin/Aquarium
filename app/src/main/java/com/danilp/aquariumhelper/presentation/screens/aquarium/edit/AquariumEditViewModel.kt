@@ -55,7 +55,7 @@ class AquariumEditViewModel @Inject constructor(
             }
             state = state.copy(
                 name = state.aquarium.name,
-                liters = if (state.aquarium.liters == 0) "" else state.aquarium.liters.toString(),
+                liters = if (state.aquarium.liters == 0.0) "" else state.aquarium.liters.toString(),
                 description = state.aquarium.description
             )
         }
@@ -113,7 +113,7 @@ class AquariumEditViewModel @Inject constructor(
         state = state.copy(
             aquarium = state.aquarium.copy(
                 name = state.name,
-                liters = state.liters.toInt(),
+                liters = state.liters.toDouble(),
                 description = state.description
             )
         )

@@ -4,14 +4,14 @@ data class Aquarium(
     val id: Int,
     val name: String,
     val description: String,
-    val liters: Int,
-    val illumination: Int, // ватт/л
-    val currentIllumination: Int, // ватт/л
-    val currentCO2: Int,          // мг/л
-    val minCO2: Int,       // мг/л
-    val currentTemperature: Int,
-    val minTemperature: Int,
-    val maxTemperature: Int,
+    val liters: Double,
+    val minIllumination: Double, // ватт/л
+    val currentIllumination: Double, // ватт/л
+    val currentCO2: Double,          // мг/л
+    val minCO2: Double,       // мг/л
+    val currentTemperature: Double, // K
+    val minTemperature: Double,  // K
+    val maxTemperature: Double,    //K
     val currentPh: Double,
     val minPh: Double,
     val maxPh: Double,
@@ -20,21 +20,57 @@ data class Aquarium(
     val maxGh: Double,
     val currentKh: Double,
     val minKh: Double,
-    val maxKh: Double
+    val maxKh: Double,
+    val currentK: Double,
+    val minK: Double,
+    val maxK: Double,
+    val currentNO3: Double,
+    val minNO3: Double,
+    val maxNO3: Double,
+    val currentFe: Double,
+    val minFe: Double,
+    val maxFe: Double,
+    val currentCa: Double,
+    val minCa: Double,
+    val maxCa: Double,
+    val currentMg: Double,
+    val minMg: Double,
+    val maxMg: Double,
+    val currentPO4: Double,
+    val minPO4: Double,
+    val maxPO4: Double
 ) {
     companion object {
         fun createEmpty(): Aquarium = Aquarium(
             0,
             "",
             "",
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
             0.0,
             0.0,
             0.0,

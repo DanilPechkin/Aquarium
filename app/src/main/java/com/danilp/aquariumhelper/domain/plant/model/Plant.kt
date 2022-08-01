@@ -5,16 +5,16 @@ data class Plant(
     val aquariumId: Int,
     val name: String,
     val genus: String,
-    val minTemperature: Int,
-    val maxTemperature: Int,
+    val minTemperature: Double,
+    val maxTemperature: Double,
     val minPh: Double,
     val maxPh: Double,
     val minGh: Double,
     val maxGh: Double,
     val minKh: Double,
     val maxKh: Double,
-    val minCO2: Int,
-    val minIllumination: Int,
+    val minCO2: Double,
+    val minIllumination: Double,
     val description: String
 ) {
     companion object {
@@ -23,16 +23,16 @@ data class Plant(
             0,
             "",
             "",
-            0,
-            0,
             0.0,
             0.0,
             0.0,
             0.0,
             0.0,
             0.0,
-            0,
-            0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
             ""
         )
     }

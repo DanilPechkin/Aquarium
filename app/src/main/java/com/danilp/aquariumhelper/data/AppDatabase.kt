@@ -10,7 +10,7 @@ import com.danilp.aquariumhelper.data.plant.local.PlantDao
 import com.danilp.aquariumhelper.data.plant.local.PlantEntity
 
 @Database(
-    version = 6,
+    version = 9,
     entities = [
         AquariumEntity::class,
         DwellerEntity::class,

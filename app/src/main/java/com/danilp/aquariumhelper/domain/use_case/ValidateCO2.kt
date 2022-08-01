@@ -12,10 +12,10 @@ class ValidateCO2 @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     fun execute(CO2: String): ValidationResult =
-        if (!CO2.isDigitsOnly())
+        if (CO2.toDoubleOrNull() == null)
             ValidationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.should_be_numeric_validation_res)
+                errorMessage = context.getString(R.string.should_be_decimal_validation_res)
             )
         else
             ValidationResult(successful = true)

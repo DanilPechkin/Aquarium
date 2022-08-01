@@ -64,16 +64,16 @@ class PlantEditViewModel @Inject constructor(
             state = state.copy(
                 name = state.plant.name,
                 genus = state.plant.genus,
-                minTemperature = if (state.plant.minTemperature == 0) "" else state.plant.minTemperature.toString(),
-                maxTemperature = if (state.plant.maxTemperature == 0) "" else state.plant.maxTemperature.toString(),
+                minTemperature = if (state.plant.minTemperature == 0.0) "" else state.plant.minTemperature.toString(),
+                maxTemperature = if (state.plant.maxTemperature == 0.0) "" else state.plant.maxTemperature.toString(),
                 minPh = if (state.plant.minPh == 0.0) "" else state.plant.minPh.toString(),
                 maxPh = if (state.plant.maxPh == 0.0) "" else state.plant.maxPh.toString(),
                 minGh = if (state.plant.minGh == 0.0) "" else state.plant.minGh.toString(),
                 maxGh = if (state.plant.maxGh == 0.0) "" else state.plant.maxGh.toString(),
                 minKh = if (state.plant.minKh == 0.0) "" else state.plant.minKh.toString(),
                 maxKh = if (state.plant.maxKh == 0.0) "" else state.plant.maxKh.toString(),
-                minCO2 = if (state.plant.minCO2 == 0) "" else state.plant.minCO2.toString(),
-                minIllumination = if (state.plant.minIllumination == 0) "" else state.plant.minIllumination.toString(),
+                minCO2 = if (state.plant.minCO2 == 0.0) "" else state.plant.minCO2.toString(),
+                minIllumination = if (state.plant.minIllumination == 0.0) "" else state.plant.minIllumination.toString(),
                 description = state.plant.description
             )
 
@@ -202,16 +202,16 @@ class PlantEditViewModel @Inject constructor(
                 plant = state.plant.copy(
                     name = state.name,
                     genus = state.genus,
-                    minTemperature = state.minTemperature.toInt(),
-                    maxTemperature = state.maxTemperature.toInt(),
+                    minTemperature = state.minTemperature.toDouble(),
+                    maxTemperature = state.maxTemperature.toDouble(),
                     minPh = state.minPh.toDoubleOrNull() ?: 0.0,
                     maxPh = state.maxPh.toDoubleOrNull() ?: 0.0,
                     minGh = state.minGh.toDoubleOrNull() ?: 0.0,
                     maxGh = state.maxGh.toDoubleOrNull() ?: 0.0,
                     minKh = state.minKh.toDoubleOrNull() ?: 0.0,
                     maxKh = state.maxKh.toDoubleOrNull() ?: 0.0,
-                    minIllumination = state.minIllumination.toIntOrNull() ?: 0,
-                    minCO2 = state.minCO2.toIntOrNull() ?: 0,
+                    minIllumination = state.minIllumination.toDoubleOrNull() ?: 0.0,
+                    minCO2 = state.minCO2.toDoubleOrNull() ?: 0.0,
                     description = state.description
                 )
             )
