@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.navigation.nav_graphs.InAquariumNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @InAquariumNavGraph
@@ -36,6 +36,7 @@ fun CalculatorsList(
             )
         }
     ) { paddingValues ->
-        Text(text = "Calculators", modifier = Modifier.padding(paddingValues))
+
+    Text(text = "Calculators", modifier = Modifier.padding(paddingValues))
     }
 }
