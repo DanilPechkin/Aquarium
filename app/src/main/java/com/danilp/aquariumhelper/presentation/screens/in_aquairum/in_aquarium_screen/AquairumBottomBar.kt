@@ -19,7 +19,7 @@ fun AquariumBottomBar(
     modifier: Modifier = Modifier
 ) {
     val currentDestination: Destination = navController.appCurrentDestinationAsState().value
-        ?:  NavGraphs.inAquarium.startAppDestination
+        ?: NavGraphs.inAquarium.startAppDestination
 
     BottomAppBar(
         modifier = modifier

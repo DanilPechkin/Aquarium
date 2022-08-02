@@ -188,7 +188,7 @@ fun PlantEdit(
                         viewModel.onEvent(PlantEditEvent.InsertButtonPressed)
                     }
                 ) {
-                    Text(text = "Save Plant")
+                    Text(text = stringResource(R.string.save_button))
                 }
             }
         }

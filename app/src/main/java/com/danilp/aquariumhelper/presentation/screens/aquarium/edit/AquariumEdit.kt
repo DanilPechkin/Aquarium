@@ -114,7 +114,7 @@ fun AquariumEdit(
                         viewModel.onEvent(AquariumEditEvent.InsertButtonPressed)
                     }
                 ) {
-                    Text(text = stringResource(R.string.save_aquarium_button))
+                    Text(text = stringResource(R.string.save_button))
                 }
             }
         }

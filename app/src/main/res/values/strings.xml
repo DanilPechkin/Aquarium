@@ -10,7 +10,7 @@
     <string name="name_label">Name</string>
     <string name="capacity_label">Capacity</string>
     <string name="delete_button">Delete</string>
-    <string name="save_aquarium_button">Save aquarium</string>
+    <string name="save_button">Save</string>
     <string name="content_description_back_arrow">Navigate back</string>
     <string name="description_label">Description</string>
     <string name="notes_icon">Notes</string>
