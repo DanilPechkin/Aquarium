@@ -38,13 +38,19 @@ data class Aquarium(
     val maxMg: Double,
     val currentPO4: Double,
     val minPO4: Double,
-    val maxPO4: Double
+    val maxPO4: Double,
+    val currentAmmonia: Double,
+    val minAmmonia: Double,
+    val maxAmmonia: Double
 ) {
     companion object {
         fun createEmpty(): Aquarium = Aquarium(
             0,
             "",
             "",
+            0.0,
+            0.0,
+            0.0,
             0.0,
             0.0,
             0.0,

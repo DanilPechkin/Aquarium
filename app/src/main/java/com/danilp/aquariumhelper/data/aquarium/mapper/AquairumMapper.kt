@@ -41,7 +41,10 @@ fun AquariumEntity.toAquarium() = Aquarium(
     maxMg = maxMg,
     currentPO4 = currentPO4,
     minPO4 = minPO4,
-    maxPO4 = maxPO4
+    maxPO4 = maxPO4,
+    currentAmmonia = currentAmmonia,
+    minAmmonia = minAmmonia,
+    maxAmmonia = maxAmmonia
 )
 
 fun Aquarium.toAquariumEntity() = AquariumEntity(
@@ -82,5 +85,8 @@ fun Aquarium.toAquariumEntity() = AquariumEntity(
     maxMg = maxMg,
     currentPO4 = currentPO4,
     minPO4 = minPO4,
-    maxPO4 = maxPO4
+    maxPO4 = maxPO4,
+    currentAmmonia = currentAmmonia,
+    minAmmonia = minAmmonia,
+    maxAmmonia = maxAmmonia
 )

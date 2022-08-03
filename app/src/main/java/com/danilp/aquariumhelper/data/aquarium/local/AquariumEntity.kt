@@ -49,5 +49,8 @@ data class AquariumEntity(
     @ColumnInfo(name = "max_mg") val maxMg: Double,
     val currentPO4: Double,
     @ColumnInfo(name = "min_po4") val minPO4: Double,
-    @ColumnInfo(name = "max_po4") val maxPO4: Double
+    @ColumnInfo(name = "max_po4") val maxPO4: Double,
+    val currentAmmonia: Double,
+    @ColumnInfo(name = "min_ammonia") val minAmmonia: Double,
+    @ColumnInfo(name = "max_ammonia") val maxAmmonia: Double
 )

@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.ui.theme.AquariumHelperTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchField(
     value: String,
@@ -62,7 +63,6 @@ fun SearchField(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GridItem(
     name: String,
@@ -94,6 +94,7 @@ fun GridItem(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InfoFieldWithError(
     value: String,
