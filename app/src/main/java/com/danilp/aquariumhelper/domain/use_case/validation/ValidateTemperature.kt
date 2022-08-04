@@ -1,7 +1,6 @@
-package com.danilp.aquariumhelper.domain.use_case
+package com.danilp.aquariumhelper.domain.use_case.validation
 
 import android.content.Context
-import androidx.core.text.isDigitsOnly
 import com.danilp.aquariumhelper.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

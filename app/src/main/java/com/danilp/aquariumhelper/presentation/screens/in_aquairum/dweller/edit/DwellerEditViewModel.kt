@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.dweller.model.Dweller
 import com.danilp.aquariumhelper.domain.dweller.repository.DwellerRepository
-import com.danilp.aquariumhelper.domain.use_case.*
+import com.danilp.aquariumhelper.domain.use_case.validation.*
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.domain.use_case
+package com.danilp.aquariumhelper.domain.use_case.validation
 
 import android.content.Context
 import com.danilp.aquariumhelper.R

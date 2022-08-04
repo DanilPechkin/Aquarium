@@ -2,6 +2,7 @@ package com.danilp.aquariumhelper.di
 
 import android.content.Context
 import com.danilp.aquariumhelper.domain.use_case.*
+import com.danilp.aquariumhelper.domain.use_case.validation.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

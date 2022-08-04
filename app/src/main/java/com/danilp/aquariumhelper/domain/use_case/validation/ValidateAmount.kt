@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.domain.use_case
+package com.danilp.aquariumhelper.domain.use_case.validation
 
 import android.content.Context
 import androidx.core.text.isDigitsOnly
@@ -8,19 +8,19 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ValidateLiters @Inject constructor(
+class ValidateAmount @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    fun execute(liters: String): ValidationResult =
-        if (liters.isBlank())
+    fun execute(amount: String): ValidationResult =
+        if (amount.isBlank())
             ValidationResult(
                 successful = false,
                 errorMessage = context.getString(R.string.this_field_cant_be_blank_validation_res)
             )
-        else if (liters.toDoubleOrNull() == null)
+        else if (!amount.isDigitsOnly())
             ValidationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.should_be_decimal_validation_res)
+                errorMessage = context.getString(R.string.should_be_numeric_validation_res)
             )
         else
             ValidationResult(successful = true)

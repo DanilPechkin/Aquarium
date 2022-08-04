@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.domain.use_case
+package com.danilp.aquariumhelper.domain.use_case.validation
 
 import android.content.Context
 import com.danilp.aquariumhelper.R
@@ -7,11 +7,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ValidateKh @Inject constructor(
+class ValidateCO2 @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    fun execute(kH: String): ValidationResult =
-        if (kH.toDoubleOrNull() == null)
+    fun execute(CO2: String): ValidationResult =
+        if (CO2.toDoubleOrNull() == null)
             ValidationResult(
                 successful = false,
                 errorMessage = context.getString(R.string.should_be_decimal_validation_res)

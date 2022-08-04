@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.domain.aquairum.model.Aquarium
 import com.danilp.aquariumhelper.domain.aquairum.repository.AquariumRepository
-import com.danilp.aquariumhelper.domain.use_case.ValidateLiters
-import com.danilp.aquariumhelper.domain.use_case.ValidateName
+import com.danilp.aquariumhelper.domain.use_case.validation.ValidateLiters
+import com.danilp.aquariumhelper.domain.use_case.validation.ValidateName
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
