@@ -2,6 +2,7 @@ package com.danilp.aquariumhelper.di
 
 import android.content.Context
 import com.danilp.aquariumhelper.domain.use_case.*
+import com.danilp.aquariumhelper.domain.use_case.calculation.capacity.*
 import com.danilp.aquariumhelper.domain.use_case.validation.*
 import dagger.Module
 import dagger.Provides
@@ -14,6 +15,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
 
+    // Validation
     @Provides
     @Singleton
     fun provideValidateLiters(@ApplicationContext context: Context): ValidateLiters =
@@ -58,4 +60,47 @@ object UseCaseModule {
     @Singleton
     fun provideValidateAmount(@ApplicationContext context: Context): ValidateAmount =
         ValidateAmount(context)
+
+    //Calculation
+
+    //Capacity
+    @Provides
+    @Singleton
+    fun provideCalculateLitersCubicFeet(): CalculateLitersCubicFeet = CalculateLitersCubicFeet()
+
+    @Provides
+    @Singleton
+    fun provideCalculateLitersCubicInches(): CalculateLitersCubicInches =
+        CalculateLitersCubicInches()
+
+    @Provides
+    @Singleton
+    fun provideCalculateLitersCubicMeters(): CalculateLitersCubicMeters =
+        CalculateLitersCubicMeters()
+
+    @Provides
+    @Singleton
+    fun provideCalculateLitersGallons(): CalculateLitersGallons = CalculateLitersGallons()
+
+    @Provides
+    @Singleton
+    fun provideCalculateLitersMetricCups(): CalculateLitersMetricCups = CalculateLitersMetricCups()
+
+    @Provides
+    @Singleton
+    fun provideCalculateLitersMilliliters(): CalculateLitersMilliliters =
+        CalculateLitersMilliliters()
+
+    @Provides
+    @Singleton
+    fun provideCalculateLitersTablespoons(): CalculateLitersTablespoons =
+        CalculateLitersTablespoons()
+
+    @Provides
+    @Singleton
+    fun provideCalculateLitersTeaspoons(): CalculateLitersTeaspoons = CalculateLitersTeaspoons()
+
+    @Provides
+    @Singleton
+    fun provideCalculateLitersUSCups(): CalculateLitersUSCups = CalculateLitersUSCups()
 }
