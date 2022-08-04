@@ -3,6 +3,8 @@ package com.danilp.aquariumhelper.di
 import android.content.Context
 import com.danilp.aquariumhelper.domain.use_case.*
 import com.danilp.aquariumhelper.domain.use_case.calculation.capacity.*
+import com.danilp.aquariumhelper.domain.use_case.calculation.temperature.CalculateCelsiusFahrenheit
+import com.danilp.aquariumhelper.domain.use_case.calculation.temperature.CalculateCelsiusKelvin
 import com.danilp.aquariumhelper.domain.use_case.validation.*
 import dagger.Module
 import dagger.Provides
@@ -103,4 +105,15 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideCalculateLitersUSCups(): CalculateLitersUSCups = CalculateLitersUSCups()
+
+    //Temperature
+
+    @Provides
+    @Singleton
+    fun provideCalculateCelsiusFahrenheit(): CalculateCelsiusFahrenheit =
+        CalculateCelsiusFahrenheit()
+
+    @Provides
+    @Singleton
+    fun provideCalculateCelsiusKelvin(): CalculateCelsiusKelvin = CalculateCelsiusKelvin()
 }

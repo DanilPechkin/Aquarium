@@ -9,9 +9,9 @@ data class Aquarium(
     val currentIllumination: Double, // ватт/л
     val currentCO2: Double,          // мг/л
     val minCO2: Double,       // мг/л
-    val currentTemperature: Double, // K
-    val minTemperature: Double,  // K
-    val maxTemperature: Double,    //K
+    val currentTemperature: Double,
+    val minTemperature: Double,
+    val maxTemperature: Double,
     val currentPh: Double,
     val minPh: Double,
     val maxPh: Double,
