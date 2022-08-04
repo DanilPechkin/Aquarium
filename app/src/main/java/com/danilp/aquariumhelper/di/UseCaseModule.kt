@@ -2,6 +2,8 @@ package com.danilp.aquariumhelper.di
 
 import android.content.Context
 import com.danilp.aquariumhelper.domain.use_case.*
+import com.danilp.aquariumhelper.domain.use_case.calculation.alkalinity.CalculateDKHMeqL
+import com.danilp.aquariumhelper.domain.use_case.calculation.alkalinity.CalculateDKHPpm
 import com.danilp.aquariumhelper.domain.use_case.calculation.capacity.*
 import com.danilp.aquariumhelper.domain.use_case.calculation.temperature.CalculateCelsiusFahrenheit
 import com.danilp.aquariumhelper.domain.use_case.calculation.temperature.CalculateCelsiusKelvin
@@ -116,4 +118,14 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideCalculateCelsiusKelvin(): CalculateCelsiusKelvin = CalculateCelsiusKelvin()
+
+    //Alkalinity
+
+    @Provides
+    @Singleton
+    fun provideCalculateDKHMeqL(): CalculateDKHMeqL = CalculateDKHMeqL()
+
+    @Provides
+    @Singleton
+    fun provideCalculateDKHPpm(): CalculateDKHPpm = CalculateDKHPpm()
 }
