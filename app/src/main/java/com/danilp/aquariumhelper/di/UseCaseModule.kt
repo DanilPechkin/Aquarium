@@ -2,11 +2,9 @@ package com.danilp.aquariumhelper.di
 
 import android.content.Context
 import com.danilp.aquariumhelper.domain.use_case.*
-import com.danilp.aquariumhelper.domain.use_case.calculation.alkalinity.CalculateDKHMeqL
-import com.danilp.aquariumhelper.domain.use_case.calculation.alkalinity.CalculateDKHPpm
-import com.danilp.aquariumhelper.domain.use_case.calculation.capacity.*
-import com.danilp.aquariumhelper.domain.use_case.calculation.temperature.CalculateCelsiusFahrenheit
-import com.danilp.aquariumhelper.domain.use_case.calculation.temperature.CalculateCelsiusKelvin
+import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.alkalinity.ConvertDKH
+import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.capacity.*
+import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.temperature.ConvertCelsius
 import com.danilp.aquariumhelper.domain.use_case.validation.*
 import dagger.Module
 import dagger.Provides
@@ -65,67 +63,21 @@ object UseCaseModule {
     fun provideValidateAmount(@ApplicationContext context: Context): ValidateAmount =
         ValidateAmount(context)
 
-    //Calculation
+
+    //Conversion
 
     //Capacity
     @Provides
     @Singleton
-    fun provideCalculateLitersCubicFeet(): CalculateLitersCubicFeet = CalculateLitersCubicFeet()
-
-    @Provides
-    @Singleton
-    fun provideCalculateLitersCubicInches(): CalculateLitersCubicInches =
-        CalculateLitersCubicInches()
-
-    @Provides
-    @Singleton
-    fun provideCalculateLitersCubicMeters(): CalculateLitersCubicMeters =
-        CalculateLitersCubicMeters()
-
-    @Provides
-    @Singleton
-    fun provideCalculateLitersGallons(): CalculateLitersGallons = CalculateLitersGallons()
-
-    @Provides
-    @Singleton
-    fun provideCalculateLitersMetricCups(): CalculateLitersMetricCups = CalculateLitersMetricCups()
-
-    @Provides
-    @Singleton
-    fun provideCalculateLitersMilliliters(): CalculateLitersMilliliters =
-        CalculateLitersMilliliters()
-
-    @Provides
-    @Singleton
-    fun provideCalculateLitersTablespoons(): CalculateLitersTablespoons =
-        CalculateLitersTablespoons()
-
-    @Provides
-    @Singleton
-    fun provideCalculateLitersTeaspoons(): CalculateLitersTeaspoons = CalculateLitersTeaspoons()
-
-    @Provides
-    @Singleton
-    fun provideCalculateLitersUSCups(): CalculateLitersUSCups = CalculateLitersUSCups()
+    fun provideConvertLiters(): ConvertLiters = ConvertLiters()
 
     //Temperature
-
     @Provides
     @Singleton
-    fun provideCalculateCelsiusFahrenheit(): CalculateCelsiusFahrenheit =
-        CalculateCelsiusFahrenheit()
-
-    @Provides
-    @Singleton
-    fun provideCalculateCelsiusKelvin(): CalculateCelsiusKelvin = CalculateCelsiusKelvin()
+    fun provideConvertCelsius(): ConvertCelsius = ConvertCelsius()
 
     //Alkalinity
-
     @Provides
     @Singleton
-    fun provideCalculateDKHMeqL(): CalculateDKHMeqL = CalculateDKHMeqL()
-
-    @Provides
-    @Singleton
-    fun provideCalculateDKHPpm(): CalculateDKHPpm = CalculateDKHPpm()
+    fun provideConvertDKH(): ConvertDKH = ConvertDKH()
 }
