@@ -4,6 +4,7 @@ import android.content.Context
 import com.danilp.aquariumhelper.domain.use_case.*
 import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.alkalinity.ConvertDKH
 import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.capacity.*
+import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.metric.ConvertMeters
 import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.temperature.ConvertCelsius
 import com.danilp.aquariumhelper.domain.use_case.validation.*
 import dagger.Module
@@ -80,4 +81,9 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideConvertDKH(): ConvertDKH = ConvertDKH()
+
+    //Metric
+    @Provides
+    @Singleton
+    fun provideConvertMeters(): ConvertMeters = ConvertMeters()
 }
