@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.domain.use_case.calculation.convertation.alkalinity
+package com.danilp.aquariumhelper.domain.use_case.calculation.conversion.alkalinity
 
 import com.danilp.aquariumhelper.domain.use_case.calculation.CalculationResult
 import javax.inject.Singleton
@@ -16,6 +16,7 @@ class ConvertDKH {
             CalculationResult(result = meqL / 0.357)
 
     /**
+     * Ppm also can be used as mg/L
      * @param dKH to calculate ppm
      * @param ppm to calculate dKH
      */

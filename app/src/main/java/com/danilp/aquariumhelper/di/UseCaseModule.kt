@@ -2,10 +2,10 @@ package com.danilp.aquariumhelper.di
 
 import android.content.Context
 import com.danilp.aquariumhelper.domain.use_case.*
-import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.alkalinity.ConvertDKH
-import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.capacity.*
-import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.metric.ConvertMeters
-import com.danilp.aquariumhelper.domain.use_case.calculation.convertation.temperature.ConvertCelsius
+import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.alkalinity.ConvertDKH
+import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.capacity.*
+import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.metric.ConvertMeters
+import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.temperature.ConvertCelsius
 import com.danilp.aquariumhelper.domain.use_case.validation.*
 import dagger.Module
 import dagger.Provides

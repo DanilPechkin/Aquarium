@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.domain.use_case.calculation.convertation.temperature
+package com.danilp.aquariumhelper.domain.use_case.calculation.conversion.temperature
 
 import com.danilp.aquariumhelper.domain.use_case.calculation.CalculationResult
 import javax.inject.Singleton

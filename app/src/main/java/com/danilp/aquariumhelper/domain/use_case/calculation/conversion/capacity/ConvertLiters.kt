@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.domain.use_case.calculation.convertation.capacity
+package com.danilp.aquariumhelper.domain.use_case.calculation.conversion.capacity
 
 import com.danilp.aquariumhelper.domain.use_case.calculation.CalculationResult
 import javax.inject.Singleton
