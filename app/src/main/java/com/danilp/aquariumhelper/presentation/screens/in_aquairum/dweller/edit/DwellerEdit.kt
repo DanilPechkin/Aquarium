@@ -2,6 +2,7 @@ package com.danilp.aquariumhelper.presentation.screens.in_aquairum.dweller.edit
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -10,8 +11,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -74,15 +78,25 @@ fun DwellerEdit(
                 .verticalScroll(rememberScrollState())
         ) {
 
+            val focusManager = LocalFocusManager.current
+
             InfoFieldWithError(
                 value = state.name,
                 onValueChange = { viewModel.onEvent(DwellerEditEvent.NameChanged(it)) },
                 label = stringResource(R.string.name_label),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessage = state.nameError,
                 maxLines = 1,
                 singleLine = true,
-                textFielModifier = Modifier.fillMaxWidth()
+                textFieldModifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -91,11 +105,19 @@ fun DwellerEdit(
                 value = state.amount,
                 onValueChange = { viewModel.onEvent(DwellerEditEvent.AmountChanged(it)) },
                 label = stringResource(R.string.amount_label),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessage = state.amountError,
                 maxLines = 1,
                 singleLine = true,
-                textFielModifier = Modifier.fillMaxWidth()
+                textFieldModifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -104,11 +126,19 @@ fun DwellerEdit(
                 value = state.liters,
                 onValueChange = { viewModel.onEvent(DwellerEditEvent.LitersChanged(it)) },
                 label = stringResource(R.string.capacity_label),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessage = state.litersError,
                 maxLines = 1,
                 singleLine = true,
-                textFielModifier = Modifier.fillMaxWidth()
+                textFieldModifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -119,6 +149,16 @@ fun DwellerEdit(
                 valueTo = state.maxTemperature,
                 onValueFromChange = { viewModel.onEvent(DwellerEditEvent.MinTemperatureChanged(it)) },
                 onValueToChange = { viewModel.onEvent(DwellerEditEvent.MaxTemperatureChanged(it)) },
+                keyboardActionsFrom = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
+                keyboardActionsTo = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessageFrom = state.minTemperatureError,
                 errorMessageTo = state.maxTemperatureError
             )
@@ -131,6 +171,16 @@ fun DwellerEdit(
                 valueTo = state.maxPh,
                 onValueFromChange = { viewModel.onEvent(DwellerEditEvent.MinPhChanged(it)) },
                 onValueToChange = { viewModel.onEvent(DwellerEditEvent.MaxPhChanged(it)) },
+                keyboardActionsFrom = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
+                keyboardActionsTo = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessageFrom = state.minPhError,
                 errorMessageTo = state.maxPhError
             )
@@ -143,6 +193,16 @@ fun DwellerEdit(
                 valueTo = state.maxGh,
                 onValueFromChange = { viewModel.onEvent(DwellerEditEvent.MinGhChanged(it)) },
                 onValueToChange = { viewModel.onEvent(DwellerEditEvent.MaxGhChanged(it)) },
+                keyboardActionsFrom = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
+                keyboardActionsTo = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessageFrom = state.minGhError,
                 errorMessageTo = state.maxGhError
             )
@@ -155,18 +215,38 @@ fun DwellerEdit(
                 valueTo = state.maxKh,
                 onValueFromChange = { viewModel.onEvent(DwellerEditEvent.MinKhChanged(it)) },
                 onValueToChange = { viewModel.onEvent(DwellerEditEvent.MaxKhChanged(it)) },
+                keyboardActionsFrom = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
+                keyboardActionsTo = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessageFrom = state.minKhError,
                 errorMessageTo = state.maxKhError
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            InfoFieldWithError(
+            OutlinedTextField(
                 value = state.description,
                 onValueChange = { viewModel.onEvent(DwellerEditEvent.DescriptionChanged(it)) },
-                label = stringResource(R.string.description_label),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                textFielModifier = Modifier.fillMaxWidth()
+                label = {
+                    Text(text = stringResource(R.string.description_label))
+                },
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                    }
+                )
             )
 
             Row(

@@ -2,6 +2,7 @@ package com.danilp.aquariumhelper.presentation.screens.in_aquairum.plant.edit
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -10,8 +11,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -74,15 +78,25 @@ fun PlantEdit(
                 .verticalScroll(rememberScrollState())
         ) {
 
+            val focusManager = LocalFocusManager.current
+
             InfoFieldWithError(
                 value = state.name,
                 onValueChange = { viewModel.onEvent(PlantEditEvent.NameChanged(it)) },
                 label = stringResource(R.string.name_label),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessage = state.nameError,
                 maxLines = 1,
                 singleLine = true,
-                textFielModifier = Modifier.fillMaxWidth()
+                textFieldModifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -93,6 +107,16 @@ fun PlantEdit(
                 valueTo = state.maxTemperature,
                 onValueFromChange = { viewModel.onEvent(PlantEditEvent.MinTemperatureChanged(it)) },
                 onValueToChange = { viewModel.onEvent(PlantEditEvent.MaxTemperatureChanged(it)) },
+                keyboardActionsFrom = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
+                keyboardActionsTo = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessageFrom = state.minTemperatureError,
                 errorMessageTo = state.maxTemperatureError
             )
@@ -105,6 +129,16 @@ fun PlantEdit(
                 valueTo = state.maxPh,
                 onValueFromChange = { viewModel.onEvent(PlantEditEvent.MinPhChanged(it)) },
                 onValueToChange = { viewModel.onEvent(PlantEditEvent.MaxPhChanged(it)) },
+                keyboardActionsFrom = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
+                keyboardActionsTo = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessageFrom = state.minPhError,
                 errorMessageTo = state.maxPhError
             )
@@ -117,6 +151,16 @@ fun PlantEdit(
                 valueTo = state.maxGh,
                 onValueFromChange = { viewModel.onEvent(PlantEditEvent.MinGhChanged(it)) },
                 onValueToChange = { viewModel.onEvent(PlantEditEvent.MaxGhChanged(it)) },
+                keyboardActionsFrom = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
+                keyboardActionsTo = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessageFrom = state.minGhError,
                 errorMessageTo = state.maxGhError
             )
@@ -129,6 +173,16 @@ fun PlantEdit(
                 valueTo = state.maxKh,
                 onValueFromChange = { viewModel.onEvent(PlantEditEvent.MinKhChanged(it)) },
                 onValueToChange = { viewModel.onEvent(PlantEditEvent.MaxKhChanged(it)) },
+                keyboardActionsFrom = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
+                keyboardActionsTo = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessageFrom = state.minKhError,
                 errorMessageTo = state.maxKhError
             )
@@ -139,11 +193,19 @@ fun PlantEdit(
                 value = state.minCO2,
                 onValueChange = { viewModel.onEvent(PlantEditEvent.MinCO2Changed(it)) },
                 label = stringResource(R.string.min_co2_label),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessage = state.minCO2Error,
                 maxLines = 1,
                 singleLine = true,
-                textFielModifier = Modifier.fillMaxWidth()
+                textFieldModifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -152,23 +214,40 @@ fun PlantEdit(
                 value = state.minIllumination,
                 onValueChange = { viewModel.onEvent(PlantEditEvent.MinIlluminationChanged(it)) },
                 label = stringResource(R.string.illumination_label),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
                 errorMessage = state.minIlluminationError,
                 maxLines = 1,
                 singleLine = true,
-                textFielModifier = Modifier.fillMaxWidth()
+                textFieldModifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            InfoFieldWithError(
+            OutlinedTextField(
                 value = state.description,
                 onValueChange = { viewModel.onEvent(PlantEditEvent.DescriptionChanged(it)) },
-                label = stringResource(R.string.description_label),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                textFielModifier = Modifier.fillMaxWidth()
+                label = {
+                    Text(text = stringResource(R.string.description_label))
+                },
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                    }
+                )
             )
-
             Row(
                 modifier = Modifier
                     .padding(16.dp)

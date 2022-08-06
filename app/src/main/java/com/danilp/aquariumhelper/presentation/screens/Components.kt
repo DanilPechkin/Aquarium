@@ -19,10 +19,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.danilp.aquariumhelper.R
-import com.danilp.aquariumhelper.presentation.ui.theme.AquariumHelperTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -101,8 +99,9 @@ fun InfoFieldWithError(
     onValueChange: (String) -> Unit,
     label: String,
     modifier: Modifier = Modifier,
-    textFielModifier: Modifier = Modifier,
+    textFieldModifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    keyboardActions: KeyboardActions = KeyboardActions(),
     errorMessage: String? = null,
     maxLines: Int = Int.MAX_VALUE,
     singleLine: Boolean = false
@@ -114,9 +113,10 @@ fun InfoFieldWithError(
             label = {
                 Text(text = label)
             },
-            modifier = textFielModifier,
+            modifier = textFieldModifier,
             isError = errorMessage != null,
             keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
             maxLines = maxLines,
             singleLine = singleLine
         )
@@ -138,7 +138,12 @@ fun FromToInfoFields(
     onValueFromChange: (String) -> Unit,
     onValueToChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+    keyboardOptions: KeyboardOptions = KeyboardOptions(
+        keyboardType = KeyboardType.Decimal,
+        imeAction = ImeAction.Next
+    ),
+    keyboardActionsFrom: KeyboardActions = KeyboardActions(),
+    keyboardActionsTo: KeyboardActions = KeyboardActions(),
     errorMessageFrom: String? = null,
     errorMessageTo: String? = null
 ) {
@@ -160,6 +165,7 @@ fun FromToInfoFields(
                     .padding(end = 16.dp)
                     .weight(1f),
                 keyboardOptions = keyboardOptions,
+                keyboardActions = keyboardActionsFrom,
                 errorMessage = errorMessageFrom,
                 maxLines = 1,
                 singleLine = true
@@ -170,24 +176,11 @@ fun FromToInfoFields(
                 label = stringResource(R.string.label_to),
                 modifier = Modifier.weight(1f),
                 keyboardOptions = keyboardOptions,
+                keyboardActions = keyboardActionsTo,
                 errorMessage = errorMessageTo,
                 maxLines = 1,
                 singleLine = true
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun FromToInfoFieldsPreview() {
-    AquariumHelperTheme {
-        FromToInfoFields(
-            label = "Temperature",
-            valueFrom = "15",
-            valueTo = "20",
-            onValueFromChange = {},
-            onValueToChange = {}
-        )
     }
 }
