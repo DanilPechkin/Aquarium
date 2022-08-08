@@ -5,6 +5,7 @@ import com.danilp.aquariumhelper.domain.aquairum.model.Aquarium
 
 fun AquariumEntity.toAquarium() = Aquarium(
     id = id,
+    imageUri = imageUri,
     name = name,
     description = description,
     liters = liters,
@@ -49,6 +50,7 @@ fun AquariumEntity.toAquarium() = Aquarium(
 
 fun Aquarium.toAquariumEntity() = AquariumEntity(
     id = id,
+    imageUri = imageUri,
     name = name,
     description = description,
     liters = liters,

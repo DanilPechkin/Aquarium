@@ -15,6 +15,7 @@ import androidx.room.PrimaryKey
 data class DwellerEntity(
     @PrimaryKey(autoGenerate = true) var id: Int,
     val aquariumId: Int,
+    val imageUri: String,
     val name: String,
     val genus: String,
     val amount: Int,

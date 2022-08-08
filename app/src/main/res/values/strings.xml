@@ -40,4 +40,5 @@
     <string name="add_dweller_button">Add new dweller</string>
     <string name="edit_dweller_title">Edit dweller</string>
     <string name="amount_label">Amount</string>
+    <string name="imagepicker_content_descr">Select image</string>
 </resources>

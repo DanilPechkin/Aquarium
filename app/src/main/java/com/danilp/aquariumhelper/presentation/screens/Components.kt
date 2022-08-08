@@ -1,7 +1,10 @@
 package com.danilp.aquariumhelper.presentation.screens
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -15,14 +18,14 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.danilp.aquariumhelper.R
-import com.danilp.aquariumhelper.presentation.ui.theme.AquariumHelperTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,7 +71,7 @@ fun GridItem(
     name: String,
     message: String,
     cardColors: CardColors,
-    //TODO: image
+    imageUri: String,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -76,10 +79,14 @@ fun GridItem(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
     ) {
-        Image(
-            painter = painterResource(R.drawable.aquairum_pic),
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageUri.ifBlank { (R.drawable.aquairum_pic) })
+                .crossfade(true)
+                .build(),
             contentDescription = name,
             contentScale = ContentScale.FillWidth,
+//          TODO:  placeholder = painterResource(R.drawable.ic_launcher_background),
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .fillMaxWidth()
@@ -87,11 +94,38 @@ fun GridItem(
         Column(
             modifier = Modifier.padding(top = 6.dp, start = 10.dp, bottom = 10.dp, end = 10.dp)
         ) {
-            Text(text = name, style = MaterialTheme.typography.titleMedium)
+            Text(text = name, style = MaterialTheme.typography.titleMedium, maxLines = 1)
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = message, style = MaterialTheme.typography.labelMedium)
         }
     }
+}
+
+@Composable
+fun ImagePicker(
+    imageUri: String,
+    onSelection: (Uri?) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val galleryLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) {
+        onSelection(it)
+    }
+
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(imageUri.ifBlank { (R.drawable.aquairum_pic) })
+            .crossfade(true)
+            .build(),
+        contentDescription = stringResource(R.string.imagepicker_content_descr),
+        contentScale = ContentScale.FillWidth,
+        // TODO: placeholder,
+        modifier = modifier
+            .clickable {
+                galleryLauncher.launch("image/*")
+            }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -101,8 +135,9 @@ fun InfoFieldWithError(
     onValueChange: (String) -> Unit,
     label: String,
     modifier: Modifier = Modifier,
-    textFielModifier: Modifier = Modifier,
+    textFieldModifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    keyboardActions: KeyboardActions = KeyboardActions(),
     errorMessage: String? = null,
     maxLines: Int = Int.MAX_VALUE,
     singleLine: Boolean = false
@@ -114,9 +149,10 @@ fun InfoFieldWithError(
             label = {
                 Text(text = label)
             },
-            modifier = textFielModifier,
+            modifier = textFieldModifier,
             isError = errorMessage != null,
             keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
             maxLines = maxLines,
             singleLine = singleLine
         )
@@ -138,7 +174,12 @@ fun FromToInfoFields(
     onValueFromChange: (String) -> Unit,
     onValueToChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+    keyboardOptions: KeyboardOptions = KeyboardOptions(
+        keyboardType = KeyboardType.Decimal,
+        imeAction = ImeAction.Next
+    ),
+    keyboardActionsFrom: KeyboardActions = KeyboardActions(),
+    keyboardActionsTo: KeyboardActions = KeyboardActions(),
     errorMessageFrom: String? = null,
     errorMessageTo: String? = null
 ) {
@@ -160,6 +201,7 @@ fun FromToInfoFields(
                     .padding(end = 16.dp)
                     .weight(1f),
                 keyboardOptions = keyboardOptions,
+                keyboardActions = keyboardActionsFrom,
                 errorMessage = errorMessageFrom,
                 maxLines = 1,
                 singleLine = true
@@ -170,24 +212,11 @@ fun FromToInfoFields(
                 label = stringResource(R.string.label_to),
                 modifier = Modifier.weight(1f),
                 keyboardOptions = keyboardOptions,
+                keyboardActions = keyboardActionsTo,
                 errorMessage = errorMessageTo,
                 maxLines = 1,
                 singleLine = true
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun FromToInfoFieldsPreview() {
-    AquariumHelperTheme {
-        FromToInfoFields(
-            label = "Temperature",
-            valueFrom = "15",
-            valueTo = "20",
-            onValueFromChange = {},
-            onValueToChange = {}
-        )
     }
 }

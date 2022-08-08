@@ -3,6 +3,7 @@ package com.danilp.aquariumhelper.domain.plant.model
 data class Plant(
     val id: Int,
     val aquariumId: Int,
+    val imageUri: String,
     val name: String,
     val genus: String,
     val minTemperature: Double,
@@ -21,6 +22,7 @@ data class Plant(
         fun createEmpty(): Plant = Plant(
             0,
             0,
+            "",
             "",
             "",
             0.0,

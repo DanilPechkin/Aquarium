@@ -82,6 +82,11 @@ class AquariumEditViewModel @Inject constructor(
             is AquariumEditEvent.DescriptionChanged -> {
                 state = state.copy(description = event.description)
             }
+            is AquariumEditEvent.ImagePicked -> {
+                state = state.copy(
+                    aquarium = state.aquarium.copy(imageUri = event.imageUri.toString())
+                )
+            }
         }
     }
 

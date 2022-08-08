@@ -1,8 +1,10 @@
 package com.danilp.aquariumhelper.presentation.screens.in_aquairum.plant.edit
 
+import android.net.Uri
+
 sealed class PlantEditEvent {
-    object DeleteButtonPressed: PlantEditEvent()
-    object InsertButtonPressed: PlantEditEvent()
+    object DeleteButtonPressed : PlantEditEvent()
+    object InsertButtonPressed : PlantEditEvent()
     data class NameChanged(val name: String) : PlantEditEvent()
     data class GenusChanged(val genus: String) : PlantEditEvent()
     data class MinTemperatureChanged(val temp: String) : PlantEditEvent()
@@ -16,4 +18,6 @@ sealed class PlantEditEvent {
     data class MinCO2Changed(val co2: String) : PlantEditEvent()
     data class MinIlluminationChanged(val illumination: String) : PlantEditEvent()
     data class DescriptionChanged(val description: String) : PlantEditEvent()
+    data class ImagePicked(val imageUri: Uri?) : PlantEditEvent()
+
 }

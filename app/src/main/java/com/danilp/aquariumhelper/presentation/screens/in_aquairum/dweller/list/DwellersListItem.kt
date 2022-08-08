@@ -15,6 +15,7 @@ fun DwellersListItem(
     GridItem(
         name = dweller.name,
         message = "Здоровый",
+        imageUri = dweller.imageUri,
         cardColors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
