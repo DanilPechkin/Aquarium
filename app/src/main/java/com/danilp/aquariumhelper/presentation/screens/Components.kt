@@ -1,6 +1,10 @@
 package com.danilp.aquariumhelper.presentation.screens
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -82,7 +86,7 @@ fun GridItem(
                 .build(),
             contentDescription = name,
             contentScale = ContentScale.FillWidth,
-            // TODO: placeholder,
+//          TODO:  placeholder = painterResource(R.drawable.ic_launcher_background),
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .fillMaxWidth()
@@ -90,11 +94,38 @@ fun GridItem(
         Column(
             modifier = Modifier.padding(top = 6.dp, start = 10.dp, bottom = 10.dp, end = 10.dp)
         ) {
-            Text(text = name, style = MaterialTheme.typography.titleMedium)
+            Text(text = name, style = MaterialTheme.typography.titleMedium, maxLines = 1)
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = message, style = MaterialTheme.typography.labelMedium)
         }
     }
+}
+
+@Composable
+fun ImagePicker(
+    imageUri: String,
+    onSelection: (Uri?) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val galleryLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) {
+        onSelection(it)
+    }
+
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(imageUri.ifBlank { (R.drawable.aquairum_pic) })
+            .crossfade(true)
+            .build(),
+        contentDescription = stringResource(R.string.imagepicker_content_descr),
+        contentScale = ContentScale.FillWidth,
+        // TODO: placeholder,
+        modifier = modifier
+            .clickable {
+                galleryLauncher.launch("image/*")
+            }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

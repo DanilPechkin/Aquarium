@@ -143,6 +143,11 @@ class DwellerEditViewModel @Inject constructor(
             is DwellerEditEvent.DescriptionChanged -> {
                 state = state.copy(description = event.description)
             }
+            is DwellerEditEvent.ImagePicked -> {
+                state = state.copy(
+                    dweller = state.dweller.copy(imageUri = event.imageUri.toString())
+                )
+            }
         }
     }
 

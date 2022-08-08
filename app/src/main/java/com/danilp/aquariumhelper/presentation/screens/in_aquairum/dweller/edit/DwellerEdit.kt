@@ -2,6 +2,7 @@ package com.danilp.aquariumhelper.presentation.screens.in_aquairum.dweller.edit
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -11,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -22,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.navigation.nav_graphs.InAquariumNavGraph
 import com.danilp.aquariumhelper.presentation.screens.FromToInfoFields
+import com.danilp.aquariumhelper.presentation.screens.ImagePicker
 import com.danilp.aquariumhelper.presentation.screens.InfoFieldWithError
 import com.danilp.aquariumhelper.presentation.screens.destinations.DwellersListDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -79,6 +82,17 @@ fun DwellerEdit(
         ) {
 
             val focusManager = LocalFocusManager.current
+
+            ImagePicker(
+                imageUri = state.dweller.imageUri,
+                onSelection = { viewModel.onEvent(DwellerEditEvent.ImagePicked(it)) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 256.dp)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             InfoFieldWithError(
                 value = state.name,

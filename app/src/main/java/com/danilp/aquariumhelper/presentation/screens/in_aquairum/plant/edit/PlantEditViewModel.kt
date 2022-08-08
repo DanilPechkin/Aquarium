@@ -142,6 +142,11 @@ class PlantEditViewModel @Inject constructor(
             is PlantEditEvent.DescriptionChanged -> {
                 state = state.copy(description = event.description)
             }
+            is PlantEditEvent.ImagePicked -> {
+                state = state.copy(
+                    plant = state.plant.copy(imageUri = event.imageUri.toString())
+                )
+            }
         }
     }
 
