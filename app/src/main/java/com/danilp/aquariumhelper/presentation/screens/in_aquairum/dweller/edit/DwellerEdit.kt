@@ -101,45 +101,51 @@ fun DwellerEdit(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            InfoFieldWithError(
-                value = state.amount,
-                onValueChange = { viewModel.onEvent(DwellerEditEvent.AmountChanged(it)) },
-                label = stringResource(R.string.amount_label),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = {
-                        focusManager.moveFocus(FocusDirection.Next)
-                    }
-                ),
-                errorMessage = state.amountError,
-                maxLines = 1,
-                singleLine = true,
-                textFieldModifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            InfoFieldWithError(
-                value = state.liters,
-                onValueChange = { viewModel.onEvent(DwellerEditEvent.LitersChanged(it)) },
-                label = stringResource(R.string.capacity_label),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = {
-                        focusManager.moveFocus(FocusDirection.Next)
-                    }
-                ),
-                errorMessage = state.litersError,
-                maxLines = 1,
-                singleLine = true,
-                textFieldModifier = Modifier.fillMaxWidth()
-            )
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                InfoFieldWithError(
+                    value = state.amount,
+                    onValueChange = { viewModel.onEvent(DwellerEditEvent.AmountChanged(it)) },
+                    label = stringResource(R.string.amount_label),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Next)
+                        }
+                    ),
+                    errorMessage = state.amountError,
+                    maxLines = 1,
+                    singleLine = true,
+                    textFieldModifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 16.dp)
+                )
+                InfoFieldWithError(
+                    value = state.liters,
+                    onValueChange = { viewModel.onEvent(DwellerEditEvent.LitersChanged(it)) },
+                    label = stringResource(R.string.capacity_label),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Next)
+                        }
+                    ),
+                    errorMessage = state.litersError,
+                    maxLines = 1,
+                    singleLine = true,
+                    textFieldModifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.weight(1f)
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
