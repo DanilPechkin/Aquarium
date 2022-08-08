@@ -13,6 +13,7 @@ import androidx.room.PrimaryKey
 )
 data class AquariumEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
+    val imageUri: String,
     val name: String,
     val description: String,
     val liters: Double,

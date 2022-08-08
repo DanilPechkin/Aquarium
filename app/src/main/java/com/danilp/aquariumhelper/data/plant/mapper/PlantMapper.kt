@@ -6,6 +6,7 @@ import com.danilp.aquariumhelper.domain.plant.model.Plant
 fun PlantEntity.toPlant() = Plant(
     id = id,
     aquariumId = aquariumId,
+    imageUri = imageUri,
     name = name,
     genus = genus,
     minTemperature = minTemperature,
@@ -24,6 +25,7 @@ fun PlantEntity.toPlant() = Plant(
 fun Plant.toPlantEntity() = PlantEntity(
     id = id,
     aquariumId = aquariumId,
+    imageUri = imageUri,
     name = name,
     genus = genus,
     minTemperature = minTemperature,

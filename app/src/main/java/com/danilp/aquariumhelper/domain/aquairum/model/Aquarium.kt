@@ -2,6 +2,7 @@ package com.danilp.aquariumhelper.domain.aquairum.model
 
 data class Aquarium(
     val id: Int,
+    val imageUri: String,
     val name: String,
     val description: String,
     val liters: Double,
@@ -46,6 +47,7 @@ data class Aquarium(
     companion object {
         fun createEmpty(): Aquarium = Aquarium(
             0,
+            "",
             "",
             "",
             0.0,

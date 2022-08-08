@@ -1,6 +1,9 @@
 package com.danilp.aquariumhelper.data.plant.local
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "plants",
@@ -12,6 +15,7 @@ import androidx.room.*
 data class PlantEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val aquariumId: Int,
+    val imageUri: String,
     val name: String,
     val genus: String,
     @ColumnInfo(name = "min_temperature") val minTemperature: Double,
