@@ -198,18 +198,34 @@ class PlantEditViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            val isTempCorrect = (state.minTemperature.toDouble() < state.maxTemperature.toDouble())
+            val isPhCorrect = (((state.minPh.toDoubleOrNull()
+                ?: 0.0) < (state.maxPh.toDoubleOrNull() ?: 0.0)))
+            val isGhCorrect = (((state.minGh.toDoubleOrNull()
+                ?: 0.0) < (state.maxGh.toDoubleOrNull() ?: 0.0)))
+            val isKhCorrect = (((state.minKh.toDoubleOrNull()
+                ?: 0.0) < (state.maxKh.toDoubleOrNull() ?: 0.0)))
+
             state = state.copy(
                 plant = state.plant.copy(
                     name = state.name,
                     genus = state.genus,
-                    minTemperature = state.minTemperature.toDouble(),
-                    maxTemperature = state.maxTemperature.toDouble(),
-                    minPh = state.minPh.toDoubleOrNull() ?: 0.0,
-                    maxPh = state.maxPh.toDoubleOrNull() ?: 0.0,
-                    minGh = state.minGh.toDoubleOrNull() ?: 0.0,
-                    maxGh = state.maxGh.toDoubleOrNull() ?: 0.0,
-                    minKh = state.minKh.toDoubleOrNull() ?: 0.0,
-                    maxKh = state.maxKh.toDoubleOrNull() ?: 0.0,
+                    minTemperature = if (isTempCorrect) state.minTemperature.toDouble()
+                    else state.maxTemperature.toDouble(),
+                    maxTemperature = if (isTempCorrect) state.maxTemperature.toDouble()
+                    else state.minTemperature.toDouble(),
+                    minPh = if (isPhCorrect) state.minPh.toDoubleOrNull() ?: 0.0
+                    else state.maxPh.toDoubleOrNull() ?: 0.0,
+                    maxPh = if (isPhCorrect) state.maxPh.toDoubleOrNull() ?: 0.0
+                    else state.minPh.toDoubleOrNull() ?: 0.0,
+                    minGh = if (isGhCorrect) state.minGh.toDoubleOrNull() ?: 0.0
+                    else state.maxGh.toDoubleOrNull() ?: 0.0,
+                    maxGh = if (isGhCorrect) state.maxGh.toDoubleOrNull() ?: 0.0
+                    else state.minGh.toDoubleOrNull() ?: 0.0,
+                    minKh = if (isKhCorrect) state.minKh.toDoubleOrNull() ?: 0.0
+                    else state.maxKh.toDoubleOrNull() ?: 0.0,
+                    maxKh = if (isKhCorrect) state.maxKh.toDoubleOrNull() ?: 0.0
+                    else state.minKh.toDoubleOrNull() ?: 0.0,
                     minIllumination = state.minIllumination.toDoubleOrNull() ?: 0.0,
                     minCO2 = state.minCO2.toDoubleOrNull() ?: 0.0,
                     description = state.description
