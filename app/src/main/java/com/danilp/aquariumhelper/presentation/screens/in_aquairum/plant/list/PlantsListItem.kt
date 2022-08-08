@@ -16,6 +16,7 @@ fun PlantsListItem(
         name = plant.name,
         //TODO: make message
         message = "Здоровый",
+        imageUri = plant.imageUri,
         cardColors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),

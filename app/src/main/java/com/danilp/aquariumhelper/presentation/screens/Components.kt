@@ -1,7 +1,6 @@
 package com.danilp.aquariumhelper.presentation.screens
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -15,11 +14,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.danilp.aquariumhelper.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,7 +67,7 @@ fun GridItem(
     name: String,
     message: String,
     cardColors: CardColors,
-    //TODO: image
+    imageUri: String,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -74,10 +75,14 @@ fun GridItem(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
     ) {
-        Image(
-            painter = painterResource(R.drawable.aquairum_pic),
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageUri.ifBlank { (R.drawable.aquairum_pic) })
+                .crossfade(true)
+                .build(),
             contentDescription = name,
             contentScale = ContentScale.FillWidth,
+            // TODO: placeholder,
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .fillMaxWidth()
