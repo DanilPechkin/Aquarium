@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.plant.model.Plant
 import com.danilp.aquariumhelper.domain.plant.repository.PlantRepository
-import com.danilp.aquariumhelper.domain.use_case.validation.*
+import com.danilp.aquariumhelper.domain.use_case.validation.Validate
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -24,13 +24,7 @@ class PlantEditViewModel @Inject constructor(
     @ApplicationContext context: Context,
     private val savedStateHandle: SavedStateHandle,
     private val repository: PlantRepository,
-    private val validateIllumination: ValidateIllumination,
-    private val validateCO2: ValidateCO2,
-    private val validateKh: ValidateKh,
-    private val validateGh: ValidateGh,
-    private val validatePh: ValidatePh,
-    private val validateTemperature: ValidateTemperature,
-    private val validateName: ValidateName
+    private val validate: Validate
 ) : ViewModel() {
 
     var state by mutableStateOf(PlantEditState())
@@ -159,18 +153,17 @@ class PlantEditViewModel @Inject constructor(
     }
 
     private fun submitData() {
-        val nameResult = validateName.execute(state.name)
-        val minTemperatureResult = validateTemperature.execute(state.minTemperature)
-        val maxTemperatureResult = validateTemperature.execute(state.maxTemperature)
-        val minPhResult = validatePh.execute(state.minPh.ifEmpty { "0" })
-        val maxPhResult = validatePh.execute(state.maxPh.ifEmpty { "0" })
-        val minGhResult = validateGh.execute(state.minGh.ifEmpty { "0" })
-        val maxGhResult = validateGh.execute(state.maxGh.ifEmpty { "0" })
-        val minKhResult = validateKh.execute(state.minKh.ifEmpty { "0" })
-        val maxKhResult = validateKh.execute(state.maxKh.ifEmpty { "0" })
-        val minCO2Result = validateCO2.execute(state.minCO2.ifEmpty { "0" })
-        val minIlluminationResult =
-            validateIllumination.execute(state.minIllumination.ifEmpty { "0" })
+        val nameResult = validate.string(state.name)
+        val minTemperatureResult = validate.decimal(state.minTemperature, isRequired = true)
+        val maxTemperatureResult = validate.decimal(state.maxTemperature, isRequired = true)
+        val minPhResult = validate.decimal(state.minPh)
+        val maxPhResult = validate.decimal(state.maxPh)
+        val minGhResult = validate.decimal(state.minGh)
+        val maxGhResult = validate.decimal(state.maxGh)
+        val minKhResult = validate.decimal(state.minKh)
+        val maxKhResult = validate.decimal(state.maxKh)
+        val minCO2Result = validate.decimal(state.minCO2)
+        val minIlluminationResult = validate.decimal(state.minIllumination)
 
         val hasError = listOf(
             nameResult,

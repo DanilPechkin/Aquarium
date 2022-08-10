@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.dweller.model.Dweller
 import com.danilp.aquariumhelper.domain.dweller.repository.DwellerRepository
-import com.danilp.aquariumhelper.domain.use_case.validation.*
+import com.danilp.aquariumhelper.domain.use_case.validation.Validate
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -24,13 +24,7 @@ class DwellerEditViewModel @Inject constructor(
     @ApplicationContext context: Context,
     private val repository: DwellerRepository,
     private val savedStateHandle: SavedStateHandle,
-    private val validateAmount: ValidateAmount,
-    private val validateLiters: ValidateLiters,
-    private val validateKh: ValidateKh,
-    private val validateGh: ValidateGh,
-    private val validatePh: ValidatePh,
-    private val validateTemperature: ValidateTemperature,
-    private val validateName: ValidateName
+    private val validate: Validate
 ) : ViewModel() {
 
     var state by mutableStateOf(DwellerEditState())
@@ -160,17 +154,17 @@ class DwellerEditViewModel @Inject constructor(
     }
 
     private fun submitData() {
-        val nameResult = validateName.execute(state.name)
-        val amountResult = validateAmount.execute(state.amount)
-        val minTemperatureResult = validateTemperature.execute(state.minTemperature)
-        val maxTemperatureResult = validateTemperature.execute(state.maxTemperature)
-        val litersResult = validateLiters.execute(state.liters)
-        val minPhResult = validatePh.execute(state.minPh.ifEmpty { "0" })
-        val maxPhResult = validatePh.execute(state.maxPh.ifEmpty { "0" })
-        val minGhResult = validateGh.execute(state.minGh.ifEmpty { "0" })
-        val maxGhResult = validateGh.execute(state.maxGh.ifEmpty { "0" })
-        val minKhResult = validateKh.execute(state.minKh.ifEmpty { "0" })
-        val maxKhResult = validateKh.execute(state.maxKh.ifEmpty { "0" })
+        val nameResult = validate.string(state.name)
+        val amountResult = validate.integer(state.amount)
+        val minTemperatureResult = validate.decimal(state.minTemperature, isRequired = true)
+        val maxTemperatureResult = validate.decimal(state.maxTemperature, isRequired = true)
+        val litersResult = validate.decimal(state.liters, isRequired = true)
+        val minPhResult = validate.decimal(state.minPh)
+        val maxPhResult = validate.decimal(state.maxPh)
+        val minGhResult = validate.decimal(state.minGh)
+        val maxGhResult = validate.decimal(state.maxGh)
+        val minKhResult = validate.decimal(state.minKh)
+        val maxKhResult = validate.decimal(state.maxKh)
 
         val hasError = listOf(
             nameResult,
