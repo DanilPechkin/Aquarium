@@ -8,8 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.domain.aquairum.model.Aquarium
 import com.danilp.aquariumhelper.domain.aquairum.repository.AquariumRepository
-import com.danilp.aquariumhelper.domain.use_case.validation.ValidateLiters
-import com.danilp.aquariumhelper.domain.use_case.validation.ValidateName
+import com.danilp.aquariumhelper.domain.use_case.validation.Validate
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -21,8 +20,7 @@ import javax.inject.Inject
 class AquariumEditViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val repository: AquariumRepository,
-    private val validateName: ValidateName,
-    private val validateLiters: ValidateLiters,
+    private val validate: Validate
 ) : ViewModel() {
 
     var state by mutableStateOf(AquariumEditState())
@@ -99,8 +97,8 @@ class AquariumEditViewModel @Inject constructor(
     }
 
     private fun submitData() {
-        val nameResult = validateName.execute(state.name)
-        val litersResult = validateLiters.execute(state.liters)
+        val nameResult = validate.string(state.name)
+        val litersResult = validate.decimal(state.liters, isRequired = true)
 
         val hasError = listOf(
             nameResult,

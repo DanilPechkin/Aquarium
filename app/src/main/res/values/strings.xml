@@ -5,7 +5,7 @@
     <string name="add_aquarium_fab">Add a new aquarium</string>
     <string name="search_placeholder">Search…</string>
     <string name="this_field_cant_be_blank_validation_res">This field can\'t be blank</string>
-    <string name="should_be_numeric_validation_res">Should be numeric</string>
+    <string name="should_be_integer_validation_res">Should be integer</string>
     <string name="edit_aquarium_title">Edit aquarium</string>
     <string name="name_label">Name</string>
     <string name="capacity_label">Capacity</string>
