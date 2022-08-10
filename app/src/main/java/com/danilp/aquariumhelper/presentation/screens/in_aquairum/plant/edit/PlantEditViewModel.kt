@@ -168,8 +168,9 @@ class PlantEditViewModel @Inject constructor(
         val maxGhResult = validateGh.execute(state.maxGh.ifEmpty { "0" })
         val minKhResult = validateKh.execute(state.minKh.ifEmpty { "0" })
         val maxKhResult = validateKh.execute(state.maxKh.ifEmpty { "0" })
-        val minCO2Result = validateCO2.execute(state.minCO2)
-        val minIlluminationResult = validateIllumination.execute(state.minIllumination)
+        val minCO2Result = validateCO2.execute(state.minCO2.ifEmpty { "0" })
+        val minIlluminationResult =
+            validateIllumination.execute(state.minIllumination.ifEmpty { "0" })
 
         val hasError = listOf(
             nameResult,
