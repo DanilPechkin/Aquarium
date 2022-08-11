@@ -80,11 +80,12 @@ fun GridItem(
         GlideImage(
             imageModel = imageUri.ifBlank { (R.drawable.aquairum_pic) },
             contentDescription = name,
-            contentScale = ContentScale.FillWidth,
+            contentScale = ContentScale.Crop,
 //          TODO:  placeholder = painterResource(R.drawable.ic_launcher_background),
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .fillMaxWidth()
+                .heightIn(max = 110.dp)
         )
         Column(
             modifier = Modifier.padding(top = 6.dp, start = 10.dp, bottom = 10.dp, end = 10.dp)
@@ -111,7 +112,7 @@ fun ImagePicker(
     GlideImage(
         imageModel = imageUri.ifBlank { (R.drawable.aquairum_pic) },
         contentDescription = stringResource(R.string.imagepicker_content_descr),
-        contentScale = ContentScale.FillWidth,
+        contentScale = ContentScale.Crop,
         // TODO: placeholder,
         modifier = modifier
             .clickable {
