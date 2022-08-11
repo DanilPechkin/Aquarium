@@ -18,14 +18,12 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.danilp.aquariumhelper.R
+import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,17 +77,15 @@ fun GridItem(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUri.ifBlank { (R.drawable.aquairum_pic) })
-                .crossfade(true)
-                .build(),
+        GlideImage(
+            imageModel = imageUri.ifBlank { (R.drawable.aquairum_pic) },
             contentDescription = name,
-            contentScale = ContentScale.FillWidth,
+            contentScale = ContentScale.Crop,
 //          TODO:  placeholder = painterResource(R.drawable.ic_launcher_background),
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .fillMaxWidth()
+                .heightIn(max = 110.dp)
         )
         Column(
             modifier = Modifier.padding(top = 6.dp, start = 10.dp, bottom = 10.dp, end = 10.dp)
@@ -113,13 +109,10 @@ fun ImagePicker(
         onSelection(it)
     }
 
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(imageUri.ifBlank { (R.drawable.aquairum_pic) })
-            .crossfade(true)
-            .build(),
+    GlideImage(
+        imageModel = imageUri.ifBlank { (R.drawable.aquairum_pic) },
         contentDescription = stringResource(R.string.imagepicker_content_descr),
-        contentScale = ContentScale.FillWidth,
+        contentScale = ContentScale.Crop,
         // TODO: placeholder,
         modifier = modifier
             .clickable {
