@@ -7,5 +7,5 @@ import kotlin.math.pow
 @Singleton
 class CalculateFreshCO2 {
     fun execute(kH: Double, pH: Double): CalculationResult =
-        CalculationResult(result = 3.0 * kH * (10.0).pow(7.0 - pH))
+        CalculationResult(3.0 * kH * (10.0).pow(7.0 - pH))
 }

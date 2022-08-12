@@ -6,6 +6,7 @@ import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.alkalini
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.capacity.*
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.metric.ConvertMeters
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.temperature.ConvertCelsius
+import com.danilp.aquariumhelper.domain.use_case.calculation.fresh_water.CalculateFreshCO2
 import com.danilp.aquariumhelper.domain.use_case.validation.*
 import dagger.Module
 import dagger.Provides
@@ -25,7 +26,7 @@ object UseCaseModule {
         Validate(context)
 
 
-    //----------Conversion----------
+    // ----------Conversion----------
 
     //Capacity
     @Provides
@@ -46,4 +47,19 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideConvertMeters(): ConvertMeters = ConvertMeters()
+
+
+    // ----------Calculation----------
+
+    //---Fresh water---
+
+    @Provides
+    @Singleton
+    fun provideCalculateFreshCO2(): CalculateFreshCO2 = CalculateFreshCO2()
+
+    // ---Aquarium---
+
+    //Capacity
+
+
 }
