@@ -15,12 +15,17 @@ class Validate @Inject constructor(
         if (isRequired && value.isBlank())
             ValidationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.this_field_cant_be_blank_validation_res)
+                errorMessage = context.getString(R.string.this_field_cant_be_blank_error)
             )
         else if (value.ifEmpty { "0" }.toDoubleOrNull() == null)
             ValidationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.should_be_decimal_validation_res)
+                errorMessage = context.getString(R.string.should_be_decimal_error)
+            )
+        else if (value.ifEmpty { "0" }.toDouble() < 0.0)
+            ValidationResult(
+                successful = false,
+                errorMessage = context.getString(R.string.this_value_cant_be_negative_error)
             )
         else
             ValidationResult(successful = true)
@@ -29,12 +34,17 @@ class Validate @Inject constructor(
         if (isRequired && value.isBlank())
             ValidationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.this_field_cant_be_blank_validation_res)
+                errorMessage = context.getString(R.string.this_field_cant_be_blank_error)
             )
         else if (!value.ifEmpty { "0" }.isDigitsOnly())
             ValidationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.should_be_integer_validation_res)
+                errorMessage = context.getString(R.string.should_be_integer_error)
+            )
+        else if (value.ifEmpty { "0" }.toInt() < 0)
+            ValidationResult(
+                successful = false,
+                errorMessage = context.getString(R.string.this_value_cant_be_negative_error)
             )
         else
             ValidationResult(successful = true)
@@ -43,7 +53,7 @@ class Validate @Inject constructor(
         if (value.isBlank())
             ValidationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.this_field_cant_be_blank_validation_res)
+                errorMessage = context.getString(R.string.this_field_cant_be_blank_error)
             )
         else
             ValidationResult(successful = true)

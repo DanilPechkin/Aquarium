@@ -4,8 +4,8 @@
     <string name="search_icon">Search</string>
     <string name="add_aquarium_fab">Add a new aquarium</string>
     <string name="search_placeholder">Search…</string>
-    <string name="this_field_cant_be_blank_validation_res">This field can\'t be blank</string>
-    <string name="should_be_integer_validation_res">Should be integer</string>
+    <string name="this_field_cant_be_blank_error">This field can\'t be blank</string>
+    <string name="should_be_integer_error">Should be integer</string>
     <string name="edit_aquarium_title">Edit aquarium</string>
     <string name="name_label">Name</string>
     <string name="capacity_label">Capacity</string>
@@ -23,7 +23,7 @@
     <string name="plants_title">Plants</string>
     <string name="back_arrow_button">Back</string>
     <string name="add_plant_button">Add new plant</string>
-    <string name="should_be_decimal_validation_res">Should be decimal</string>
+    <string name="should_be_decimal_error">Should be decimal</string>
     <string name="edit_plant_title">Edit plant</string>
     <string name="label_from">From</string>
     <string name="label_to">To</string>
@@ -41,4 +41,5 @@
     <string name="edit_dweller_title">Edit dweller</string>
     <string name="amount_label">Amount</string>
     <string name="imagepicker_content_descr">Select image</string>
+    <string name="this_value_cant_be_negative_error">This value cannot be negative</string>
 </resources>
