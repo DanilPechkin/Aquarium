@@ -2,6 +2,7 @@ package com.danilp.aquariumhelper.di
 
 import android.content.Context
 import com.danilp.aquariumhelper.domain.use_case.*
+import com.danilp.aquariumhelper.domain.use_case.calculation.aquairum.capacity.CalculateCapacity
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.alkalinity.ConvertDKH
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.capacity.*
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.metric.ConvertMeters
@@ -60,6 +61,11 @@ object UseCaseModule {
     // ---Aquarium---
 
     //Capacity
+
+    @Provides
+    @Singleton
+    fun provideCalculateCapacity(@ApplicationContext context: Context): CalculateCapacity =
+        CalculateCapacity(context)
 
 
 }
