@@ -155,7 +155,7 @@ class DwellerEditViewModel @Inject constructor(
 
     private fun submitData() {
         val nameResult = validate.string(state.name)
-        val amountResult = validate.integer(state.amount)
+        val amountResult = validate.integer(state.amount, isRequired = true)
         val minTemperatureResult = validate.decimal(state.minTemperature, isRequired = true)
         val maxTemperatureResult = validate.decimal(state.maxTemperature, isRequired = true)
         val litersResult = validate.decimal(state.liters, isRequired = true)
