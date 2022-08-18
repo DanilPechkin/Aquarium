@@ -44,4 +44,5 @@
     <string name="this_value_cant_be_negative_error">This value cannot be negative</string>
     <string name="fullwidth_greater_than_width_error">Full width must be greater than width</string>
     <string name="fulllength_greater_than_length_error">Full length must be greater than length</string>
+    <string name="wrong_number_of_sides_error">Wrong number of sides</string>
 </resources>
