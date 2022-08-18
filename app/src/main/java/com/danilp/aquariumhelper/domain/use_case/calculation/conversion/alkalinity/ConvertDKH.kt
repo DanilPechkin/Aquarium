@@ -1,9 +1,7 @@
 package com.danilp.aquariumhelper.domain.use_case.calculation.conversion.alkalinity
 
 import com.danilp.aquariumhelper.domain.use_case.calculation.CalculationResult
-import javax.inject.Singleton
 
-@Singleton
 class ConvertDKH {
     /**
      * @param dKH to calculate meqL

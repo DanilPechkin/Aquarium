@@ -1,9 +1,7 @@
 package com.danilp.aquariumhelper.domain.use_case.calculation.conversion.capacity
 
 import com.danilp.aquariumhelper.domain.use_case.calculation.CalculationResult
-import javax.inject.Singleton
 
-@Singleton
 class ConvertLiters {
     /**
      * @param liters to calculate feet

@@ -1,11 +1,6 @@
 package com.danilp.aquariumhelper.domain.use_case.calculation.aquairum.capacity
 
-import android.content.Context
-import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.use_case.calculation.CalculationResult
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.math.PI
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -14,9 +9,10 @@ import kotlin.math.tan
 /**
  * Takes centimeters, returns milliliters
  */
-@Singleton
-class CalculateCapacity @Inject constructor(
-    @ApplicationContext private val context: Context
+class CalculateCapacity(
+    private val widthsError: String,
+    private val lengthsError: String,
+    private val numberOfSidesError: String
 ) {
 
     fun rectangle(length: Double, width: Double, height: Double): CalculationResult =
@@ -42,7 +38,7 @@ class CalculateCapacity @Inject constructor(
         if (fullWidth < width)
             CalculationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.fullwidth_greater_than_width_error)
+                errorMessage = widthsError
             )
         else
             CalculationResult(
@@ -69,12 +65,12 @@ class CalculateCapacity @Inject constructor(
         if (fullWidth < width)
             CalculationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.fullwidth_greater_than_width_error)
+                errorMessage = widthsError
             )
         else if (fullLength < length)
             CalculationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.fulllength_greater_than_length_error)
+                errorMessage = lengthsError
             )
         else
             CalculationResult(result = (fullWidth * fullLength * height) - width * length * height)
@@ -97,12 +93,12 @@ class CalculateCapacity @Inject constructor(
         if (fullWidth < width || lengthBetweenSide > fullWidth)
             CalculationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.fullwidth_greater_than_width_error)
+                errorMessage = widthsError
             )
         else if (fullLength < length || widthBetweenSide > fullLength)
             CalculationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.fulllength_greater_than_length_error)
+                errorMessage = lengthsError
             )
         else
             CalculationResult(
@@ -143,7 +139,7 @@ class CalculateCapacity @Inject constructor(
         if (fullWidth < width)
             CalculationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.fullwidth_greater_than_width_error)
+                errorMessage = widthsError
             )
         else
             CalculationResult(result = (0.5 * (width + fullWidth) * length) * height)
@@ -164,12 +160,12 @@ class CalculateCapacity @Inject constructor(
         if (fullWidth < width)
             CalculationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.fullwidth_greater_than_width_error)
+                errorMessage = widthsError
             )
         else if (fullLength < length)
             CalculationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.fulllength_greater_than_length_error)
+                errorMessage = lengthsError
             )
         else
             CalculationResult(
@@ -185,7 +181,7 @@ class CalculateCapacity @Inject constructor(
         if (sides < 3)
             CalculationResult(
                 successful = false,
-                errorMessage = context.getString(R.string.wrong_number_of_sides_error)
+                errorMessage = numberOfSidesError
             )
         else
             CalculationResult(
