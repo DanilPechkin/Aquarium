@@ -9,11 +9,7 @@ import kotlin.math.tan
 /**
  * Takes centimeters, returns milliliters
  */
-class CalculateCapacity(
-    private val widthsError: String,
-    private val lengthsError: String,
-    private val numberOfSidesError: String
-) {
+class CalculateCapacity {
 
     fun rectangle(length: Double, width: Double, height: Double): CalculationResult =
         CalculationResult(result = length * width * height)
@@ -38,7 +34,7 @@ class CalculateCapacity(
         if (fullWidth < width)
             CalculationResult(
                 successful = false,
-                errorMessage = widthsError
+                errorMessageCode = CapacityErrorCode.WIDTHS_ERROR
             )
         else
             CalculationResult(
@@ -65,12 +61,12 @@ class CalculateCapacity(
         if (fullWidth < width)
             CalculationResult(
                 successful = false,
-                errorMessage = widthsError
+                errorMessageCode = CapacityErrorCode.WIDTHS_ERROR
             )
         else if (fullLength < length)
             CalculationResult(
                 successful = false,
-                errorMessage = lengthsError
+                errorMessageCode = CapacityErrorCode.LENGTH_ERROR
             )
         else
             CalculationResult(result = (fullWidth * fullLength * height) - width * length * height)
@@ -93,12 +89,12 @@ class CalculateCapacity(
         if (fullWidth < width || lengthBetweenSide > fullWidth)
             CalculationResult(
                 successful = false,
-                errorMessage = widthsError
+                errorMessageCode = CapacityErrorCode.WIDTHS_ERROR
             )
         else if (fullLength < length || widthBetweenSide > fullLength)
             CalculationResult(
                 successful = false,
-                errorMessage = lengthsError
+                errorMessageCode = CapacityErrorCode.LENGTH_ERROR
             )
         else
             CalculationResult(
@@ -139,7 +135,7 @@ class CalculateCapacity(
         if (fullWidth < width)
             CalculationResult(
                 successful = false,
-                errorMessage = widthsError
+                errorMessageCode = CapacityErrorCode.WIDTHS_ERROR
             )
         else
             CalculationResult(result = (0.5 * (width + fullWidth) * length) * height)
@@ -160,12 +156,12 @@ class CalculateCapacity(
         if (fullWidth < width)
             CalculationResult(
                 successful = false,
-                errorMessage = widthsError
+                errorMessageCode = CapacityErrorCode.WIDTHS_ERROR
             )
         else if (fullLength < length)
             CalculationResult(
                 successful = false,
-                errorMessage = lengthsError
+                errorMessageCode = CapacityErrorCode.LENGTH_ERROR
             )
         else
             CalculationResult(
@@ -181,7 +177,7 @@ class CalculateCapacity(
         if (sides < 3)
             CalculationResult(
                 successful = false,
-                errorMessage = numberOfSidesError
+                errorMessageCode = CapacityErrorCode.NUMBER_OF_SIDES_ERROR
             )
         else
             CalculationResult(

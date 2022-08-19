@@ -105,7 +105,7 @@ fun AquariumEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorMessage = state.nameError,
+                errorCode = state.nameErrorCode,
                 maxLines = 1,
                 singleLine = true
             )
@@ -125,7 +125,7 @@ fun AquariumEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorMessage = state.litersError,
+                errorCode = state.litersErrorCode,
                 maxLines = 1,
                 singleLine = true
             )

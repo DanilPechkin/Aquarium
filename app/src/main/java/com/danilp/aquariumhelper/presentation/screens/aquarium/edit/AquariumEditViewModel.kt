@@ -107,8 +107,8 @@ class AquariumEditViewModel @Inject constructor(
 
         if (hasError) {
             state = state.copy(
-                nameError = nameResult.errorMessage,
-                litersError = litersResult.errorMessage
+                nameErrorCode = nameResult.errorMessage,
+                litersErrorCode = litersResult.errorMessage
             )
             return
         }

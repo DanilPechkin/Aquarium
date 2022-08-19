@@ -181,17 +181,17 @@ class PlantEditViewModel @Inject constructor(
 
         if (hasError) {
             state = state.copy(
-                nameError = nameResult.errorMessage,
-                minTemperatureError = minTemperatureResult.errorMessage,
-                maxTemperatureError = maxTemperatureResult.errorMessage,
-                minPhError = minPhResult.errorMessage,
-                maxPhError = maxPhResult.errorMessage,
-                minGhError = minGhResult.errorMessage,
-                maxGhError = maxGhResult.errorMessage,
-                minKhError = minKhResult.errorMessage,
-                maxKhError = maxKhResult.errorMessage,
-                minCO2Error = minCO2Result.errorMessage,
-                minIlluminationError = minIlluminationResult.errorMessage
+                nameErrorCode = nameResult.errorMessage,
+                minTemperatureErrorCode = minTemperatureResult.errorMessage,
+                maxTemperatureErrorCode = maxTemperatureResult.errorMessage,
+                minPhErrorCode = minPhResult.errorMessage,
+                maxPhErrorCode = maxPhResult.errorMessage,
+                minGhErrorCode = minGhResult.errorMessage,
+                maxGhErrorCode = maxGhResult.errorMessage,
+                minKhErrorCode = minKhResult.errorMessage,
+                maxKhErrorCode = maxKhResult.errorMessage,
+                minCO2ErrorCode = minCO2Result.errorMessage,
+                minIlluminationErrorCode = minIlluminationResult.errorMessage
             )
             return
         }

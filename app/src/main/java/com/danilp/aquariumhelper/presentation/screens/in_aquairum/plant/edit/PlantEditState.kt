@@ -21,16 +21,16 @@ data class PlantEditState(
     val minIllumination: String = "",
     val description: String = "",
     // Stats errors
-    val nameError: String? = null,
-    /*TODO: val genusError: String? = null,*/
-    val minTemperatureError: String? = null,
-    val maxTemperatureError: String? = null,
-    val minPhError: String? = null,
-    val maxPhError: String? = null,
-    val minGhError: String? = null,
-    val maxGhError: String? = null,
-    val minKhError: String? = null,
-    val maxKhError: String? = null,
-    val minCO2Error: String? = null,
-    val minIlluminationError: String? = null
+    val nameErrorCode: Int? = null,
+    /*TODO: val genusError: Int? = null,*/
+    val minTemperatureErrorCode: Int? = null,
+    val maxTemperatureErrorCode: Int? = null,
+    val minPhErrorCode: Int? = null,
+    val maxPhErrorCode: Int? = null,
+    val minGhErrorCode: Int? = null,
+    val maxGhErrorCode: Int? = null,
+    val minKhErrorCode: Int? = null,
+    val maxKhErrorCode: Int? = null,
+    val minCO2ErrorCode: Int? = null,
+    val minIlluminationErrorCode: Int? = null
 )

@@ -107,7 +107,7 @@ fun DwellerEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorMessage = state.nameError,
+                errorCode = state.nameErrorCode,
                 maxLines = 1,
                 singleLine = true,
                 textFieldModifier = Modifier.fillMaxWidth()
@@ -132,7 +132,7 @@ fun DwellerEdit(
                             focusManager.moveFocus(FocusDirection.Next)
                         }
                     ),
-                    errorMessage = state.amountError,
+                    errorCode = state.amountErrorCode,
                     maxLines = 1,
                     singleLine = true,
                     textFieldModifier = Modifier.fillMaxWidth(),
@@ -153,7 +153,7 @@ fun DwellerEdit(
                             focusManager.moveFocus(FocusDirection.Next)
                         }
                     ),
-                    errorMessage = state.litersError,
+                    errorCode = state.litersErrorCode,
                     maxLines = 1,
                     singleLine = true,
                     textFieldModifier = Modifier.fillMaxWidth(),
@@ -179,8 +179,8 @@ fun DwellerEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorMessageFrom = state.minTemperatureError,
-                errorMessageTo = state.maxTemperatureError
+                errorCodeFrom = state.minTemperatureErrorCode,
+                errorCodeTo = state.maxTemperatureErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -201,8 +201,8 @@ fun DwellerEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorMessageFrom = state.minPhError,
-                errorMessageTo = state.maxPhError
+                errorCodeFrom = state.minPhErrorCode,
+                errorCodeTo = state.maxPhErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -223,8 +223,8 @@ fun DwellerEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorMessageFrom = state.minGhError,
-                errorMessageTo = state.maxGhError
+                errorCodeFrom = state.minGhErrorCode,
+                errorCodeTo = state.maxGhErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -245,8 +245,8 @@ fun DwellerEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorMessageFrom = state.minKhError,
-                errorMessageTo = state.maxKhError
+                errorCodeFrom = state.minKhErrorCode,
+                errorCodeTo = state.maxKhErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))

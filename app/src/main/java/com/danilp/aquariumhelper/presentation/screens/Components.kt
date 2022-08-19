@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.danilp.aquariumhelper.R
+import com.danilp.aquariumhelper.domain.use_case.validation.ValidationErrorCode
 import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -131,7 +132,7 @@ fun InfoFieldWithError(
     textFieldModifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     keyboardActions: KeyboardActions = KeyboardActions(),
-    errorMessage: String? = null,
+    errorCode: Int? = null,
     maxLines: Int = Int.MAX_VALUE,
     singleLine: Boolean = false
 ) {
@@ -143,16 +144,32 @@ fun InfoFieldWithError(
                 Text(text = label)
             },
             modifier = textFieldModifier,
-            isError = errorMessage != null,
+            isError = errorCode != null,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             maxLines = maxLines,
             singleLine = singleLine
         )
 
-        if (errorMessage != null) {
+        if (errorCode != null) {
             Text(
-                text = errorMessage,
+                text = when (errorCode) {
+                    ValidationErrorCode.BLANK_FIELD_ERROR -> {
+                        stringResource(R.string.this_field_cant_be_blank_error)
+                    }
+                    ValidationErrorCode.DECIMAL_ERROR -> {
+                        stringResource(R.string.should_be_decimal_error)
+                    }
+                    ValidationErrorCode.INTEGER_ERROR -> {
+                        stringResource(R.string.should_be_integer_error)
+                    }
+                    ValidationErrorCode.NEGATIVE_VALUE_ERROR -> {
+                        stringResource(R.string.this_value_cant_be_negative_error)
+                    }
+                    else -> {
+                        stringResource(R.string.unknown_error)
+                    }
+                },
                 color = MaterialTheme.colorScheme.error
             )
         }
@@ -173,8 +190,8 @@ fun FromToInfoFields(
     ),
     keyboardActionsFrom: KeyboardActions = KeyboardActions(),
     keyboardActionsTo: KeyboardActions = KeyboardActions(),
-    errorMessageFrom: String? = null,
-    errorMessageTo: String? = null
+    errorCodeFrom: Int? = null,
+    errorCodeTo: Int? = null
 ) {
     Column(modifier = modifier) {
         Text(
@@ -195,7 +212,7 @@ fun FromToInfoFields(
                     .weight(1f),
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActionsFrom,
-                errorMessage = errorMessageFrom,
+                errorCode = errorCodeFrom,
                 maxLines = 1,
                 singleLine = true
             )
@@ -206,7 +223,7 @@ fun FromToInfoFields(
                 modifier = Modifier.weight(1f),
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActionsTo,
-                errorMessage = errorMessageTo,
+                errorCode = errorCodeTo,
                 maxLines = 1,
                 singleLine = true
             )

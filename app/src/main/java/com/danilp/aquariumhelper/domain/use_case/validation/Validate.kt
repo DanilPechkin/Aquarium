@@ -1,26 +1,21 @@
 package com.danilp.aquariumhelper.domain.use_case.validation
 
-class Validate(
-    private val blankFieldError: String?,
-    private val decimalError: String?,
-    private val integerError: String?,
-    private val negativeValueError: String?
-) {
+class Validate {
     fun decimal(value: String, isRequired: Boolean = false): ValidationResult =
         if (isRequired && value.isBlank())
             ValidationResult(
                 successful = false,
-                errorMessage = blankFieldError
+                errorMessage = ValidationErrorCode.BLANK_FIELD_ERROR
             )
         else if (value.ifEmpty { "0" }.toDoubleOrNull() == null)
             ValidationResult(
                 successful = false,
-                errorMessage = decimalError
+                errorMessage = ValidationErrorCode.DECIMAL_ERROR
             )
         else if (value.ifEmpty { "0" }.toDouble() < 0.0)
             ValidationResult(
                 successful = false,
-                errorMessage = negativeValueError
+                errorMessage = ValidationErrorCode.NEGATIVE_VALUE_ERROR
             )
         else
             ValidationResult(successful = true)
@@ -29,17 +24,17 @@ class Validate(
         if (isRequired && value.isBlank())
             ValidationResult(
                 successful = false,
-                errorMessage = blankFieldError
+                errorMessage = ValidationErrorCode.BLANK_FIELD_ERROR
             )
         else if (!value.ifEmpty { "0" }.all { it.isDigit() })
             ValidationResult(
                 successful = false,
-                errorMessage = integerError
+                errorMessage = ValidationErrorCode.INTEGER_ERROR
             )
         else if (value.ifEmpty { "0" }.toInt() < 0)
             ValidationResult(
                 successful = false,
-                errorMessage = negativeValueError
+                errorMessage = ValidationErrorCode.NEGATIVE_VALUE_ERROR
             )
         else
             ValidationResult(successful = true)
@@ -48,7 +43,7 @@ class Validate(
         if (value.isBlank())
             ValidationResult(
                 successful = false,
-                errorMessage = blankFieldError
+                errorMessage = ValidationErrorCode.BLANK_FIELD_ERROR
             )
         else
             ValidationResult(successful = true)
