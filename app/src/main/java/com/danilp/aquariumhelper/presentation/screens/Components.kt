@@ -1,7 +1,7 @@
 package com.danilp.aquariumhelper.presentation.screens
 
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
@@ -82,7 +82,6 @@ fun GridItem(
             imageModel = imageUri.ifBlank { (R.drawable.aquairum_pic) },
             contentDescription = name,
             contentScale = ContentScale.Crop,
-//          TODO:  placeholder = painterResource(R.drawable.ic_launcher_background),
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .fillMaxWidth()
@@ -101,13 +100,13 @@ fun GridItem(
 @Composable
 fun ImagePicker(
     imageUri: String,
-    onSelection: (Uri?) -> Unit,
+    onSelection: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val galleryLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
+    val pickMedia = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
     ) {
-        onSelection(it)
+        onSelection(it?.toString() ?: "")
     }
 
     GlideImage(
@@ -117,7 +116,9 @@ fun ImagePicker(
         // TODO: placeholder,
         modifier = modifier
             .clickable {
-                galleryLauncher.launch("image/*")
+                pickMedia.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
             }
     )
 }

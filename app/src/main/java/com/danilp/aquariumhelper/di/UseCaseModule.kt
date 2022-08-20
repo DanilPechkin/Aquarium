@@ -1,7 +1,6 @@
 package com.danilp.aquariumhelper.di
 
 import android.content.Context
-import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.use_case.*
 import com.danilp.aquariumhelper.domain.use_case.calculation.aquairum.capacity.CalculateCapacity
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.alkalinity.ConvertDKH
@@ -25,12 +24,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideValidate(@ApplicationContext context: Context): Validate =
-        Validate(
-            blankFieldError = context.getString(R.string.this_field_cant_be_blank_error),
-            decimalError = context.getString(R.string.should_be_decimal_error),
-            integerError = context.getString(R.string.should_be_integer_error),
-            negativeValueError = context.getString(R.string.should_be_integer_error)
-        )
+        Validate()
 
 
     // ----------Conversion----------
@@ -71,11 +65,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideCalculateCapacity(@ApplicationContext context: Context): CalculateCapacity =
-        CalculateCapacity(
-            widthsError = context.getString(R.string.fullwidth_greater_than_width_error),
-            lengthsError = context.getString(R.string.fulllength_greater_than_length_error),
-            numberOfSidesError = context.getString(R.string.wrong_number_of_sides_error)
-        )
+        CalculateCapacity()
 
 
 }

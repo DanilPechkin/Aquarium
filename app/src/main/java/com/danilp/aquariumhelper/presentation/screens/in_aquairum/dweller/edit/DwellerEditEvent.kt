@@ -1,7 +1,5 @@
 package com.danilp.aquariumhelper.presentation.screens.in_aquairum.dweller.edit
 
-import android.net.Uri
-
 sealed class DwellerEditEvent {
     object DeleteButtonPressed : DwellerEditEvent()
     object InsertButtonPressed : DwellerEditEvent()
@@ -18,7 +16,7 @@ sealed class DwellerEditEvent {
     data class MinKhChanged(val kh: String) : DwellerEditEvent()
     data class MaxKhChanged(val kh: String) : DwellerEditEvent()
     data class DescriptionChanged(val description: String) : DwellerEditEvent()
-    data class ImagePicked(val imageUri: Uri?) : DwellerEditEvent()
+    data class ImagePicked(val imageUri: String) : DwellerEditEvent()
 
 }
 
