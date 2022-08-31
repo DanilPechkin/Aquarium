@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "367604896540",
+    "firebase_url": "https://professional-aquarist-dc450-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "professional-aquarist-dc450",
+    "storage_bucket": "professional-aquarist-dc450.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367604896540:android:f704abb42f23b6df1120d9",
+        "android_client_info": {
+          "package_name": "com.danilp.aquariumhelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367604896540-p489aes9v5gce44rn0mgignbsh94220h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP48LITnjZ2OTch-L2srhXRuGCjHyZ9KA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367604896540-p489aes9v5gce44rn0mgignbsh94220h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

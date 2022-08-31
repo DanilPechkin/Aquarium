@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.google.devtools.ksp' version '1.7.10-1.0.6'
+    id 'com.google.gms.google-services'
 }
 
 kotlin {
@@ -88,7 +89,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
-    //Dagger - Hilt
+    //TODO: DELETE Dagger - Hilt
     implementation "com.google.dagger:hilt-android:2.42"
     kapt "com.google.dagger:hilt-android-compiler:2.42"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
@@ -99,10 +100,17 @@ dependencies {
     implementation "io.github.raamcosta.compose-destinations:animations-core:$destinations_version"
     ksp "io.github.raamcosta.compose-destinations:ksp:$destinations_version"
 
-    //Room
+    //TODO: delete Room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
+
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:30.3.2')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     //Image loading
     implementation "com.github.skydoves:landscapist-glide:1.6.1"
