@@ -10,6 +10,7 @@ import com.danilp.aquariumhelper.presentation.screens.NavGraphs
 import com.danilp.aquariumhelper.presentation.screens.appCurrentDestinationAsState
 import com.danilp.aquariumhelper.presentation.screens.destinations.Destination
 import com.danilp.aquariumhelper.presentation.screens.in_aquairum.in_aquarium_bottom_bar.AquariumBottomBar
+import com.danilp.aquariumhelper.presentation.screens.in_aquairum.in_aquarium_bottom_bar.AquariumBottomBarDestination
 import com.danilp.aquariumhelper.presentation.screens.startAppDestination
 import com.ramcosta.composedestinations.DestinationsNavHost
 
@@ -23,7 +24,7 @@ fun AquariumsScreen() {
             val currentDestination: Destination = navController.appCurrentDestinationAsState().value
                 ?: NavGraphs.inAquarium.startAppDestination
 
-            if (currentDestination in NavGraphs.inAquarium.destinations) {
+            if (AquariumBottomBarDestination.values().any { it.direction == currentDestination }) {
                 AquariumBottomBar(
                     navController = navController,
                     currentDestination = currentDestination
