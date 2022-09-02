@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.presentation.screens.in_aquairum.in_aquarium_screen
+package com.danilp.aquariumhelper.presentation.screens.in_aquairum.in_aquarium_bottom_bar
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons

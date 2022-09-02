@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.presentation.screens.in_aquairum.in_aquarium_screen
+package com.danilp.aquariumhelper.presentation.screens.in_aquairum.in_aquarium_bottom_bar
 
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
@@ -7,20 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import com.danilp.aquariumhelper.presentation.screens.NavGraphs
-import com.danilp.aquariumhelper.presentation.screens.appCurrentDestinationAsState
 import com.danilp.aquariumhelper.presentation.screens.destinations.Destination
-import com.danilp.aquariumhelper.presentation.screens.startAppDestination
 import com.ramcosta.composedestinations.navigation.navigate
 
 @Composable
 fun AquariumBottomBar(
     navController: NavController,
+    currentDestination: Destination,
     modifier: Modifier = Modifier
 ) {
-    val currentDestination: Destination = navController.appCurrentDestinationAsState().value
-        ?: NavGraphs.inAquarium.startAppDestination
-
     BottomAppBar(
         modifier = modifier
     ) {
