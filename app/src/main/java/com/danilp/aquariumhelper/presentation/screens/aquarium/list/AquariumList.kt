@@ -6,8 +6,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -17,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
-import com.danilp.aquariumhelper.presentation.screens.SearchField
+import com.danilp.aquariumhelper.presentation.screens.AquariumTopBarWithSearch
 import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumEditDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.MainAquariumScreenDestination
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -35,45 +34,30 @@ fun AquariumList(
     viewModel: AquariumListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
+
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isRefreshing)
     var isSearchFieldVisible by rememberSaveable { mutableStateOf(false) }
     val searchFieldFocusRequester = remember { FocusRequester() }
+    var isTopMenuExpanded by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.aquariums_top_bar_title),
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                        maxLines = 1
-                    )
+            AquariumTopBarWithSearch(
+                stringResource(R.string.aquariums_top_bar_title),
+                searchQuery = state.searchQuery,
+                onSearchQueryChange = {
+                    viewModel.onEvent(AquariumListEvent.OnSearchQueryChange(it))
                 },
-                actions = {
-                    SearchField(
-                        value = state.searchQuery,
-                        onValueChange = {
-                            viewModel.onEvent(
-                                AquariumListEvent.OnSearchQueryChange(it)
-                            )
-                        },
-                        isSearchFieldVisible = isSearchFieldVisible,
-                        hideSearchField = { isSearchFieldVisible = false },
-                        focusRequester = searchFieldFocusRequester
-                    )
-
-                    IconButton(
-                        onClick = {
-                            isSearchFieldVisible = !isSearchFieldVisible
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Search, contentDescription = stringResource(
-                                R.string.search_icon
-                            )
-                        )
-                    }
-                }
+                isSearchFieldVisible = isSearchFieldVisible,
+                switchSearchFieldVisibility = { isSearchFieldVisible = !isSearchFieldVisible },
+                hideSearchField = { isSearchFieldVisible = false },
+                searchFieldFocusRequester = searchFieldFocusRequester,
+                switchMenuVisibility = { isTopMenuExpanded = !isTopMenuExpanded },
+                isMenuExpanded = isTopMenuExpanded,
+                hideMenu = { isTopMenuExpanded = false },
+                navigateBack = { navigator.navigateUp() },
+                navigateToSettings = { /*TODO*/ },
+                navigateToAccount = { /*TODO*/ }
             )
         },
         floatingActionButton = {

@@ -26,7 +26,7 @@ class Validate {
                 successful = false,
                 errorMessage = ValidationErrorCode.BLANK_FIELD_ERROR
             )
-        else if (!value.ifEmpty { "0" }.all { it.isDigit() })
+        else if (value.ifEmpty { "0" }.toIntOrNull() == null)
             ValidationResult(
                 successful = false,
                 errorMessage = ValidationErrorCode.INTEGER_ERROR

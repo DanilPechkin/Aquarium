@@ -6,11 +6,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
@@ -23,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.navigation.nav_graphs.InAquariumNavGraph
+import com.danilp.aquariumhelper.presentation.screens.AquariumTopBar
 import com.danilp.aquariumhelper.presentation.screens.FromToInfoFields
 import com.danilp.aquariumhelper.presentation.screens.ImagePicker
 import com.danilp.aquariumhelper.presentation.screens.InfoFieldWithError
@@ -41,6 +40,9 @@ fun PlantEdit(
 ) {
     val state = viewModel.state
 
+    var isTopMenuExpanded by rememberSaveable { mutableStateOf(false) }
+
+
     LaunchedEffect(key1 = LocalContext.current) {
         viewModel.validationEvents.collect { event ->
             when (event) {
@@ -53,23 +55,14 @@ fun PlantEdit(
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.edit_plant_title),
-                        maxLines = 1
-                    )
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = { navigator.navigateUp() }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.ArrowBack,
-                            contentDescription = stringResource(R.string.content_description_back_arrow)
-                        )
-                    }
-                }
+            AquariumTopBar(
+                stringResource(R.string.edit_plant_title),
+                switchMenuVisibility = { isTopMenuExpanded = !isTopMenuExpanded },
+                isMenuExpanded = isTopMenuExpanded,
+                hideMenu = { isTopMenuExpanded = false },
+                navigateBack = { navigator.navigateUp() },
+                navigateToSettings = { /*TODO*/ },
+                navigateToAccount = { /*TODO*/ }
             )
         }
     ) { paddingValues ->

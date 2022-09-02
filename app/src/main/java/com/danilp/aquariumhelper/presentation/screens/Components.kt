@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.use_case.validation.ValidationErrorCode
@@ -57,12 +60,214 @@ fun SearchField(
             shape = RoundedCornerShape(16.dp),
             modifier = modifier
                 .focusRequester(focusRequester)
+                .sizeIn(maxWidth = 192.dp)
         )
 
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AquariumTopBar(
+    title: String,
+    switchMenuVisibility: () -> Unit,
+    isMenuExpanded: Boolean,
+    hideMenu: () -> Unit,
+    navigateBack: () -> Unit,
+    navigateToSettings: () -> Unit,
+    navigateToAccount: () -> Unit
+) {
+    SmallTopAppBar(
+        title = {
+            Text(
+                text = title,
+                modifier = Modifier.padding(horizontal = 4.dp),
+                maxLines = 1
+            )
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = navigateBack
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.ArrowBack,
+                    contentDescription = stringResource(R.string.content_description_back_arrow)
+                )
+            }
+        },
+        actions = {
+            Box {
+                IconButton(
+                    onClick = switchMenuVisibility
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.MoreVert,
+                        contentDescription = stringResource(
+                            R.string.expand_upbar_menu_content_description
+                        )
+                    )
+                }
+                DropdownMenu(
+                    expanded = isMenuExpanded,
+                    onDismissRequest = hideMenu,
+                    offset = DpOffset((10).dp, 0.dp)
+                ) {
+                    DropdownMenuItem(
+                        onClick = navigateToAccount,
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    R.string.account_menu_item_content_description
+                                )
+                            )
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Rounded.AccountCircle,
+                                contentDescription = stringResource(
+                                    R.string.account_menu_item_content_description
+                                )
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        onClick = navigateToSettings,
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    R.string.settings_menu_item_content_description
+                                )
+                            )
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Rounded.Settings,
+                                contentDescription = stringResource(
+                                    R.string.settings_menu_item_content_description
+                                )
+                            )
+                        }
+                    )
+                }
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AquariumTopBarWithSearch(
+    title: String,
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit,
+    isSearchFieldVisible: Boolean,
+    switchSearchFieldVisibility: () -> Unit,
+    hideSearchField: () -> Unit,
+    searchFieldFocusRequester: FocusRequester,
+    switchMenuVisibility: () -> Unit,
+    isMenuExpanded: Boolean,
+    hideMenu: () -> Unit,
+    navigateBack: () -> Unit,
+    navigateToSettings: () -> Unit,
+    navigateToAccount: () -> Unit
+) {
+    SmallTopAppBar(
+        title = {
+            Text(
+                text = title,
+                modifier = Modifier.padding(horizontal = 4.dp),
+                maxLines = 1
+            )
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = navigateBack
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.ArrowBack,
+                    contentDescription = stringResource(R.string.content_description_back_arrow)
+                )
+            }
+        },
+        actions = {
+            SearchField(
+                value = searchQuery,
+                onValueChange = onSearchQueryChange,
+                isSearchFieldVisible = isSearchFieldVisible,
+                hideSearchField = hideSearchField,
+                focusRequester = searchFieldFocusRequester
+            )
+
+            IconButton(
+                onClick = switchSearchFieldVisibility
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Search,
+                    contentDescription = stringResource(
+                        R.string.search_icon
+                    )
+                )
+            }
+
+            Box {
+                IconButton(
+                    onClick = switchMenuVisibility
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.MoreVert,
+                        contentDescription = stringResource(
+                            R.string.expand_upbar_menu_content_description
+                        )
+                    )
+                }
+                DropdownMenu(
+                    expanded = isMenuExpanded,
+                    onDismissRequest = hideMenu,
+                    offset = DpOffset((10).dp, 0.dp)
+                ) {
+                    DropdownMenuItem(
+                        onClick = navigateToAccount,
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    R.string.account_menu_item_content_description
+                                )
+                            )
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Rounded.AccountCircle,
+                                contentDescription = stringResource(
+                                    R.string.account_menu_item_content_description
+                                )
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        onClick = navigateToSettings,
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    R.string.settings_menu_item_content_description
+                                )
+                            )
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Rounded.Settings,
+                                contentDescription = stringResource(
+                                    R.string.settings_menu_item_content_description
+                                )
+                            )
+                        }
+                    )
+                }
+            }
+        }
+    )
 }
 
 @Composable

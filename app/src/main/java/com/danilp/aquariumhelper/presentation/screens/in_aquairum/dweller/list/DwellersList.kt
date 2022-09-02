@@ -7,8 +7,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -19,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.navigation.nav_graphs.InAquariumNavGraph
-import com.danilp.aquariumhelper.presentation.screens.SearchField
+import com.danilp.aquariumhelper.presentation.screens.AquariumTopBarWithSearch
 import com.danilp.aquariumhelper.presentation.screens.destinations.DwellerEditDestination
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -39,47 +37,27 @@ fun DwellersList(
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isRefreshing)
     var isSearchFieldVisible by rememberSaveable { mutableStateOf(false) }
     val searchFieldFocusRequester = remember { FocusRequester() }
+    var isTopMenuExpanded by rememberSaveable { mutableStateOf(false) }
+
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.dwellers_title),
-                        maxLines = 1
-                    )
+            AquariumTopBarWithSearch(
+                stringResource(R.string.dwellers_title),
+                searchQuery = state.searchQuery,
+                onSearchQueryChange = {
+                    viewModel.onEvent(DwellersListEvent.OnSearchQueryChange(it))
                 },
-                navigationIcon = {
-                    IconButton(onClick = { navigator.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.ArrowBack,
-                            contentDescription = stringResource(R.string.back_arrow_button)
-                        )
-                    }
-                },
-                actions = {
-                    SearchField(
-                        value = state.searchQuery,
-                        onValueChange = {
-                            viewModel.onEvent(DwellersListEvent.OnSearchQueryChange(it))
-                        },
-                        isSearchFieldVisible = isSearchFieldVisible,
-                        hideSearchField = { isSearchFieldVisible = false },
-                        focusRequester = searchFieldFocusRequester
-                    )
-
-                    IconButton(
-                        onClick = {
-                            isSearchFieldVisible = !isSearchFieldVisible
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Search, contentDescription = stringResource(
-                                R.string.search_icon
-                            )
-                        )
-                    }
-                }
+                isSearchFieldVisible = isSearchFieldVisible,
+                switchSearchFieldVisibility = { isSearchFieldVisible = !isSearchFieldVisible },
+                hideSearchField = { isSearchFieldVisible = false },
+                searchFieldFocusRequester = searchFieldFocusRequester,
+                switchMenuVisibility = { isTopMenuExpanded = !isTopMenuExpanded },
+                isMenuExpanded = isTopMenuExpanded,
+                hideMenu = { isTopMenuExpanded = false },
+                navigateBack = { navigator.navigateUp() },
+                navigateToSettings = { /*TODO*/ },
+                navigateToAccount = { /*TODO*/ }
             )
         },
         floatingActionButton = {

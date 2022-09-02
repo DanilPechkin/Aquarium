@@ -46,4 +46,7 @@
     <string name="fulllength_greater_than_length_error">Full length must be greater than length</string>
     <string name="wrong_number_of_sides_error">Wrong number of sides</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="expand_upbar_menu_content_description">Show menu</string>
+    <string name="account_menu_item_content_description">Account</string>
+    <string name="settings_menu_item_content_description">Settings</string>
 </resources>
