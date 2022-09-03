@@ -23,7 +23,9 @@ import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.screens.AquariumTopBar
 import com.danilp.aquariumhelper.presentation.screens.ImagePicker
 import com.danilp.aquariumhelper.presentation.screens.InfoFieldWithError
+import com.danilp.aquariumhelper.presentation.screens.destinations.AccountScreenDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumListDestination
+import com.danilp.aquariumhelper.presentation.screens.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -59,8 +61,8 @@ fun AquariumEdit(
                 isMenuExpanded = isTopMenuExpanded,
                 hideMenu = { isTopMenuExpanded = false },
                 navigateBack = { navigator.navigateUp() },
-                navigateToSettings = { /*TODO*/ },
-                navigateToAccount = { /*TODO*/ }
+                navigateToSettings = { navigator.navigate(SettingsScreenDestination()) },
+                navigateToAccount = { navigator.navigate(AccountScreenDestination()) }
             )
         }
     ) { paddingValues ->

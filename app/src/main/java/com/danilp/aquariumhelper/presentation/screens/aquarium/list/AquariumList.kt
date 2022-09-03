@@ -17,8 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.screens.AquariumTopBarWithSearch
+import com.danilp.aquariumhelper.presentation.screens.destinations.AccountScreenDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumEditDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.MainAquariumScreenDestination
+import com.danilp.aquariumhelper.presentation.screens.destinations.SettingsScreenDestination
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ramcosta.composedestinations.annotation.Destination
@@ -56,8 +58,8 @@ fun AquariumList(
                 isMenuExpanded = isTopMenuExpanded,
                 hideMenu = { isTopMenuExpanded = false },
                 navigateBack = { navigator.navigateUp() },
-                navigateToSettings = { /*TODO*/ },
-                navigateToAccount = { /*TODO*/ }
+                navigateToSettings = { navigator.navigate(SettingsScreenDestination()) },
+                navigateToAccount = { navigator.navigate(AccountScreenDestination()) }
             )
         },
         floatingActionButton = {
