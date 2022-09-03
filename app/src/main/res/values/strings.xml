@@ -49,4 +49,6 @@
     <string name="expand_upbar_menu_content_description">Show menu</string>
     <string name="account_menu_item_content_description">Account</string>
     <string name="settings_menu_item_content_description">Settings</string>
+    <string name="settings_title">Settings</string>
+    <string name="account_title">Account</string>
 </resources>
