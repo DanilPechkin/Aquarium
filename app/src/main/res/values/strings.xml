@@ -51,4 +51,16 @@
     <string name="settings_menu_item_content_description">Settings</string>
     <string name="settings_title">Settings</string>
     <string name="account_title">Account</string>
+    <string name="temperature_measure_id_key">temperature_measure</string>
+    <string name="alkalinity_measure_id_key">alkalinity_measure</string>
+    <string name="capacity_measure_id_key">capacity_measure</string>
+    <string name="temp_measure_celsius">celsius</string>
+    <string name="alkalinity_measure_dkh">dkh</string>
+    <string name="capacity_measure_liters">liters</string>
+    <string name="temp_measure_kelvin">kelvin</string>
+    <string name="temp_measure_fahrenheit">fahrenheit</string>
+    <string name="alkalinity_measure_ppm">ppm</string>
+    <string name="alkalinity_measure_meql">meql</string>
+    <string name="metric_measure_id_key">metric_measure</string>
+    <string name="metric_measure_meters">metric_measure_meters</string>
 </resources>

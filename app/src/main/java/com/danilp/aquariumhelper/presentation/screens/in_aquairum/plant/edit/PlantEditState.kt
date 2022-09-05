@@ -6,6 +6,8 @@ data class PlantEditState(
     val plant: Plant = Plant.createEmpty(),
     val isLoading: Boolean = false,
     val error: String? = null,
+    val tempMeasure: String = "",
+    val alkalinityMeasure: String = "",
     // Stats
     val name: String = "",
     val genus: String = "",

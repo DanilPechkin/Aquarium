@@ -10,6 +10,8 @@ import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.plant.model.Plant
 import com.danilp.aquariumhelper.domain.plant.repository.PlantRepository
+import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.alkalinity.ConvertDKH
+import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.temperature.ConvertCelsius
 import com.danilp.aquariumhelper.domain.use_case.validation.Validate
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,13 +26,22 @@ class PlantEditViewModel @Inject constructor(
     @ApplicationContext context: Context,
     private val savedStateHandle: SavedStateHandle,
     private val repository: PlantRepository,
-    private val validate: Validate
+    private val validate: Validate,
+    private val convertCelsius: ConvertCelsius,
+    private val convertDKH: ConvertDKH
 ) : ViewModel() {
 
     var state by mutableStateOf(PlantEditState())
 
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
+
+    private lateinit var measureCelsius: String
+    private lateinit var measureKelvin: String
+    private lateinit var measureFahrenheit: String
+    private lateinit var measureDKH: String
+    private lateinit var measureMeqL: String
+    private lateinit var measurePpm: String
 
     init {
         viewModelScope.launch {
@@ -55,21 +66,6 @@ class PlantEditViewModel @Inject constructor(
                     }
                 }
             }
-            state = state.copy(
-                name = state.plant.name,
-                genus = state.plant.genus,
-                minTemperature = if (state.plant.minTemperature == 0.0) "" else state.plant.minTemperature.toString(),
-                maxTemperature = if (state.plant.maxTemperature == 0.0) "" else state.plant.maxTemperature.toString(),
-                minPh = if (state.plant.minPh == 0.0) "" else state.plant.minPh.toString(),
-                maxPh = if (state.plant.maxPh == 0.0) "" else state.plant.maxPh.toString(),
-                minGh = if (state.plant.minGh == 0.0) "" else state.plant.minGh.toString(),
-                maxGh = if (state.plant.maxGh == 0.0) "" else state.plant.maxGh.toString(),
-                minKh = if (state.plant.minKh == 0.0) "" else state.plant.minKh.toString(),
-                maxKh = if (state.plant.maxKh == 0.0) "" else state.plant.maxKh.toString(),
-                minCO2 = if (state.plant.minCO2 == 0.0) "" else state.plant.minCO2.toString(),
-                minIllumination = if (state.plant.minIllumination == 0.0) "" else state.plant.minIllumination.toString(),
-                description = state.plant.description
-            )
 
             val sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.in_aquarium_info_shared_preferences_key),
@@ -81,7 +77,94 @@ class PlantEditViewModel @Inject constructor(
                         context.getString(R.string.saved_aquarium_id_key),
                         0
                     )
-                )
+                ),
+                tempMeasure = sharedPreferences.getString(
+                    context.getString(R.string.temperature_measure_id_key),
+                    context.getString(R.string.temp_measure_celsius)
+                ) ?: context.getString(R.string.temp_measure_celsius),
+                alkalinityMeasure = sharedPreferences.getString(
+                    context.getString(R.string.alkalinity_measure_id_key),
+                    context.getString(R.string.alkalinity_measure_dkh)
+                ) ?: context.getString(R.string.alkalinity_measure_dkh)
+            )
+
+            measureCelsius = context.getString(R.string.temp_measure_celsius)
+            measureFahrenheit = context.getString(R.string.temp_measure_fahrenheit)
+            measureKelvin = context.getString(R.string.temp_measure_kelvin)
+            measureDKH = context.getString(R.string.alkalinity_measure_dkh)
+            measurePpm = context.getString(R.string.alkalinity_measure_ppm)
+            measureMeqL = context.getString(R.string.alkalinity_measure_meql)
+
+            state = state.copy(
+                name = state.plant.name,
+                genus = state.plant.genus,
+                minTemperature = if (state.plant.minTemperature == 0.0) "" else
+                    when (state.tempMeasure) {
+                        measureCelsius -> state.plant.minTemperature.toString()
+                        measureKelvin -> convertCelsius.toKelvin(
+                            celsius = state.plant.minTemperature
+                        ).result.toString()
+                        measureFahrenheit -> convertCelsius.toFahrenheit(
+                            celsius = state.plant.minTemperature
+                        ).result.toString()
+                        else -> state.plant.minTemperature.toString()
+                    },
+                maxTemperature = if (state.plant.maxTemperature == 0.0) "" else
+                    when (state.tempMeasure) {
+                        measureCelsius -> state.plant.maxTemperature.toString()
+                        measureKelvin -> convertCelsius.toKelvin(
+                            celsius = state.plant.maxTemperature
+                        ).result.toString()
+                        measureFahrenheit -> convertCelsius.toFahrenheit(
+                            celsius = state.plant.maxTemperature
+                        ).result.toString()
+                        else -> state.plant.maxTemperature.toString()
+                    },
+                minPh = if (state.plant.minPh == 0.0) "" else
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.plant.minPh.toString()
+                        measurePpm -> convertDKH.toPpm(dKH = state.plant.minPh).result.toString()
+                        measureMeqL -> convertDKH.toMeqL(dKH = state.plant.minPh).result.toString()
+                        else -> state.plant.minPh.toString()
+                    },
+                maxPh = if (state.plant.maxPh == 0.0) "" else
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.plant.maxPh.toString()
+                        measurePpm -> convertDKH.toPpm(dKH = state.plant.maxPh).result.toString()
+                        measureMeqL -> convertDKH.toMeqL(dKH = state.plant.maxPh).result.toString()
+                        else -> state.plant.maxPh.toString()
+                    },
+                minGh = if (state.plant.minGh == 0.0) "" else
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.plant.minGh.toString()
+                        measurePpm -> convertDKH.toPpm(dKH = state.plant.minGh).result.toString()
+                        measureMeqL -> convertDKH.toMeqL(dKH = state.plant.minGh).result.toString()
+                        else -> state.plant.minGh.toString()
+                    },
+                maxGh = if (state.plant.maxGh == 0.0) "" else
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.plant.maxGh.toString()
+                        measurePpm -> convertDKH.toPpm(dKH = state.plant.maxGh).result.toString()
+                        measureMeqL -> convertDKH.toMeqL(dKH = state.plant.maxGh).result.toString()
+                        else -> state.plant.maxGh.toString()
+                    },
+                minKh = if (state.plant.minKh == 0.0) "" else
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.plant.minKh.toString()
+                        measurePpm -> convertDKH.toPpm(dKH = state.plant.minKh).result.toString()
+                        measureMeqL -> convertDKH.toMeqL(dKH = state.plant.minKh).result.toString()
+                        else -> state.plant.minKh.toString()
+                    },
+                maxKh = if (state.plant.maxKh == 0.0) "" else
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.plant.maxKh.toString()
+                        measurePpm -> convertDKH.toPpm(dKH = state.plant.maxKh).result.toString()
+                        measureMeqL -> convertDKH.toMeqL(dKH = state.plant.maxKh).result.toString()
+                        else -> state.plant.maxKh.toString()
+                    },
+                minCO2 = if (state.plant.minCO2 == 0.0) "" else state.plant.minCO2.toString(),
+                minIllumination = if (state.plant.minIllumination == 0.0) "" else state.plant.minIllumination.toString(),
+                description = state.plant.description
             )
         }
     }
@@ -138,7 +221,7 @@ class PlantEditViewModel @Inject constructor(
             }
             is PlantEditEvent.ImagePicked -> {
                 state = state.copy(
-                    plant = state.plant.copy(imageUri = event.imageUri.toString())
+                    plant = state.plant.copy(imageUri = event.imageUri)
                 )
             }
         }
@@ -205,26 +288,130 @@ class PlantEditViewModel @Inject constructor(
             val isKhCorrect = (((state.minKh.toDoubleOrNull()
                 ?: 0.0) < (state.maxKh.toDoubleOrNull() ?: 0.0)))
 
+            if (!isTempCorrect) {
+                kotlin.run {
+                    val temp = state.minTemperature
+                    state = state.copy(minTemperature = state.maxTemperature)
+                    state = state.copy(maxTemperature = temp)
+                }
+            }
+
+            if (!isPhCorrect) {
+                kotlin.run {
+                    val temp = state.minPh
+                    state = state.copy(minPh = state.maxPh)
+                    state = state.copy(maxPh = temp)
+                }
+            }
+
+            if (!isGhCorrect) {
+                kotlin.run {
+                    val temp = state.minGh
+                    state = state.copy(minGh = state.maxGh)
+                    state = state.copy(maxGh = temp)
+                }
+            }
+
+            if (!isKhCorrect) {
+                kotlin.run {
+                    val temp = state.minKh
+                    state = state.copy(minKh = state.maxKh)
+                    state = state.copy(maxKh = temp)
+                }
+            }
+
             state = state.copy(
                 plant = state.plant.copy(
                     name = state.name,
                     genus = state.genus,
-                    minTemperature = if (isTempCorrect) state.minTemperature.toDouble()
-                    else state.maxTemperature.toDouble(),
-                    maxTemperature = if (isTempCorrect) state.maxTemperature.toDouble()
-                    else state.minTemperature.toDouble(),
-                    minPh = if (isPhCorrect) state.minPh.toDoubleOrNull() ?: 0.0
-                    else state.maxPh.toDoubleOrNull() ?: 0.0,
-                    maxPh = if (isPhCorrect) state.maxPh.toDoubleOrNull() ?: 0.0
-                    else state.minPh.toDoubleOrNull() ?: 0.0,
-                    minGh = if (isGhCorrect) state.minGh.toDoubleOrNull() ?: 0.0
-                    else state.maxGh.toDoubleOrNull() ?: 0.0,
-                    maxGh = if (isGhCorrect) state.maxGh.toDoubleOrNull() ?: 0.0
-                    else state.minGh.toDoubleOrNull() ?: 0.0,
-                    minKh = if (isKhCorrect) state.minKh.toDoubleOrNull() ?: 0.0
-                    else state.maxKh.toDoubleOrNull() ?: 0.0,
-                    maxKh = if (isKhCorrect) state.maxKh.toDoubleOrNull() ?: 0.0
-                    else state.minKh.toDoubleOrNull() ?: 0.0,
+                    minTemperature =
+                    when (state.tempMeasure) {
+                        measureCelsius -> state.minTemperature.toDouble()
+                        measureFahrenheit -> convertCelsius.toFahrenheit(
+                            fahrenheit = state.minTemperature.toDouble()
+                        ).result
+                        measureKelvin -> convertCelsius.toKelvin(
+                            kelvin = state.minTemperature.toDouble()
+                        ).result
+                        else -> state.minTemperature.toDouble()
+                    },
+                    maxTemperature =
+                    when (state.tempMeasure) {
+                        measureCelsius -> state.maxTemperature.toDouble()
+                        measureFahrenheit -> convertCelsius.toFahrenheit(
+                            fahrenheit = state.maxTemperature.toDouble()
+                        ).result
+                        measureKelvin -> convertCelsius.toKelvin(
+                            kelvin = state.maxTemperature.toDouble()
+                        ).result
+                        else -> state.maxTemperature.toDouble()
+                    },
+                    minPh =
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.minPh.toDouble()
+                        measurePpm -> convertDKH.toPpm(
+                            ppm = state.minPh.toDouble()
+                        ).result
+                        measureMeqL -> convertDKH.toMeqL(
+                            meqL = state.minPh.toDouble()
+                        ).result
+                        else -> state.minPh.toDouble()
+                    },
+                    maxPh =
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.maxPh.toDouble()
+                        measurePpm -> convertDKH.toPpm(
+                            ppm = state.maxPh.toDouble()
+                        ).result
+                        measureMeqL -> convertDKH.toMeqL(
+                            meqL = state.maxPh.toDouble()
+                        ).result
+                        else -> state.maxPh.toDouble()
+                    },
+                    minGh =
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.minGh.toDouble()
+                        measurePpm -> convertDKH.toPpm(
+                            ppm = state.minGh.toDouble()
+                        ).result
+                        measureMeqL -> convertDKH.toMeqL(
+                            meqL = state.minGh.toDouble()
+                        ).result
+                        else -> state.minGh.toDouble()
+                    },
+                    maxGh =
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.maxGh.toDouble()
+                        measurePpm -> convertDKH.toPpm(
+                            ppm = state.maxGh.toDouble()
+                        ).result
+                        measureMeqL -> convertDKH.toMeqL(
+                            meqL = state.maxGh.toDouble()
+                        ).result
+                        else -> state.maxGh.toDouble()
+                    },
+                    minKh =
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.minKh.toDouble()
+                        measurePpm -> convertDKH.toPpm(
+                            ppm = state.minKh.toDouble()
+                        ).result
+                        measureMeqL -> convertDKH.toMeqL(
+                            meqL = state.minKh.toDouble()
+                        ).result
+                        else -> state.minKh.toDouble()
+                    },
+                    maxKh =
+                    when (state.alkalinityMeasure) {
+                        measureDKH -> state.maxKh.toDouble()
+                        measurePpm -> convertDKH.toPpm(
+                            ppm = state.maxKh.toDouble()
+                        ).result
+                        measureMeqL -> convertDKH.toMeqL(
+                            meqL = state.maxKh.toDouble()
+                        ).result
+                        else -> state.maxKh.toDouble()
+                    },
                     minIllumination = state.minIllumination.toDoubleOrNull() ?: 0.0,
                     minCO2 = state.minCO2.toDoubleOrNull() ?: 0.0,
                     description = state.description
