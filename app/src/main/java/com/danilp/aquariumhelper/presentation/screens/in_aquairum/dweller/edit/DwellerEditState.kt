@@ -6,6 +6,9 @@ data class DwellerEditState(
     val dweller: Dweller = Dweller.createEmpty(),
     val isLoading: Boolean = false,
     val error: String? = null,
+    val tempMeasure: String = "",
+    val alkalinityMeasure: String = "",
+    val capacityMeasure: String = "",
     //Stats
     val name: String = "",
     val genus: String = "",

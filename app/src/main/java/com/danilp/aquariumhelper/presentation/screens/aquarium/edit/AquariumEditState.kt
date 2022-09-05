@@ -6,6 +6,7 @@ data class AquariumEditState(
     val aquarium: Aquarium = Aquarium.createEmpty(),
     val isLoading: Boolean = false,
     val error: String? = null,
+    val capacityMeasure: String = "",
     val nameErrorCode: Int? = null,
     val litersErrorCode: Int? = null,
     val name: String = "",
