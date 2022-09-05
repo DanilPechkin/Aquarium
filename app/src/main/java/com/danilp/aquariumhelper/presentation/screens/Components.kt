@@ -12,19 +12,22 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.use_case.validation.ValidationErrorCode
 import com.skydoves.landscapist.glide.GlideImage
@@ -434,5 +437,72 @@ fun FromToInfoFields(
                 singleLine = true
             )
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun OutlinedDropDownMenuField(
+    label: String,
+    items: List<String>,
+    selectedItem: String,
+    changeSelectedItem: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    var textFieldSize by remember { mutableStateOf(Size.Zero) }
+
+    val icon = if (expanded)
+        Icons.Rounded.KeyboardArrowUp
+    else
+        Icons.Rounded.KeyboardArrowDown
+
+    Column(modifier = modifier) {
+
+        OutlinedTextField(
+            value = selectedItem,
+            onValueChange = { },
+            modifier = Modifier
+                .onGloballyPositioned { coordinates ->
+                    textFieldSize = coordinates.size.toSize()
+                },
+            maxLines = 1,
+            singleLine = true,
+            readOnly = true,
+            label = { Text(text = label) },
+            trailingIcon = {
+                IconButton(
+                    onClick = { expanded = !expanded }
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = stringResource(R.string.expand_button_content_descr)
+                    )
+                }
+            }
+        )
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .width(
+                    with(LocalDensity.current) {
+                        textFieldSize.width.toDp()
+                    }
+                )
+        ) {
+            items.forEach { label ->
+                DropdownMenuItem(
+                    text = { Text(text = label) },
+                    onClick = {
+                        changeSelectedItem(label)
+                        expanded = false
+                    }
+                )
+            }
+        }
+
     }
 }

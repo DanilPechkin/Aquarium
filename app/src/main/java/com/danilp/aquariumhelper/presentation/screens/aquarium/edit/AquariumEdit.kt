@@ -8,7 +8,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
@@ -41,7 +40,7 @@ fun AquariumEdit(
 ) {
     val state = viewModel.state
 
-    var isTopMenuExpanded by rememberSaveable { mutableStateOf(false) }
+    var isTopMenuExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = LocalContext.current) {
         viewModel.validationEvents.collect { event ->

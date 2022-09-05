@@ -76,4 +76,8 @@
     <string name="metric_measure_millimeters">millimeters</string>
     <string name="metric_measure_feet">feet</string>
     <string name="metric_measure_inches">inches</string>
+    <string name="expand_button_content_descr">Expand</string>
+    <string name="alkalinity_label">Alkalinity</string>
+    <string name="metric_label">Metric</string>
+    <string name="set_default_button">Set default</string>
 </resources>

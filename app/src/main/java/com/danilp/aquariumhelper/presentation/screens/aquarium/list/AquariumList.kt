@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.stringResource
@@ -38,9 +37,9 @@ fun AquariumList(
     val state = viewModel.state
 
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isRefreshing)
-    var isSearchFieldVisible by rememberSaveable { mutableStateOf(false) }
+    var isSearchFieldVisible by remember { mutableStateOf(false) }
     val searchFieldFocusRequester = remember { FocusRequester() }
-    var isTopMenuExpanded by rememberSaveable { mutableStateOf(false) }
+    var isTopMenuExpanded by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
