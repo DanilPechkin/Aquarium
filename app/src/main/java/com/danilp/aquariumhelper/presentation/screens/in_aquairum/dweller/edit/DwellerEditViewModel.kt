@@ -279,7 +279,7 @@ class DwellerEditViewModel @Inject constructor(
             }
             is DwellerEditEvent.ImagePicked -> {
                 state = state.copy(
-                    dweller = state.dweller.copy(imageUri = event.imageUri.toString())
+                    dweller = state.dweller.copy(imageUri = event.imageUri)
                 )
             }
         }
@@ -385,123 +385,123 @@ class DwellerEditViewModel @Inject constructor(
                     amount = state.amount.toInt(),
                     minTemperature =
                     when (state.tempMeasure) {
-                        measureCelsius -> state.minTemperature.toDouble()
+                        measureCelsius -> state.minTemperature.toDoubleOrNull() ?: 0.0
                         measureFahrenheit -> convertCelsius.toFahrenheit(
-                            fahrenheit = state.minTemperature.toDouble()
+                            fahrenheit = state.minTemperature.toDoubleOrNull() ?: 0.0
                         ).result
                         measureKelvin -> convertCelsius.toKelvin(
-                            kelvin = state.minTemperature.toDouble()
+                            kelvin = state.minTemperature.toDoubleOrNull() ?: 0.0
                         ).result
-                        else -> state.minTemperature.toDouble()
+                        else -> state.minTemperature.toDoubleOrNull() ?: 0.0
                     },
                     maxTemperature =
                     when (state.tempMeasure) {
-                        measureCelsius -> state.maxTemperature.toDouble()
+                        measureCelsius -> state.maxTemperature.toDoubleOrNull() ?: 0.0
                         measureFahrenheit -> convertCelsius.toFahrenheit(
-                            fahrenheit = state.maxTemperature.toDouble()
+                            fahrenheit = state.maxTemperature.toDoubleOrNull() ?: 0.0
                         ).result
                         measureKelvin -> convertCelsius.toKelvin(
-                            kelvin = state.maxTemperature.toDouble()
+                            kelvin = state.maxTemperature.toDoubleOrNull() ?: 0.0
                         ).result
-                        else -> state.maxTemperature.toDouble()
+                        else -> state.maxTemperature.toDoubleOrNull() ?: 0.0
                     },
                     liters =
                     when (state.capacityMeasure) {
-                        measureLiters -> state.liters.toDouble()
+                        measureLiters -> state.liters.toDoubleOrNull() ?: 0.0
                         measureCubicFeet -> convertLiters.toCubicFeet(
-                            feet = state.liters.toDouble()
+                            feet = state.liters.toDoubleOrNull() ?: 0.0
                         ).result
                         measureUSCups -> convertLiters.toUSCups(
-                            cups = state.liters.toDouble()
+                            cups = state.liters.toDoubleOrNull() ?: 0.0
                         ).result
                         measureTeaspoons -> convertLiters.toTeaspoons(
-                            teaspoons = state.liters.toDouble()
+                            teaspoons = state.liters.toDoubleOrNull() ?: 0.0
                         ).result
                         measureTablespoons -> convertLiters.toTablespoons(
-                            tablespoons = state.liters.toDouble()
+                            tablespoons = state.liters.toDoubleOrNull() ?: 0.0
                         ).result
                         measureMilliliters -> convertLiters.toMilliliters(
-                            milliliters = state.liters.toDouble()
+                            milliliters = state.liters.toDoubleOrNull() ?: 0.0
                         ).result
                         measureMetricCups -> convertLiters.toMetricCups(
-                            cups = state.liters.toDouble()
+                            cups = state.liters.toDoubleOrNull() ?: 0.0
                         ).result
                         measureGallons -> convertLiters.toGallons(
-                            gallons = state.liters.toDouble()
+                            gallons = state.liters.toDoubleOrNull() ?: 0.0
                         ).result
                         measureCubicMeters -> convertLiters.toCubicMeters(
-                            meters = state.liters.toDouble()
+                            meters = state.liters.toDoubleOrNull() ?: 0.0
                         ).result
                         measureCubicInches -> convertLiters.toCubicInches(
-                            inches = state.liters.toDouble()
+                            inches = state.liters.toDoubleOrNull() ?: 0.0
                         ).result
-                        else -> state.liters.toDouble()
+                        else -> state.liters.toDoubleOrNull() ?: 0.0
                     },
                     minPh =
                     when (state.alkalinityMeasure) {
-                        measureDKH -> state.minPh.toDouble()
+                        measureDKH -> state.minPh.toDoubleOrNull() ?: 0.0
                         measurePpm -> convertDKH.toPpm(
-                            ppm = state.minPh.toDouble()
+                            ppm = state.minPh.toDoubleOrNull() ?: 0.0
                         ).result
                         measureMeqL -> convertDKH.toMeqL(
-                            meqL = state.minPh.toDouble()
+                            meqL = state.minPh.toDoubleOrNull() ?: 0.0
                         ).result
-                        else -> state.minPh.toDouble()
+                        else -> state.minPh.toDoubleOrNull() ?: 0.0
                     },
                     maxPh =
                     when (state.alkalinityMeasure) {
-                        measureDKH -> state.maxPh.toDouble()
+                        measureDKH -> state.maxPh.toDoubleOrNull() ?: 0.0
                         measurePpm -> convertDKH.toPpm(
-                            ppm = state.maxPh.toDouble()
+                            ppm = state.maxPh.toDoubleOrNull() ?: 0.0
                         ).result
                         measureMeqL -> convertDKH.toMeqL(
-                            meqL = state.maxPh.toDouble()
+                            meqL = state.maxPh.toDoubleOrNull() ?: 0.0
                         ).result
-                        else -> state.maxPh.toDouble()
+                        else -> state.maxPh.toDoubleOrNull() ?: 0.0
                     },
                     minGh =
                     when (state.alkalinityMeasure) {
-                        measureDKH -> state.minGh.toDouble()
+                        measureDKH -> state.minGh.toDoubleOrNull() ?: 0.0
                         measurePpm -> convertDKH.toPpm(
-                            ppm = state.minGh.toDouble()
+                            ppm = state.minGh.toDoubleOrNull() ?: 0.0
                         ).result
                         measureMeqL -> convertDKH.toMeqL(
-                            meqL = state.minGh.toDouble()
+                            meqL = state.minGh.toDoubleOrNull() ?: 0.0
                         ).result
-                        else -> state.minGh.toDouble()
+                        else -> state.minGh.toDoubleOrNull() ?: 0.0
                     },
                     maxGh =
                     when (state.alkalinityMeasure) {
-                        measureDKH -> state.maxGh.toDouble()
+                        measureDKH -> state.maxGh.toDoubleOrNull() ?: 0.0
                         measurePpm -> convertDKH.toPpm(
-                            ppm = state.maxGh.toDouble()
+                            ppm = state.maxGh.toDoubleOrNull() ?: 0.0
                         ).result
                         measureMeqL -> convertDKH.toMeqL(
-                            meqL = state.maxGh.toDouble()
+                            meqL = state.maxGh.toDoubleOrNull() ?: 0.0
                         ).result
-                        else -> state.maxGh.toDouble()
+                        else -> state.maxGh.toDoubleOrNull() ?: 0.0
                     },
                     minKh =
                     when (state.alkalinityMeasure) {
-                        measureDKH -> state.minKh.toDouble()
+                        measureDKH -> state.minKh.toDoubleOrNull() ?: 0.0
                         measurePpm -> convertDKH.toPpm(
-                            ppm = state.minKh.toDouble()
+                            ppm = state.minKh.toDoubleOrNull() ?: 0.0
                         ).result
                         measureMeqL -> convertDKH.toMeqL(
-                            meqL = state.minKh.toDouble()
+                            meqL = state.minKh.toDoubleOrNull() ?: 0.0
                         ).result
-                        else -> state.minKh.toDouble()
+                        else -> state.minKh.toDoubleOrNull() ?: 0.0
                     },
                     maxKh =
                     when (state.alkalinityMeasure) {
-                        measureDKH -> state.maxKh.toDouble()
+                        measureDKH -> state.maxKh.toDoubleOrNull() ?: 0.0
                         measurePpm -> convertDKH.toPpm(
-                            ppm = state.maxKh.toDouble()
+                            ppm = state.maxKh.toDoubleOrNull() ?: 0.0
                         ).result
                         measureMeqL -> convertDKH.toMeqL(
-                            meqL = state.maxKh.toDouble()
+                            meqL = state.maxKh.toDoubleOrNull() ?: 0.0
                         ).result
-                        else -> state.maxKh.toDouble()
+                        else -> state.maxKh.toDoubleOrNull() ?: 0.0
                     },
                     description = state.description
                 )
