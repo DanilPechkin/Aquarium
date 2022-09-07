@@ -80,4 +80,5 @@
     <string name="alkalinity_label">Alkalinity</string>
     <string name="metric_label">Metric</string>
     <string name="set_default_button">Set default</string>
+    <string name="save_settings_toast">Settings saved</string>
 </resources>

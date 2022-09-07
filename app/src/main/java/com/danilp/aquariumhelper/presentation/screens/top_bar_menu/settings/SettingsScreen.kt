@@ -1,5 +1,6 @@
 package com.danilp.aquariumhelper.presentation.screens.top_bar_menu.settings
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -7,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,6 +33,24 @@ fun SettingsScreen(
     val state = viewModel.state
 
     var isTopMenuExpanded by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = context) {
+        viewModel.savingEvents.collect { event ->
+            when (event) {
+                is SettingsViewModel.SavingEvent.Success -> {
+                    Toast.makeText(
+                        context,
+                        context.getText(R.string.save_settings_toast),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    navigator.navigateUp()
+                }
+            }
+        }
+    }
 
     Scaffold(
         topBar = {

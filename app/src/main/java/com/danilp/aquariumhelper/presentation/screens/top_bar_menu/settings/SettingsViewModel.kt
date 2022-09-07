@@ -10,6 +10,8 @@ import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +21,9 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     var state by mutableStateOf(SettingsState())
+
+    private val savingEventChannel = Channel<SavingEvent>()
+    val savingEvents = savingEventChannel.receiveAsFlow()
 
     private var sharedPreferences: SharedPreferences? = null
 
@@ -104,22 +109,18 @@ class SettingsViewModel @Inject constructor(
     fun onEvent(event: SettingsEvent) {
         when (event) {
             is SettingsEvent.SaveButtonPressed -> {
-                with(sharedPreferences?.edit()) {
-                    this?.putString(measureAlkalinity, state.alkalinityMeasure) ?: return
-                    this.putString(measureCapacity, state.capacityMeasure)
-                    this.putString(measureMetric, state.metricMeasure)
-                    this.putString(measureTemperature, state.temperatureMeasure)
-                    commit()
+                viewModelScope.launch {
+                    with(sharedPreferences?.edit()) {
+                        this?.putString(measureAlkalinity, state.alkalinityMeasure)
+                        this?.putString(measureCapacity, state.capacityMeasure)
+                        this?.putString(measureMetric, state.metricMeasure)
+                        this?.putString(measureTemperature, state.temperatureMeasure)
+                        this?.apply()
+                    }
+                    savingEventChannel.send(SavingEvent.Success)
                 }
             }
             is SettingsEvent.DefaultButtonPressed -> {
-                with(sharedPreferences?.edit()) {
-                    this?.putString(measureAlkalinity, measureAlkalinityDefault) ?: return
-                    this.putString(measureCapacity, measureCapacityDefault)
-                    this.putString(measureMetric, measureMetricDefault)
-                    this.putString(measureTemperature, measureTemperatureDefault)
-                    commit()
-                }
                 state = state.copy(
                     alkalinityMeasure = measureAlkalinityDefault,
                     capacityMeasure = measureCapacityDefault,
@@ -140,6 +141,10 @@ class SettingsViewModel @Inject constructor(
                 state = state.copy(temperatureMeasure = event.temperature)
             }
         }
+    }
+
+    sealed class SavingEvent {
+        object Success : SavingEvent()
     }
 
 }
