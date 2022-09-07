@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.navigation.nav_graphs.InAquariumNavGraph
+import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumListDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -26,7 +27,7 @@ fun Notes(
                     Text(text = stringResource(R.string.notes_title))
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navigator.navigateUp() }) {
+                    IconButton(onClick = { navigator.navigate(AquariumListDestination()) }) {
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = stringResource(R.string.back_arrow_button)

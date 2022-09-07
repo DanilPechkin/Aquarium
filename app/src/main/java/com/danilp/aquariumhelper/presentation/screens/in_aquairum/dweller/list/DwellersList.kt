@@ -18,6 +18,7 @@ import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.navigation.nav_graphs.InAquariumNavGraph
 import com.danilp.aquariumhelper.presentation.screens.AquariumTopBarWithSearch
 import com.danilp.aquariumhelper.presentation.screens.destinations.AccountScreenDestination
+import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumListDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.DwellerEditDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.SettingsScreenDestination
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -56,7 +57,7 @@ fun DwellersList(
                 switchMenuVisibility = { isTopMenuExpanded = !isTopMenuExpanded },
                 isMenuExpanded = isTopMenuExpanded,
                 hideMenu = { isTopMenuExpanded = false },
-                navigateBack = { navigator.navigateUp() },
+                navigateBack = { navigator.navigate(AquariumListDestination()) },
                 navigateToSettings = { navigator.navigate(SettingsScreenDestination()) },
                 navigateToAccount = { navigator.navigate(AccountScreenDestination()) }
             )
