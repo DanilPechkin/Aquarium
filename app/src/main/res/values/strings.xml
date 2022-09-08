@@ -81,4 +81,10 @@
     <string name="metric_label">Metric</string>
     <string name="set_default_button">Set default</string>
     <string name="save_settings_toast">Settings saved</string>
+    <string name="sign_up_button">Sign up</string>
+    <string name="signing_in_title">Signing in</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="signing_up_title">Signing up</string>
+    <string name="repeat_password_label">Repeat password</string>
 </resources>

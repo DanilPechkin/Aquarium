@@ -63,6 +63,7 @@ fun PlantsList(
         },
         floatingActionButton = {
             FloatingActionButton(
+                containerColor = MaterialTheme.colorScheme.primary,
                 onClick = {
                     navigator.navigate(PlantEditDestination(0))
                 }

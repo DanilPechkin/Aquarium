@@ -1,6 +1,5 @@
 package com.danilp.aquariumhelper.di
 
-import android.content.Context
 import com.danilp.aquariumhelper.domain.use_case.*
 import com.danilp.aquariumhelper.domain.use_case.calculation.aquairum.capacity.CalculateCapacity
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.alkalinity.ConvertDKH
@@ -12,7 +11,6 @@ import com.danilp.aquariumhelper.domain.use_case.validation.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -23,7 +21,7 @@ object UseCaseModule {
     // ----------Validation----------
     @Provides
     @Singleton
-    fun provideValidate(@ApplicationContext context: Context): Validate =
+    fun provideValidate(): Validate =
         Validate()
 
 
@@ -64,7 +62,7 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideCalculateCapacity(@ApplicationContext context: Context): CalculateCapacity =
+    fun provideCalculateCapacity(): CalculateCapacity =
         CalculateCapacity()
 
 

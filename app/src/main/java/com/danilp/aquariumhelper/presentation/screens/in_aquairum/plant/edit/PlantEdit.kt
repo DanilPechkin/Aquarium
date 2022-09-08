@@ -262,7 +262,7 @@ fun PlantEdit(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                Button(
+                OutlinedButton(
                     onClick = {
                         viewModel.onEvent(PlantEditEvent.DeleteButtonPressed)
                     }

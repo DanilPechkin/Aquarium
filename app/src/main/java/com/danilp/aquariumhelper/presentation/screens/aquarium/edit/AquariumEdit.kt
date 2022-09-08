@@ -143,7 +143,7 @@ fun AquariumEdit(
             Row(
                 Modifier.padding(16.dp)
             ) {
-                Button(
+                OutlinedButton(
                     onClick = {
                         viewModel.onEvent(AquariumEditEvent.DeleteButtonPressed)
                     }

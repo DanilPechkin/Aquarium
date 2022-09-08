@@ -64,6 +64,7 @@ fun DwellersList(
         },
         floatingActionButton = {
             FloatingActionButton(
+                containerColor = MaterialTheme.colorScheme.primary,
                 onClick = {
                     navigator.navigate(DwellerEditDestination(0))
                 }

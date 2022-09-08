@@ -1,20 +1,21 @@
 package com.danilp.aquariumhelper.presentation.screens.top_bar_menu.account
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.screens.AquariumTopBar
 import com.danilp.aquariumhelper.presentation.screens.destinations.AccountScreenDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.SettingsScreenDestination
+import com.danilp.aquariumhelper.presentation.screens.destinations.SignInScreenDestination
+import com.danilp.aquariumhelper.presentation.screens.destinations.SignUpScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -42,6 +43,27 @@ fun AccountScreen(
             )
         }
     ) { paddingValues ->
-        Text(text = "account", modifier = Modifier.padding(paddingValues))
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Button(
+                onClick = {
+                    navigator.navigate(SignInScreenDestination())
+                }
+            ) {
+                Text(stringResource(com.google.android.gms.base.R.string.common_signin_button_text))
+            }
+            OutlinedButton(
+                onClick = {
+                    navigator.navigate(SignUpScreenDestination())
+                }
+            ) {
+                Text(stringResource(R.string.sign_up_button))
+            }
+        }
     }
 }

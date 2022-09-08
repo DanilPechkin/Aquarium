@@ -268,7 +268,7 @@ fun DwellerEdit(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                Button(
+                OutlinedButton(
                     onClick = {
                         viewModel.onEvent(DwellerEditEvent.DeleteButtonPressed)
                     }
