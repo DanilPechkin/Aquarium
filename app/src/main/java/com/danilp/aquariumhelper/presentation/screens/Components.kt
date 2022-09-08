@@ -25,6 +25,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
@@ -329,6 +331,87 @@ fun ImagePicker(
                 )
             }
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PasswordFieldWithError(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    changePasswordVisibility: () -> Unit,
+    isPasswordVisible: Boolean,
+    modifier: Modifier = Modifier,
+    textFieldModifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    keyboardActions: KeyboardActions = KeyboardActions(),
+    errorCode: Int? = null,
+    maxLines: Int = Int.MAX_VALUE,
+    singleLine: Boolean = false
+) {
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = {
+                Text(text = label)
+            },
+            modifier = textFieldModifier,
+            isError = errorCode != null,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            visualTransformation = if (isPasswordVisible) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            },
+            maxLines = maxLines,
+            singleLine = singleLine,
+            trailingIcon = {
+                val image = if (isPasswordVisible) {
+                    Icons.Rounded.Visibility
+                } else {
+                    Icons.Rounded.VisibilityOff
+                }
+
+                val description = if (isPasswordVisible) {
+                    stringResource(R.string.hide_password_descr)
+                } else {
+                    stringResource(R.string.show_password_descr)
+                }
+
+                IconButton(onClick = changePasswordVisibility) {
+                    Icon(
+                        imageVector = image,
+                        contentDescription = description
+                    )
+                }
+            }
+        )
+
+        if (errorCode != null) {
+            Text(
+                text = when (errorCode) {
+                    ValidationErrorCode.BLANK_FIELD_ERROR -> {
+                        stringResource(R.string.this_field_cant_be_blank_error)
+                    }
+                    ValidationErrorCode.DECIMAL_ERROR -> {
+                        stringResource(R.string.should_be_decimal_error)
+                    }
+                    ValidationErrorCode.INTEGER_ERROR -> {
+                        stringResource(R.string.should_be_integer_error)
+                    }
+                    ValidationErrorCode.NEGATIVE_VALUE_ERROR -> {
+                        stringResource(R.string.this_value_cant_be_negative_error)
+                    }
+                    else -> {
+                        stringResource(R.string.unknown_error)
+                    }
+                },
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

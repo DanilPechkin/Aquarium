@@ -87,4 +87,6 @@
     <string name="password_label">Password</string>
     <string name="signing_up_title">Signing up</string>
     <string name="repeat_password_label">Repeat password</string>
+    <string name="hide_password_descr">Hide password</string>
+    <string name="show_password_descr">Show password</string>
 </resources>

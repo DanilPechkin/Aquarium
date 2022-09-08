@@ -21,9 +21,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.screens.AquariumTopBar
 import com.danilp.aquariumhelper.presentation.screens.InfoFieldWithError
+import com.danilp.aquariumhelper.presentation.screens.PasswordFieldWithError
 import com.danilp.aquariumhelper.presentation.screens.destinations.AccountScreenDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -35,10 +37,16 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun SignInScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    viewModel: SignInViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state
+
     var isTopMenuExpanded by rememberSaveable { mutableStateOf(false) }
+
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
+
+    var isPasswordVisible by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -63,8 +71,8 @@ fun SignInScreen(
             val focusManager = LocalFocusManager.current
 
             InfoFieldWithError(
-                value = "",
-                onValueChange = {},
+                value = state.email,
+                onValueChange = { viewModel.onEvent(SignInEvent.EmailChanched(it)) },
                 label = stringResource(R.string.email_label),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -81,9 +89,11 @@ fun SignInScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            InfoFieldWithError(
-                value = "",
-                onValueChange = {},
+            PasswordFieldWithError(
+                value = state.password,
+                onValueChange = { viewModel.onEvent(SignInEvent.PasswordChanged(it)) },
+                changePasswordVisibility = { isPasswordVisible = !isPasswordVisible },
+                isPasswordVisible = isPasswordVisible,
                 label = stringResource(R.string.password_label),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,

@@ -21,9 +21,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.screens.AquariumTopBar
 import com.danilp.aquariumhelper.presentation.screens.InfoFieldWithError
+import com.danilp.aquariumhelper.presentation.screens.PasswordFieldWithError
 import com.danilp.aquariumhelper.presentation.screens.destinations.AccountScreenDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -35,10 +37,16 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun SignUpScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    viewModel: SignUpViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state
+
     var isTopMenuExpanded by rememberSaveable { mutableStateOf(false) }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
+
+    var isFirstPasswordVisible by remember { mutableStateOf(false) }
+    var isSecondPasswordVisible by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -63,8 +71,8 @@ fun SignUpScreen(
             val focusManager = LocalFocusManager.current
 
             InfoFieldWithError(
-                value = "",
-                onValueChange = {},
+                value = state.email,
+                onValueChange = { viewModel.onEvent(SignUpEvent.EmailChanged(it)) },
                 label = stringResource(R.string.email_label),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -81,9 +89,11 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            InfoFieldWithError(
-                value = "",
-                onValueChange = {},
+            PasswordFieldWithError(
+                value = state.firstPassword,
+                onValueChange = { viewModel.onEvent(SignUpEvent.FirstPasswordChanged(it)) },
+                changePasswordVisibility = { isFirstPasswordVisible = !isFirstPasswordVisible },
+                isPasswordVisible = isFirstPasswordVisible,
                 label = stringResource(R.string.password_label),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -102,9 +112,11 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            InfoFieldWithError(
-                value = "",
-                onValueChange = {},
+            PasswordFieldWithError(
+                value = state.secondPassword,
+                onValueChange = { viewModel.onEvent(SignUpEvent.SecondPasswordChanged(it)) },
+                changePasswordVisibility = { isSecondPasswordVisible = !isSecondPasswordVisible },
+                isPasswordVisible = isSecondPasswordVisible,
                 label = stringResource(R.string.repeat_password_label),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
