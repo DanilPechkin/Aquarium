@@ -4,12 +4,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.danilp.aquariumhelper.domain.service.AccountService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-
+    private val accountService: AccountService
 ) : ViewModel() {
     var state by mutableStateOf(SignUpState())
 
@@ -25,7 +28,14 @@ class SignUpViewModel @Inject constructor(
                 state = state.copy(secondPassword = event.password)
             }
             SignUpEvent.SignUpButtonPressed -> {
-                TODO()
+                viewModelScope.launch {
+                    val oldUserId = accountService.getUserId()
+                    accountService.createAccount(state.email, state.firstPassword) { error ->
+                        if (error != null) {
+                            accountService.linkAccount(state.email, state.firstPassword) {}
+                        }
+                    }
+                }
             }
         }
     }

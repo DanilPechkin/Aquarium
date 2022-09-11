@@ -147,7 +147,7 @@ fun SignUpScreen(
                 ),
                 horizontalArrangement = Arrangement.End
             ) {
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = { viewModel.onEvent(SignUpEvent.SignUpButtonPressed) }) {
                     Text(
                         text = stringResource(R.string.sign_up_button)
                     )
