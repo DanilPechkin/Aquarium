@@ -5,13 +5,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.aquairum.model.Aquarium
 import com.danilp.aquariumhelper.domain.aquairum.repository.AquariumRepository
+import com.danilp.aquariumhelper.domain.service.LogService
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.capacity.ConvertLiters
 import com.danilp.aquariumhelper.domain.use_case.validation.Validate
+import com.danilp.aquariumhelper.presentation.screens.ProfessionalAquaristViewModel
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -26,8 +27,9 @@ class AquariumEditViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val repository: AquariumRepository,
     private val validate: Validate,
-    private val convertLiters: ConvertLiters
-) : ViewModel() {
+    private val convertLiters: ConvertLiters,
+    logService: LogService
+) : ProfessionalAquaristViewModel(logService) {
 
     var state by mutableStateOf(AquariumEditState())
 
@@ -46,7 +48,7 @@ class AquariumEditViewModel @Inject constructor(
     private lateinit var measureLiters: String
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(logErrorExceptionHandler) {
             val id = savedStateHandle.get<Int>("aquariumId") ?: return@launch
             state = state.copy(isLoading = true)
             val aquariumInfoResult = repository.findAquariumById(id)
@@ -138,7 +140,7 @@ class AquariumEditViewModel @Inject constructor(
                 submitData()
             }
             is AquariumEditEvent.DeleteButtonPressed -> {
-                viewModelScope.launch {
+                viewModelScope.launch(logErrorExceptionHandler) {
                     delete(state.aquarium)
                     validationEventChannel.send(ValidationEvent.Success)
                 }
@@ -160,11 +162,11 @@ class AquariumEditViewModel @Inject constructor(
         }
     }
 
-    private fun insert(aquarium: Aquarium) = viewModelScope.launch {
+    private fun insert(aquarium: Aquarium) = viewModelScope.launch(logErrorExceptionHandler) {
         repository.insert(aquarium)
     }
 
-    private fun delete(aquarium: Aquarium) = viewModelScope.launch {
+    private fun delete(aquarium: Aquarium) = viewModelScope.launch(logErrorExceptionHandler) {
         repository.delete(aquarium)
     }
 
@@ -224,7 +226,7 @@ class AquariumEditViewModel @Inject constructor(
             )
         )
 
-        viewModelScope.launch {
+        viewModelScope.launch(logErrorExceptionHandler) {
             insert(state.aquarium)
             validationEventChannel.send(ValidationEvent.Success)
         }

@@ -5,10 +5,11 @@ import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.aquairum.repository.AquariumRepository
+import com.danilp.aquariumhelper.domain.service.LogService
+import com.danilp.aquariumhelper.presentation.screens.ProfessionalAquaristViewModel
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -20,8 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class AquariumListViewModel @Inject constructor(
     @ApplicationContext context: Context,
-    private val repository: AquariumRepository
-) : ViewModel() {
+    private val repository: AquariumRepository,
+    logService: LogService
+) : ProfessionalAquaristViewModel(logService) {
 
     var state by mutableStateOf(AquariumListState())
 
@@ -31,7 +33,7 @@ class AquariumListViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(logErrorExceptionHandler) {
             searchAquariums()
 
             sharedPreferences = context.getSharedPreferences(
@@ -50,13 +52,13 @@ class AquariumListViewModel @Inject constructor(
             is AquariumListEvent.OnSearchQueryChange -> {
                 state = state.copy(searchQuery = event.query)
                 searchJob?.cancel()
-                searchJob = viewModelScope.launch {
+                searchJob = viewModelScope.launch(logErrorExceptionHandler) {
                     delay(500L)
                     searchAquariums()
                 }
             }
             is AquariumListEvent.OnAquariumClicked -> {
-                viewModelScope.launch {
+                viewModelScope.launch(logErrorExceptionHandler) {
                     saveAquariumId(event.aquariumId)
                 }
             }
@@ -66,7 +68,7 @@ class AquariumListViewModel @Inject constructor(
     private fun searchAquariums(
         name: String = state.searchQuery.lowercase()
     ) {
-        viewModelScope.launch {
+        viewModelScope.launch(logErrorExceptionHandler) {
             repository
                 .searchAquariums(name)
                 .collect { result ->
@@ -91,7 +93,7 @@ class AquariumListViewModel @Inject constructor(
         }
     }
 
-    private fun saveAquariumId(id: Int){
+    private fun saveAquariumId(id: Int) {
         with(sharedPreferences?.edit()) {
             this?.putInt(aquariumIdKey, id) ?: return
             commit()

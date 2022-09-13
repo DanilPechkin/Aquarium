@@ -5,15 +5,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.dweller.model.Dweller
 import com.danilp.aquariumhelper.domain.dweller.repository.DwellerRepository
+import com.danilp.aquariumhelper.domain.service.LogService
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.alkalinity.ConvertDKH
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.capacity.ConvertLiters
 import com.danilp.aquariumhelper.domain.use_case.calculation.conversion.temperature.ConvertCelsius
 import com.danilp.aquariumhelper.domain.use_case.validation.Validate
+import com.danilp.aquariumhelper.presentation.screens.ProfessionalAquaristViewModel
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -30,8 +31,9 @@ class DwellerEditViewModel @Inject constructor(
     private val validate: Validate,
     private val convertCelsius: ConvertCelsius,
     private val convertLiters: ConvertLiters,
-    private val convertDKH: ConvertDKH
-) : ViewModel() {
+    private val convertDKH: ConvertDKH,
+    logService: LogService
+) : ProfessionalAquaristViewModel(logService) {
 
     var state by mutableStateOf(DwellerEditState())
 
@@ -56,7 +58,7 @@ class DwellerEditViewModel @Inject constructor(
     private lateinit var measurePpm: String
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(logErrorExceptionHandler) {
             val id = savedStateHandle.get<Int>("dwellerId") ?: return@launch
             state = state.copy(isLoading = true)
             val dwellerInfoResult = repository.findDwellerById(id)
@@ -233,7 +235,7 @@ class DwellerEditViewModel @Inject constructor(
                 submitData()
             }
             is DwellerEditEvent.DeleteButtonPressed -> {
-                viewModelScope.launch {
+                viewModelScope.launch(logErrorExceptionHandler) {
                     delete(state.dweller)
                     validationEventChannel.send(ValidationEvent.Success)
                 }
@@ -285,11 +287,11 @@ class DwellerEditViewModel @Inject constructor(
         }
     }
 
-    private fun insert(dweller: Dweller) = viewModelScope.launch {
+    private fun insert(dweller: Dweller) = viewModelScope.launch(logErrorExceptionHandler) {
         repository.insert(dweller)
     }
 
-    private fun delete(dweller: Dweller) = viewModelScope.launch {
+    private fun delete(dweller: Dweller) = viewModelScope.launch(logErrorExceptionHandler) {
         repository.delete(dweller)
     }
 
@@ -337,7 +339,7 @@ class DwellerEditViewModel @Inject constructor(
             return
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(logErrorExceptionHandler) {
             val isTempCorrect = (state.minTemperature.toDouble() < state.maxTemperature.toDouble())
             val isPhCorrect = (((state.minPh.toDoubleOrNull()
                 ?: 0.0) < (state.maxPh.toDoubleOrNull() ?: 0.0)))

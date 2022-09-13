@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.domain.dweller.repository.DwellerRepository
+import com.danilp.aquariumhelper.domain.service.LogService
+import com.danilp.aquariumhelper.presentation.screens.ProfessionalAquaristViewModel
 import com.danilp.aquariumhelper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -19,15 +20,16 @@ import javax.inject.Inject
 @HiltViewModel
 class DwellersListViewModel @Inject constructor(
     @ApplicationContext context: Context,
-    private val repository: DwellerRepository
-) : ViewModel() {
+    private val repository: DwellerRepository,
+    logService: LogService
+) : ProfessionalAquaristViewModel(logService) {
 
     var state by mutableStateOf(DwellersListState())
 
     private var searchJob: Job? = null
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(logErrorExceptionHandler) {
             val sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.in_aquarium_info_shared_preferences_key),
                 Context.MODE_PRIVATE
@@ -50,7 +52,7 @@ class DwellersListViewModel @Inject constructor(
             is DwellersListEvent.OnSearchQueryChange -> {
                 state = state.copy(searchQuery = event.query)
                 searchJob?.cancel()
-                searchJob = viewModelScope.launch {
+                searchJob = viewModelScope.launch(logErrorExceptionHandler) {
                     delay(500L)
                     searchDwellers()
                 }
@@ -62,7 +64,7 @@ class DwellersListViewModel @Inject constructor(
         aquariumId: Int = state.aquariumId,
         name: String = state.searchQuery.lowercase()
     ) {
-        viewModelScope.launch {
+        viewModelScope.launch(logErrorExceptionHandler) {
             repository
                 .searchDwellersByAquarium(aquariumId, name)
                 .collect { result ->
