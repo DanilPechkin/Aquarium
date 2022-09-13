@@ -3,10 +3,11 @@ package com.danilp.aquariumhelper.presentation.screens.top_bar_menu.account.sign
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.domain.service.AccountService
+import com.danilp.aquariumhelper.domain.service.LogService
 import com.danilp.aquariumhelper.domain.use_case.validation.Validate
+import com.danilp.aquariumhelper.presentation.screens.ProfessionalAquaristViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -16,8 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val accountService: AccountService,
-    private val validate: Validate
-) : ViewModel() {
+    private val validate: Validate,
+    logService: LogService
+) : ProfessionalAquaristViewModel(logService) {
     var state by mutableStateOf(SignUpState())
 
     private val signEventChannel = Channel<SignEvent>()
@@ -62,9 +64,11 @@ class SignUpViewModel @Inject constructor(
             return
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(logErrorExceptionHandler) {
             val oldUserId = accountService.getUserId()
-            accountService.linkAccount(state.email, state.password) {}
+            accountService.linkAccount(state.email, state.password) { error ->
+                if (error != null) onError(error)
+            }
             signEventChannel.send(SignEvent.Success)
         }
     }
