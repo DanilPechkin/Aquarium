@@ -89,4 +89,8 @@
     <string name="repeat_password_label">Repeat password</string>
     <string name="hide_password_descr">Hide password</string>
     <string name="show_password_descr">Show password</string>
+    <string name="email_is_not_valid_error">Email is not valid</string>
+    <string name="password_length_error">Password must contain at least 8 characters</string>
+    <string name="password_pattern_error">Password must contain letters and digits</string>
+    <string name="passwords_not_match_error">Passwords do not match</string>
 </resources>

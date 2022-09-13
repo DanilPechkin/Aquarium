@@ -395,14 +395,14 @@ fun PasswordFieldWithError(
                     ValidationErrorCode.BLANK_FIELD_ERROR -> {
                         stringResource(R.string.this_field_cant_be_blank_error)
                     }
-                    ValidationErrorCode.DECIMAL_ERROR -> {
-                        stringResource(R.string.should_be_decimal_error)
+                    ValidationErrorCode.PASSWORD_IS_SHORT_ERROR -> {
+                        stringResource(R.string.password_length_error)
                     }
-                    ValidationErrorCode.INTEGER_ERROR -> {
-                        stringResource(R.string.should_be_integer_error)
+                    ValidationErrorCode.PASSWORD_PATTERN_ERROR -> {
+                        stringResource(R.string.password_pattern_error)
                     }
-                    ValidationErrorCode.NEGATIVE_VALUE_ERROR -> {
-                        stringResource(R.string.this_value_cant_be_negative_error)
+                    ValidationErrorCode.REPEAT_PASSWORD_ERROR -> {
+                        stringResource(R.string.passwords_not_match_error)
                     }
                     else -> {
                         stringResource(R.string.unknown_error)
@@ -457,6 +457,9 @@ fun InfoFieldWithError(
                     }
                     ValidationErrorCode.NEGATIVE_VALUE_ERROR -> {
                         stringResource(R.string.this_value_cant_be_negative_error)
+                    }
+                    ValidationErrorCode.EMAIL_PATTERN_ERROR -> {
+                        stringResource(R.string.email_is_not_valid_error)
                     }
                     else -> {
                         stringResource(R.string.unknown_error)

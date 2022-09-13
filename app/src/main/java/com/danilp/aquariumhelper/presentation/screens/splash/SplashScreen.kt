@@ -13,7 +13,6 @@ import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumListD
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.delay
 
 @RootNavGraph(start = true)
 @Destination
@@ -31,7 +30,6 @@ fun AquariumSplashScreen(
 
     LaunchedEffect(key1 = LocalContext.current) {
         viewModel.checkAccount()
-        delay(2000L)
         navigator.navigate(AquariumListDestination())
     }
 }

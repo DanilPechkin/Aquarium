@@ -13,6 +13,9 @@ class AccountServiceImpl @Inject constructor() : AccountService {
     override fun isAnonymousUser(): Boolean =
         Firebase.auth.currentUser?.isAnonymous ?: true
 
+    override fun getUserEmail(): String =
+        Firebase.auth.currentUser?.email.orEmpty()
+
     override fun getUserId(): String =
         Firebase.auth.currentUser?.uid.orEmpty()
 
@@ -39,13 +42,13 @@ class AccountServiceImpl @Inject constructor() : AccountService {
     override fun linkAccount(email: String, password: String, onResult: (Throwable?) -> Unit) {
         val credential = EmailAuthProvider.getCredential(email, password)
 
-        Firebase.auth.currentUser!!.linkWithCredential(credential)
-            .addOnCompleteListener { onResult(it.exception) }
+        Firebase.auth.currentUser?.linkWithCredential(credential)
+            ?.addOnCompleteListener { onResult(it.exception) }
     }
 
     override fun deleteAccount(onResult: (Throwable?) -> Unit) {
-        Firebase.auth.currentUser!!.delete()
-            .addOnCompleteListener { onResult(it.exception) }
+        Firebase.auth.currentUser?.delete()
+            ?.addOnCompleteListener { onResult(it.exception) }
     }
 
     override fun signOut() {

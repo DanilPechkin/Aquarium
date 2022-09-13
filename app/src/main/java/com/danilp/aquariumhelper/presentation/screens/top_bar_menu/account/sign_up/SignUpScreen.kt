@@ -84,13 +84,14 @@ fun SignUpScreen(
                     }
                 ),
                 maxLines = 1,
-                singleLine = true
+                singleLine = true,
+                errorCode = state.emailErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             PasswordFieldWithError(
-                value = state.firstPassword,
+                value = state.password,
                 onValueChange = { viewModel.onEvent(SignUpEvent.FirstPasswordChanged(it)) },
                 changePasswordVisibility = { isFirstPasswordVisible = !isFirstPasswordVisible },
                 isPasswordVisible = isFirstPasswordVisible,
@@ -107,13 +108,14 @@ fun SignUpScreen(
                     }
                 ),
                 maxLines = 1,
-                singleLine = true
+                singleLine = true,
+                errorCode = state.passwordErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             PasswordFieldWithError(
-                value = state.secondPassword,
+                value = state.repeatedPassword,
                 onValueChange = { viewModel.onEvent(SignUpEvent.SecondPasswordChanged(it)) },
                 changePasswordVisibility = { isSecondPasswordVisible = !isSecondPasswordVisible },
                 isPasswordVisible = isSecondPasswordVisible,
@@ -134,7 +136,8 @@ fun SignUpScreen(
                 textFieldModifier = Modifier
                     .onGloballyPositioned { coordinates ->
                         textFieldSize = coordinates.size.toSize()
-                    }
+                    },
+                errorCode = state.repeatedPasswordErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))

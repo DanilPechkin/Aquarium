@@ -154,7 +154,7 @@ class AquariumEditViewModel @Inject constructor(
             }
             is AquariumEditEvent.ImagePicked -> {
                 state = state.copy(
-                    aquarium = state.aquarium.copy(imageUri = event.imageUri.toString())
+                    aquarium = state.aquarium.copy(imageUri = event.imageUri)
                 )
             }
         }
@@ -175,12 +175,12 @@ class AquariumEditViewModel @Inject constructor(
         val hasError = listOf(
             nameResult,
             litersResult
-        ).any { it.errorMessage != null }
+        ).any { it.errorCode != null }
 
         if (hasError) {
             state = state.copy(
-                nameErrorCode = nameResult.errorMessage,
-                litersErrorCode = litersResult.errorMessage
+                nameErrorCode = nameResult.errorCode,
+                litersErrorCode = litersResult.errorCode
             )
             return
         }

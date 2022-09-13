@@ -3,6 +3,7 @@ package com.danilp.aquariumhelper.domain.service
 interface AccountService {
     fun hasUser(): Boolean
     fun isAnonymousUser(): Boolean
+    fun getUserEmail(): String
     fun getUserId(): String
     fun authenticate(email: String, password: String, onResult: (Throwable?) -> Unit)
     fun createAccount(email: String, password: String, onResult: (Throwable?) -> Unit)

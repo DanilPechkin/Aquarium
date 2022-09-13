@@ -72,7 +72,7 @@ fun SignInScreen(
 
             InfoFieldWithError(
                 value = state.email,
-                onValueChange = { viewModel.onEvent(SignInEvent.EmailChanched(it)) },
+                onValueChange = { viewModel.onEvent(SignInEvent.EmailChanged(it)) },
                 label = stringResource(R.string.email_label),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -84,7 +84,8 @@ fun SignInScreen(
                     }
                 ),
                 maxLines = 1,
-                singleLine = true
+                singleLine = true,
+                errorCode = state.emailErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -111,7 +112,8 @@ fun SignInScreen(
                 textFieldModifier = Modifier
                     .onGloballyPositioned { coordinates ->
                         textFieldSize = coordinates.size.toSize()
-                    }
+                    },
+                errorCode = state.passwordErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -124,7 +126,7 @@ fun SignInScreen(
                 ),
                 horizontalArrangement = Arrangement.End
             ) {
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = { viewModel.onEvent(SignInEvent.SignInButtonPressed) }) {
                     Text(
                         text = stringResource(
                             com.google.firebase.storage.R.string.common_signin_button_text

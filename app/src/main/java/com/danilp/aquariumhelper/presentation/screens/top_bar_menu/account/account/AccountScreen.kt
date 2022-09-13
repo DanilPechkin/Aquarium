@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.presentation.screens.top_bar_menu.account
+package com.danilp.aquariumhelper.presentation.screens.top_bar_menu.account.account
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -10,8 +10,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.screens.AquariumTopBar
+import com.danilp.aquariumhelper.presentation.screens.NavGraphs
 import com.danilp.aquariumhelper.presentation.screens.destinations.AccountScreenDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.SettingsScreenDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.SignInScreenDestination
@@ -25,8 +27,10 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun AccountScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    viewModel: AccountViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state
 
     var isTopMenuExpanded by rememberSaveable { mutableStateOf(false) }
 
@@ -50,19 +54,41 @@ fun AccountScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Button(
-                onClick = {
-                    navigator.navigate(SignInScreenDestination())
+            if (state.isAnonymous) {
+                Button(
+                    onClick = {
+                        navigator.navigate(SignInScreenDestination())
+                    }
+                ) {
+                    Text(stringResource(com.google.android.gms.base.R.string.common_signin_button_text))
                 }
-            ) {
-                Text(stringResource(com.google.android.gms.base.R.string.common_signin_button_text))
-            }
-            OutlinedButton(
-                onClick = {
-                    navigator.navigate(SignUpScreenDestination())
+                OutlinedButton(
+                    onClick = {
+                        navigator.navigate(SignUpScreenDestination())
+                    }
+                ) {
+                    Text(stringResource(R.string.sign_up_button))
                 }
-            ) {
-                Text(stringResource(R.string.sign_up_button))
+            } else {
+                Text(text = state.email)
+                Row {
+                    Button(
+                        onClick = {
+                            viewModel.onEvent(AccountEvent.DeleteAccountButtonPressed)
+                            navigator.clearBackStack(NavGraphs.root.startRoute)
+                        }
+                    ) {
+                        Text("Delete account")
+                    }
+                    OutlinedButton(
+                        onClick = {
+                            viewModel.onEvent(AccountEvent.SignOutButtonPressed)
+                            navigator.clearBackStack(NavGraphs.root.startRoute)
+                        }
+                    ) {
+                        Text("Sign out")
+                    }
+                }
             }
         }
     }
