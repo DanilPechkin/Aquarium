@@ -24,11 +24,6 @@ class AccountServiceImpl @Inject constructor() : AccountService {
             .addOnCompleteListener { onResult(it.exception) }
     }
 
-    override fun createAccount(email: String, password: String, onResult: (Throwable?) -> Unit) {
-        Firebase.auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { onResult(it.exception) }
-    }
-
     override fun sendRecoveryEmail(email: String, onResult: (Throwable?) -> Unit) {
         Firebase.auth.sendPasswordResetEmail(email)
             .addOnCompleteListener { onResult(it.exception) }
@@ -42,13 +37,13 @@ class AccountServiceImpl @Inject constructor() : AccountService {
     override fun linkAccount(email: String, password: String, onResult: (Throwable?) -> Unit) {
         val credential = EmailAuthProvider.getCredential(email, password)
 
-        Firebase.auth.currentUser?.linkWithCredential(credential)
-            ?.addOnCompleteListener { onResult(it.exception) }
+        Firebase.auth.currentUser!!.linkWithCredential(credential)
+            .addOnCompleteListener { onResult(it.exception) }
     }
 
     override fun deleteAccount(onResult: (Throwable?) -> Unit) {
-        Firebase.auth.currentUser?.delete()
-            ?.addOnCompleteListener { onResult(it.exception) }
+        Firebase.auth.currentUser!!.delete()
+            .addOnCompleteListener { onResult(it.exception) }
     }
 
     override fun signOut() {

@@ -64,11 +64,7 @@ class SignUpViewModel @Inject constructor(
 
         viewModelScope.launch {
             val oldUserId = accountService.getUserId()
-            accountService.createAccount(state.email, state.password) { error ->
-                if (error != null) {
-                    accountService.linkAccount(state.email, state.password) {}
-                }
-            }
+            accountService.linkAccount(state.email, state.password) {}
             signEventChannel.send(SignEvent.Success)
         }
     }

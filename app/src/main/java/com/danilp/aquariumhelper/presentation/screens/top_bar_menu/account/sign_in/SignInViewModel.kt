@@ -57,6 +57,7 @@ class SignInViewModel @Inject constructor(
 
         viewModelScope.launch {
             val oldUserId = accountService.getUserId()
+            accountService.deleteAccount { }
             accountService.authenticate(state.email, state.password) { error ->
                 if (error == null) {
                     accountService.linkAccount(state.email, state.password) {}

@@ -12,7 +12,9 @@ class SplashViewModel @Inject constructor(
     private val accountService: AccountService
 ) : ViewModel() {
     fun checkAccount() {
-        if (!accountService.hasUser()) createAnonymousAccount()
+        if (!accountService.hasUser()) {
+            createAnonymousAccount()
+        }
     }
 
     private fun createAnonymousAccount() {
