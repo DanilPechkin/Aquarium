@@ -93,4 +93,8 @@
     <string name="password_length_error">Password must contain at least 8 characters</string>
     <string name="password_pattern_error">Password must contain letters and digits</string>
     <string name="passwords_not_match_error">Passwords do not match</string>
+    <string name="recovery_email_send_toast">Email send</string>
+    <string name="delete_account_button">Delete account</string>
+    <string name="sign_out_button">Sign out</string>
+    <string name="forgot_password_button">Forgot password?</string>
 </resources>

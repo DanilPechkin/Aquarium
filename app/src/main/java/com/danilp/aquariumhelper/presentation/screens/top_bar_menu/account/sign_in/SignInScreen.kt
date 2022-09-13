@@ -1,5 +1,6 @@
 package com.danilp.aquariumhelper.presentation.screens.top_bar_menu.account.sign_in
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -25,8 +27,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.screens.AquariumTopBar
 import com.danilp.aquariumhelper.presentation.screens.InfoFieldWithError
+import com.danilp.aquariumhelper.presentation.screens.NavGraphs
 import com.danilp.aquariumhelper.presentation.screens.PasswordFieldWithError
 import com.danilp.aquariumhelper.presentation.screens.destinations.AccountScreenDestination
+import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumSplashScreenDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -47,6 +51,26 @@ fun SignInScreen(
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 
     var isPasswordVisible by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = context) {
+        viewModel.signEvents.collect { event ->
+            when (event) {
+                SignInViewModel.SignEvent.RecoveryEmailSend -> {
+                    Toast.makeText(
+                        context,
+                        context.getText(R.string.recovery_email_send_toast),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                SignInViewModel.SignEvent.Success -> {
+                    navigator.clearBackStack(NavGraphs.root.startRoute)
+                    navigator.navigate(AquariumSplashScreenDestination())
+                }
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -126,6 +150,9 @@ fun SignInScreen(
                 ),
                 horizontalArrangement = Arrangement.End
             ) {
+                Button(onClick = { viewModel.onEvent(SignInEvent.ForgotPasswordButtonPressed) }) {
+                    Text(text = stringResource(R.string.forgot_password_button))
+                }
                 Button(onClick = { viewModel.onEvent(SignInEvent.SignInButtonPressed) }) {
                     Text(
                         text = stringResource(

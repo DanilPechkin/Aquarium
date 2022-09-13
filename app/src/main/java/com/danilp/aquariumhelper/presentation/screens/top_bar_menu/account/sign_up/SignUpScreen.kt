@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -25,8 +26,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.screens.AquariumTopBar
 import com.danilp.aquariumhelper.presentation.screens.InfoFieldWithError
+import com.danilp.aquariumhelper.presentation.screens.NavGraphs
 import com.danilp.aquariumhelper.presentation.screens.PasswordFieldWithError
 import com.danilp.aquariumhelper.presentation.screens.destinations.AccountScreenDestination
+import com.danilp.aquariumhelper.presentation.screens.destinations.AquariumSplashScreenDestination
 import com.danilp.aquariumhelper.presentation.screens.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -47,6 +50,19 @@ fun SignUpScreen(
 
     var isFirstPasswordVisible by remember { mutableStateOf(false) }
     var isSecondPasswordVisible by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = context) {
+        viewModel.signEvents.collect { event ->
+            when (event) {
+                SignUpViewModel.SignEvent.Success -> {
+                    navigator.clearBackStack(NavGraphs.root.startRoute)
+                    navigator.navigate(AquariumSplashScreenDestination())
+                }
+            }
+        }
+    }
 
     Scaffold(
         topBar = {

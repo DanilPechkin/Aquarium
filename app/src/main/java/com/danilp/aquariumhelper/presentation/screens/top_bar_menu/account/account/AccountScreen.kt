@@ -2,22 +2,17 @@ package com.danilp.aquariumhelper.presentation.screens.top_bar_menu.account.acco
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.danilp.aquariumhelper.R
 import com.danilp.aquariumhelper.presentation.screens.AquariumTopBar
 import com.danilp.aquariumhelper.presentation.screens.NavGraphs
-import com.danilp.aquariumhelper.presentation.screens.destinations.AccountScreenDestination
-import com.danilp.aquariumhelper.presentation.screens.destinations.SettingsScreenDestination
-import com.danilp.aquariumhelper.presentation.screens.destinations.SignInScreenDestination
-import com.danilp.aquariumhelper.presentation.screens.destinations.SignUpScreenDestination
+import com.danilp.aquariumhelper.presentation.screens.destinations.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -33,6 +28,19 @@ fun AccountScreen(
     val state = viewModel.state
 
     var isTopMenuExpanded by rememberSaveable { mutableStateOf(false) }
+
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = context) {
+        viewModel.completeEvents.collect { event ->
+            when (event) {
+                is AccountViewModel.CompleteEvent.Success -> {
+                    navigator.clearBackStack(NavGraphs.root.startRoute)
+                    navigator.navigate(AquariumSplashScreenDestination())
+                }
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -75,18 +83,16 @@ fun AccountScreen(
                     Button(
                         onClick = {
                             viewModel.onEvent(AccountEvent.DeleteAccountButtonPressed)
-                            navigator.clearBackStack(NavGraphs.root.startRoute)
                         }
                     ) {
-                        Text("Delete account")
+                        Text(stringResource(R.string.delete_account_button))
                     }
                     OutlinedButton(
                         onClick = {
                             viewModel.onEvent(AccountEvent.SignOutButtonPressed)
-                            navigator.clearBackStack(NavGraphs.root.startRoute)
                         }
                     ) {
-                        Text("Sign out")
+                        Text(stringResource(R.string.sign_out_button))
                     }
                 }
             }

@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.danilp.aquariumhelper.domain.service.AccountService
 import com.danilp.aquariumhelper.domain.use_case.validation.Validate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,6 +19,9 @@ class SignUpViewModel @Inject constructor(
     private val validate: Validate
 ) : ViewModel() {
     var state by mutableStateOf(SignUpState())
+
+    private val signEventChannel = Channel<SignEvent>()
+    val signEvents = signEventChannel.receiveAsFlow()
 
     fun onEvent(event: SignUpEvent) {
         when (event) {
@@ -64,6 +69,11 @@ class SignUpViewModel @Inject constructor(
                     accountService.linkAccount(state.email, state.password) {}
                 }
             }
+            signEventChannel.send(SignEvent.Success)
         }
+    }
+
+    sealed class SignEvent {
+        object Success : SignEvent()
     }
 }
