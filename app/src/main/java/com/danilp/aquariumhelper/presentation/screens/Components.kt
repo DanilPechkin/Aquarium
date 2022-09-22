@@ -85,14 +85,13 @@ fun AquariumTopBar(
     navigateToSettings: () -> Unit,
     navigateToAccount: () -> Unit
 ) {
-    SmallTopAppBar(
-        title = {
-            Text(
-                text = title,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                maxLines = 1
-            )
-        },
+    TopAppBar(title = {
+        Text(
+            text = title,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            maxLines = 1
+        )
+    },
         navigationIcon = {
             IconButton(
                 onClick = navigateBack
@@ -158,8 +157,7 @@ fun AquariumTopBar(
                     )
                 }
             }
-        }
-    )
+        })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -179,14 +177,13 @@ fun AquariumTopBarWithSearch(
     navigateToSettings: () -> Unit,
     navigateToAccount: () -> Unit
 ) {
-    SmallTopAppBar(
-        title = {
-            Text(
-                text = title,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                maxLines = 1
-            )
-        },
+    TopAppBar(title = {
+        Text(
+            text = title,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            maxLines = 1
+        )
+    },
         navigationIcon = {
             IconButton(
                 onClick = navigateBack
@@ -271,8 +268,7 @@ fun AquariumTopBarWithSearch(
                     )
                 }
             }
-        }
-    )
+        })
 }
 
 @Composable

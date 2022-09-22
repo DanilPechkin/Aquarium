@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.data.analytics
+package com.danilp.aquariumhelper.domain.service.impl
 
 import com.danilp.aquariumhelper.domain.service.LogService
 import com.google.firebase.crashlytics.ktx.crashlytics

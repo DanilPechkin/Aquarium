@@ -1,4 +1,4 @@
-package com.danilp.aquariumhelper.data.account
+package com.danilp.aquariumhelper.domain.service.impl
 
 import com.danilp.aquariumhelper.domain.service.AccountService
 import com.google.firebase.auth.EmailAuthProvider

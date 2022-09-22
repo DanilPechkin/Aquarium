@@ -16,7 +16,7 @@ enum class AquariumBottomBarDestination(
     @StringRes val label: Int
 ) {
     Notes(NotesDestination, Icons.Rounded.FormatListBulleted, R.string.notes_icon),
-    Calculators(CalculatorsListDestination, Icons.Rounded.Calculate, R.string.calculators_icon),
+    Calculators(CalculatorsDestination, Icons.Rounded.Calculate, R.string.calculators_icon),
     Main(MainAquariumScreenDestination, Icons.Rounded.Water, R.string.main_aquarium_icon),
     Dwellers(DwellersListDestination, Icons.Rounded.SetMeal, R.string.dwellers_icon),
     Plants(PlantsListDestination, Icons.Rounded.Spa, R.string.plants_icon)
