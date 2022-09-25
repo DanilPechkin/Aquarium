@@ -4,41 +4,43 @@ import com.danilp.aquariumhelper.domain.use_case.calculation.CalculationResult
 
 class ConvertLiters {
     /**
-     * @param measure required measure
+     * @param measureCode required measure
      * @param liters value to convert
      */
-    fun to(measure: CapacityMeasure, liters: Double): CalculationResult =
-        when (measure) {
-            is CapacityMeasure.CubicCentimeters -> toMilliliters(liters = liters)
-            is CapacityMeasure.CubicFeet -> toCubicFeet(liters = liters)
-            is CapacityMeasure.CubicInches -> toCubicInches(liters = liters)
-            is CapacityMeasure.CubicMeters -> toCubicMeters(liters = liters)
-            is CapacityMeasure.Gallons -> toGallons(liters = liters)
-            is CapacityMeasure.MetricCups -> toMetricCups(liters = liters)
-            is CapacityMeasure.Milliliters -> toMilliliters(liters = liters)
-            is CapacityMeasure.Tablespoons -> toTablespoons(liters = liters)
-            is CapacityMeasure.Teaspoons -> toTeaspoons(liters = liters)
-            is CapacityMeasure.USCups -> toUSCups(liters = liters)
-            is CapacityMeasure.Liters -> CalculationResult(liters)
+    fun to(measureCode: Int, liters: Double): CalculationResult =
+        when (measureCode) {
+            CapacityMeasureCode.CUBIC_CENTIMETERS -> toMilliliters(liters = liters)
+            CapacityMeasureCode.CUBIC_FEET -> toCubicFeet(liters = liters)
+            CapacityMeasureCode.CUBIC_INCHES -> toCubicInches(liters = liters)
+            CapacityMeasureCode.CUBIC_METERS -> toCubicMeters(liters = liters)
+            CapacityMeasureCode.GALLONS -> toGallons(liters = liters)
+            CapacityMeasureCode.METRIC_CUPS -> toMetricCups(liters = liters)
+            CapacityMeasureCode.MILLILITERS -> toMilliliters(liters = liters)
+            CapacityMeasureCode.TABLESPOONS -> toTablespoons(liters = liters)
+            CapacityMeasureCode.TEASPOONS -> toTeaspoons(liters = liters)
+            CapacityMeasureCode.US_CUPS -> toUSCups(liters = liters)
+            CapacityMeasureCode.LITERS -> CalculationResult(liters)
+            else -> CalculationResult(liters)
         }
 
     /**
-     * @param measure required measure
+     * @param measureCode required measure
      * @param value to convert into liters
      */
-    fun from(measure: CapacityMeasure, value: Double): CalculationResult =
-        when (measure) {
-            is CapacityMeasure.CubicCentimeters -> toMilliliters(milliliters = value)
-            is CapacityMeasure.CubicFeet -> toCubicFeet(feet = value)
-            is CapacityMeasure.CubicInches -> toCubicInches(inches = value)
-            is CapacityMeasure.CubicMeters -> toCubicMeters(meters = value)
-            is CapacityMeasure.Gallons -> toGallons(gallons = value)
-            is CapacityMeasure.MetricCups -> toMetricCups(cups = value)
-            is CapacityMeasure.Milliliters -> toMilliliters(milliliters = value)
-            is CapacityMeasure.Tablespoons -> toTablespoons(tablespoons = value)
-            is CapacityMeasure.Teaspoons -> toTeaspoons(teaspoons = value)
-            is CapacityMeasure.USCups -> toUSCups(cups = value)
-            is CapacityMeasure.Liters -> CalculationResult(value)
+    fun from(measureCode: Int, value: Double): CalculationResult =
+        when (measureCode) {
+            CapacityMeasureCode.CUBIC_CENTIMETERS -> toMilliliters(milliliters = value)
+            CapacityMeasureCode.CUBIC_FEET -> toCubicFeet(feet = value)
+            CapacityMeasureCode.CUBIC_INCHES -> toCubicInches(inches = value)
+            CapacityMeasureCode.CUBIC_METERS -> toCubicMeters(meters = value)
+            CapacityMeasureCode.GALLONS -> toGallons(gallons = value)
+            CapacityMeasureCode.METRIC_CUPS -> toMetricCups(cups = value)
+            CapacityMeasureCode.MILLILITERS -> toMilliliters(milliliters = value)
+            CapacityMeasureCode.TABLESPOONS -> toTablespoons(tablespoons = value)
+            CapacityMeasureCode.TEASPOONS -> toTeaspoons(teaspoons = value)
+            CapacityMeasureCode.US_CUPS -> toUSCups(cups = value)
+            CapacityMeasureCode.LITERS -> CalculationResult(value)
+            else -> CalculationResult(value)
         }
 
     /**

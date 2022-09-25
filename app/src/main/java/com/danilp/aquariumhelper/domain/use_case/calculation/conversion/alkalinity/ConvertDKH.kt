@@ -4,27 +4,29 @@ import com.danilp.aquariumhelper.domain.use_case.calculation.CalculationResult
 
 class ConvertDKH {
     /**
-     * @param measure required measure
+     * @param measureCode required measure
      * @param dKH value to convert
      */
-    fun to(measure: AlkalinityMeasure, dKH: Double): CalculationResult =
-        when (measure) {
-            is AlkalinityMeasure.Ppm -> toPpm(dKH = dKH)
-            is AlkalinityMeasure.MeqL -> toMeqL(dKH = dKH)
-            is AlkalinityMeasure.DKH -> CalculationResult(dKH)
-            is AlkalinityMeasure.MgL -> toPpm(dKH = dKH)
+    fun to(measureCode: Int, dKH: Double): CalculationResult =
+        when (measureCode) {
+            AlkalinityMeasureCode.PPM -> toPpm(dKH = dKH)
+            AlkalinityMeasureCode.MEQL -> toMeqL(dKH = dKH)
+            AlkalinityMeasureCode.DKH -> CalculationResult(dKH)
+            AlkalinityMeasureCode.MGL -> toPpm(dKH = dKH)
+            else -> CalculationResult(dKH)
         }
 
     /**
-     * @param measure required measure
+     * @param measureCode required measure
      * @param value to convert into dKH
      */
-    fun from(measure: AlkalinityMeasure, value: Double): CalculationResult =
-        when (measure) {
-            is AlkalinityMeasure.Ppm -> toPpm(ppm = value)
-            is AlkalinityMeasure.MeqL -> toMeqL(meqL = value)
-            is AlkalinityMeasure.DKH -> CalculationResult(value)
-            is AlkalinityMeasure.MgL -> toPpm(ppm = value)
+    fun from(measureCode: Int, value: Double): CalculationResult =
+        when (measureCode) {
+            AlkalinityMeasureCode.PPM -> toPpm(ppm = value)
+            AlkalinityMeasureCode.MEQL -> toMeqL(meqL = value)
+            AlkalinityMeasureCode.DKH -> CalculationResult(value)
+            AlkalinityMeasureCode.MGL -> toPpm(ppm = value)
+            else -> CalculationResult(value)
         }
 
     /**

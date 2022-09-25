@@ -7,25 +7,27 @@ import com.danilp.aquariumhelper.domain.use_case.calculation.CalculationResult
  */
 class ConvertCelsius {
     /**
-     * @param measure required measure
+     * @param measureCode required measure
      * @param celsius value to convert
      */
-    fun to(measure: TemperatureMeasure, celsius: Double): CalculationResult =
-        when (measure) {
-            is TemperatureMeasure.Kelvin -> toKelvin(celsius = celsius)
-            is TemperatureMeasure.Fahrenheit -> toFahrenheit(celsius = celsius)
-            is TemperatureMeasure.Celsius -> CalculationResult(celsius)
+    fun to(measureCode: Int, celsius: Double): CalculationResult =
+        when (measureCode) {
+            TemperatureMeasureCode.KELVIN -> toKelvin(celsius = celsius)
+            TemperatureMeasureCode.FAHRENHEIT -> toFahrenheit(celsius = celsius)
+            TemperatureMeasureCode.CELSIUS -> CalculationResult(celsius)
+            else -> CalculationResult(celsius)
         }
 
     /**
-     * @param measure required measure
+     * @param measureCode required measure
      * @param value to convert into celsius
      */
-    fun from(measure: TemperatureMeasure, value: Double): CalculationResult =
-        when (measure) {
-            is TemperatureMeasure.Kelvin -> toKelvin(kelvin = value)
-            is TemperatureMeasure.Fahrenheit -> toFahrenheit(fahrenheit = value)
-            is TemperatureMeasure.Celsius -> CalculationResult(value)
+    fun from(measureCode: Int, value: Double): CalculationResult =
+        when (measureCode) {
+            TemperatureMeasureCode.KELVIN -> toKelvin(kelvin = value)
+            TemperatureMeasureCode.FAHRENHEIT -> toFahrenheit(fahrenheit = value)
+            TemperatureMeasureCode.CELSIUS -> CalculationResult(value)
+            else -> CalculationResult(value)
         }
 
     /**

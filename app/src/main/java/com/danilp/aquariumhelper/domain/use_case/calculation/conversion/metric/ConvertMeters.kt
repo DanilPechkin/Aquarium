@@ -4,29 +4,31 @@ import com.danilp.aquariumhelper.domain.use_case.calculation.CalculationResult
 
 class ConvertMeters {
     /**
-     * @param measure required measure
+     * @param measureCode required measure
      * @param meters value to convert
      */
-    fun to(measure: MetricMeasure, meters: Double): CalculationResult =
-        when (measure) {
-            is MetricMeasure.Centimeters -> toCentimeters(meters = meters)
-            is MetricMeasure.Feet -> toFeet(meters = meters)
-            is MetricMeasure.Inches -> toInches(meters = meters)
-            is MetricMeasure.Millimeters -> toMillimeters(meters = meters)
-            is MetricMeasure.Meters -> CalculationResult(meters)
+    fun to(measureCode: Int, meters: Double): CalculationResult =
+        when (measureCode) {
+            MetricMeasureCode.CENTIMETERS -> toCentimeters(meters = meters)
+            MetricMeasureCode.FEET -> toFeet(meters = meters)
+            MetricMeasureCode.INCHES -> toInches(meters = meters)
+            MetricMeasureCode.MILLIMETERS -> toMillimeters(meters = meters)
+            MetricMeasureCode.METERS -> CalculationResult(meters)
+            else -> CalculationResult(meters)
         }
 
     /**
-     * @param measure required measure
+     * @param measureCode required measure
      * @param value to convert into meters
      */
-    fun from(measure: MetricMeasure, value: Double): CalculationResult =
-        when (measure) {
-            is MetricMeasure.Centimeters -> toCentimeters(centimeters = value)
-            is MetricMeasure.Feet -> toFeet(feet = value)
-            is MetricMeasure.Inches -> toInches(inches = value)
-            is MetricMeasure.Millimeters -> toMillimeters(millimeters = value)
-            is MetricMeasure.Meters -> CalculationResult(value)
+    fun from(measureCode: Int, value: Double): CalculationResult =
+        when (measureCode) {
+            MetricMeasureCode.CENTIMETERS -> toCentimeters(centimeters = value)
+            MetricMeasureCode.FEET -> toFeet(feet = value)
+            MetricMeasureCode.INCHES -> toInches(inches = value)
+            MetricMeasureCode.MILLIMETERS -> toMillimeters(millimeters = value)
+            MetricMeasureCode.METERS -> CalculationResult(value)
+            else -> CalculationResult(value)
         }
 
     /**
