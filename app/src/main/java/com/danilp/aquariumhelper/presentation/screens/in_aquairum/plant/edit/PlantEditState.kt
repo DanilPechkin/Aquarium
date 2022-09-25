@@ -1,6 +1,7 @@
 package com.danilp.aquariumhelper.presentation.screens.in_aquairum.plant.edit
 
 import com.danilp.aquariumhelper.domain.plant.model.Plant
+import com.danilp.aquariumhelper.domain.use_case.validation.ValidationError
 
 data class PlantEditState(
     val plant: Plant = Plant.createEmpty(),
@@ -23,16 +24,16 @@ data class PlantEditState(
     val minIllumination: String = "",
     val description: String = "",
     // Stats errors
-    val nameErrorCode: Int? = null,
-    /*TODO: val genusError: Int? = null,*/
-    val minTemperatureErrorCode: Int? = null,
-    val maxTemperatureErrorCode: Int? = null,
-    val minPhErrorCode: Int? = null,
-    val maxPhErrorCode: Int? = null,
-    val minGhErrorCode: Int? = null,
-    val maxGhErrorCode: Int? = null,
-    val minKhErrorCode: Int? = null,
-    val maxKhErrorCode: Int? = null,
-    val minCO2ErrorCode: Int? = null,
-    val minIlluminationErrorCode: Int? = null
+    val nameErrorCode: ValidationError? = null,
+    /*TODO: val genusError: ValidationError? = null,*/
+    val minTemperatureError: ValidationError? = null,
+    val maxTemperatureError: ValidationError? = null,
+    val minPhError: ValidationError? = null,
+    val maxPhError: ValidationError? = null,
+    val minGhError: ValidationError? = null,
+    val maxGhError: ValidationError? = null,
+    val minKhError: ValidationError? = null,
+    val maxKhError: ValidationError? = null,
+    val minCO2Error: ValidationError? = null,
+    val minIlluminationError: ValidationError? = null
 )

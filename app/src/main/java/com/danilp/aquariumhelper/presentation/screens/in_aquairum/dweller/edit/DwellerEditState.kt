@@ -1,6 +1,7 @@
 package com.danilp.aquariumhelper.presentation.screens.in_aquairum.dweller.edit
 
 import com.danilp.aquariumhelper.domain.dweller.model.Dweller
+import com.danilp.aquariumhelper.domain.use_case.validation.ValidationError
 
 data class DwellerEditState(
     val dweller: Dweller = Dweller.createEmpty(),
@@ -24,16 +25,16 @@ data class DwellerEditState(
     val maxKh: String = "",
     val description: String = "",
     // Stats errors
-    val nameErrorCode: Int? = null,
-    /*TODO: val genusError: Int? = null,*/
-    val amountErrorCode: Int? = null,
-    val minTemperatureErrorCode: Int? = null,
-    val maxTemperatureErrorCode: Int? = null,
-    val litersErrorCode: Int? = null,
-    val minPhErrorCode: Int? = null,
-    val maxPhErrorCode: Int? = null,
-    val minGhErrorCode: Int? = null,
-    val maxGhErrorCode: Int? = null,
-    val minKhErrorCode: Int? = null,
-    val maxKhErrorCode: Int? = null
+    val nameErrorCode: ValidationError? = null,
+    /*TODO: val genusError: ValidationError? = null,*/
+    val amountError: ValidationError? = null,
+    val minTemperatureError: ValidationError? = null,
+    val maxTemperatureError: ValidationError? = null,
+    val litersError: ValidationError? = null,
+    val minPhError: ValidationError? = null,
+    val maxPhError: ValidationError? = null,
+    val minGhError: ValidationError? = null,
+    val maxGhError: ValidationError? = null,
+    val minKhError: ValidationError? = null,
+    val maxKhError: ValidationError? = null
 )

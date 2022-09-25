@@ -7,12 +7,12 @@ class Validate {
         if (isRequired && value.isBlank())
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.BLANK_FIELD_ERROR
+                error = ValidationError.BlankFieldError
             )
         else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches())
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.EMAIL_PATTERN_ERROR
+                error = ValidationError.EmailPatternError
             )
         else
             ValidationResult(successful = true)
@@ -21,17 +21,17 @@ class Validate {
         if (isRequired && value.isBlank())
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.BLANK_FIELD_ERROR
+                error = ValidationError.BlankFieldError
             )
         else if (value.length < 8)
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.PASSWORD_IS_SHORT_ERROR
+                error = ValidationError.PasswordShortError
             )
         else if (!(value.any { it.isDigit() } && value.any { it.isLetter() }))
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.PASSWORD_PATTERN_ERROR
+                error = ValidationError.PasswordPatternError
             )
         else
             ValidationResult(successful = true)
@@ -44,12 +44,12 @@ class Validate {
         if (isRequired && repeatedPassword.isBlank())
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.BLANK_FIELD_ERROR
+                error = ValidationError.BlankFieldError
             )
         else if (password != repeatedPassword)
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.REPEAT_PASSWORD_ERROR
+                error = ValidationError.RepeatPasswordError
             )
         else
             ValidationResult(successful = true)
@@ -58,17 +58,17 @@ class Validate {
         if (isRequired && value.isBlank())
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.BLANK_FIELD_ERROR
+                error = ValidationError.BlankFieldError
             )
         else if (value.ifEmpty { "0" }.toDoubleOrNull() == null)
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.DECIMAL_ERROR
+                error = ValidationError.DecimalError
             )
         else if (value.ifEmpty { "0" }.toDouble() < 0.0)
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.NEGATIVE_VALUE_ERROR
+                error = ValidationError.NegativeValueError
             )
         else
             ValidationResult(successful = true)
@@ -77,17 +77,17 @@ class Validate {
         if (isRequired && value.isBlank())
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.BLANK_FIELD_ERROR
+                error = ValidationError.BlankFieldError
             )
         else if (value.ifEmpty { "0" }.toIntOrNull() == null)
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.INTEGER_ERROR
+                error = ValidationError.IntegerError
             )
         else if (value.ifEmpty { "0" }.toInt() < 0)
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.NEGATIVE_VALUE_ERROR
+                error = ValidationError.NegativeValueError
             )
         else
             ValidationResult(successful = true)
@@ -96,7 +96,7 @@ class Validate {
         if (value.isBlank())
             ValidationResult(
                 successful = false,
-                errorCode = ValidationErrorCode.BLANK_FIELD_ERROR
+                error = ValidationError.BlankFieldError
             )
         else
             ValidationResult(successful = true)

@@ -49,11 +49,11 @@ class SignInViewModel @Inject constructor(
         val hasError = listOf(
             emailResult,
             passwordResult
-        ).any { it.errorCode != null }
+        ).any { it.error != null }
 
         if (hasError) {
-            state = state.copy(emailErrorCode = emailResult.errorCode)
-            state = state.copy(passwordErrorCode = passwordResult.errorCode)
+            state = state.copy(emailErrorCode = emailResult.error)
+            state = state.copy(passwordErrorCode = passwordResult.error)
             return
         }
 
@@ -74,8 +74,8 @@ class SignInViewModel @Inject constructor(
     private fun sendRecoveryEmail() {
         val emailResult = validate.email(value = state.email, isRequired = true)
 
-        if (emailResult.errorCode != null) {
-            state = state.copy(emailErrorCode = emailResult.errorCode)
+        if (emailResult.error != null) {
+            state = state.copy(emailErrorCode = emailResult.error)
             return
         }
 

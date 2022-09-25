@@ -177,12 +177,12 @@ class AquariumEditViewModel @Inject constructor(
         val hasError = listOf(
             nameResult,
             litersResult
-        ).any { it.errorCode != null }
+        ).any { it.error != null }
 
         if (hasError) {
             state = state.copy(
-                nameErrorCode = nameResult.errorCode,
-                litersErrorCode = litersResult.errorCode
+                nameError = nameResult.error,
+                litersError = litersResult.error
             )
             return
         }

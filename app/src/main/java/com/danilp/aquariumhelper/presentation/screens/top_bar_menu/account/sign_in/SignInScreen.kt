@@ -1,15 +1,27 @@
 package com.danilp.aquariumhelper.presentation.screens.top_bar_menu.account.sign_in
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -109,7 +121,7 @@ fun SignInScreen(
                 ),
                 maxLines = 1,
                 singleLine = true,
-                errorCode = state.emailErrorCode
+                error = state.emailErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -137,7 +149,7 @@ fun SignInScreen(
                     .onGloballyPositioned { coordinates ->
                         textFieldSize = coordinates.size.toSize()
                     },
-                errorCode = state.passwordErrorCode
+                error = state.passwordErrorCode
             )
 
             Spacer(modifier = Modifier.height(16.dp))

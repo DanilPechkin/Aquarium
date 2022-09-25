@@ -55,12 +55,12 @@ class SignUpViewModel @Inject constructor(
             emailResult,
             passwordResult,
             repeatedPasswordResult
-        ).any { it.errorCode != null }
+        ).any { it.error != null }
 
         if (hasError) {
-            state = state.copy(emailErrorCode = emailResult.errorCode)
-            state = state.copy(passwordErrorCode = passwordResult.errorCode)
-            state = state.copy(repeatedPasswordErrorCode = repeatedPasswordResult.errorCode)
+            state = state.copy(emailErrorCode = emailResult.error)
+            state = state.copy(passwordErrorCode = passwordResult.error)
+            state = state.copy(repeatedPasswordErrorCode = repeatedPasswordResult.error)
             return
         }
 

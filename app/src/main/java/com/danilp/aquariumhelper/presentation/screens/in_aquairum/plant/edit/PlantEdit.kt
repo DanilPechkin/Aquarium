@@ -1,13 +1,32 @@
 package com.danilp.aquariumhelper.presentation.screens.in_aquairum.plant.edit
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
@@ -101,7 +120,7 @@ fun PlantEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorCode = state.nameErrorCode,
+                error = state.nameErrorCode,
                 maxLines = 1,
                 singleLine = true,
                 textFieldModifier = Modifier.fillMaxWidth()
@@ -125,8 +144,8 @@ fun PlantEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorCodeFrom = state.minTemperatureErrorCode,
-                errorCodeTo = state.maxTemperatureErrorCode
+                errorFrom = state.minTemperatureError,
+                errorTo = state.maxTemperatureError
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -147,8 +166,8 @@ fun PlantEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorCodeFrom = state.minPhErrorCode,
-                errorCodeTo = state.maxPhErrorCode
+                errorFrom = state.minPhError,
+                errorTo = state.maxPhError
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -169,8 +188,8 @@ fun PlantEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorCodeFrom = state.minGhErrorCode,
-                errorCodeTo = state.maxGhErrorCode
+                errorFrom = state.minGhError,
+                errorTo = state.maxGhError
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -191,8 +210,8 @@ fun PlantEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorCodeFrom = state.minKhErrorCode,
-                errorCodeTo = state.maxKhErrorCode
+                errorFrom = state.minKhError,
+                errorTo = state.maxKhError
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -210,7 +229,7 @@ fun PlantEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorCode = state.minCO2ErrorCode,
+                error = state.minCO2Error,
                 maxLines = 1,
                 singleLine = true,
                 textFieldModifier = Modifier.fillMaxWidth()
@@ -231,7 +250,7 @@ fun PlantEdit(
                         focusManager.moveFocus(FocusDirection.Next)
                     }
                 ),
-                errorCode = state.minIlluminationErrorCode,
+                error = state.minIlluminationError,
                 maxLines = 1,
                 singleLine = true,
                 textFieldModifier = Modifier.fillMaxWidth()

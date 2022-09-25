@@ -5,14 +5,49 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
@@ -31,7 +66,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.danilp.aquariumhelper.R
-import com.danilp.aquariumhelper.domain.use_case.validation.ValidationErrorCode
+import com.danilp.aquariumhelper.domain.use_case.validation.ValidationError
 import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -341,7 +376,7 @@ fun PasswordFieldWithError(
     textFieldModifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     keyboardActions: KeyboardActions = KeyboardActions(),
-    errorCode: Int? = null,
+    error: ValidationError? = null,
     maxLines: Int = Int.MAX_VALUE,
     singleLine: Boolean = false
 ) {
@@ -353,7 +388,7 @@ fun PasswordFieldWithError(
                 Text(text = label)
             },
             modifier = textFieldModifier,
-            isError = errorCode != null,
+            isError = error != null,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             visualTransformation = if (isPasswordVisible) {
@@ -385,21 +420,25 @@ fun PasswordFieldWithError(
             }
         )
 
-        if (errorCode != null) {
+        if (error != null) {
             Text(
-                text = when (errorCode) {
-                    ValidationErrorCode.BLANK_FIELD_ERROR -> {
+                text = when (error) {
+                    ValidationError.BlankFieldError -> {
                         stringResource(R.string.this_field_cant_be_blank_error)
                     }
-                    ValidationErrorCode.PASSWORD_IS_SHORT_ERROR -> {
+
+                    ValidationError.PasswordShortError -> {
                         stringResource(R.string.password_length_error)
                     }
-                    ValidationErrorCode.PASSWORD_PATTERN_ERROR -> {
+
+                    ValidationError.PasswordPatternError -> {
                         stringResource(R.string.password_pattern_error)
                     }
-                    ValidationErrorCode.REPEAT_PASSWORD_ERROR -> {
+
+                    ValidationError.RepeatPasswordError -> {
                         stringResource(R.string.passwords_not_match_error)
                     }
+
                     else -> {
                         stringResource(R.string.unknown_error)
                     }
@@ -420,7 +459,7 @@ fun InfoFieldWithError(
     textFieldModifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     keyboardActions: KeyboardActions = KeyboardActions(),
-    errorCode: Int? = null,
+    error: ValidationError? = null,
     maxLines: Int = Int.MAX_VALUE,
     singleLine: Boolean = false
 ) {
@@ -432,31 +471,36 @@ fun InfoFieldWithError(
                 Text(text = label)
             },
             modifier = textFieldModifier,
-            isError = errorCode != null,
+            isError = error != null,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             maxLines = maxLines,
             singleLine = singleLine
         )
 
-        if (errorCode != null) {
+        if (error != null) {
             Text(
-                text = when (errorCode) {
-                    ValidationErrorCode.BLANK_FIELD_ERROR -> {
+                text = when (error) {
+                    ValidationError.BlankFieldError -> {
                         stringResource(R.string.this_field_cant_be_blank_error)
                     }
-                    ValidationErrorCode.DECIMAL_ERROR -> {
+
+                    ValidationError.DecimalError -> {
                         stringResource(R.string.should_be_decimal_error)
                     }
-                    ValidationErrorCode.INTEGER_ERROR -> {
+
+                    ValidationError.IntegerError -> {
                         stringResource(R.string.should_be_integer_error)
                     }
-                    ValidationErrorCode.NEGATIVE_VALUE_ERROR -> {
+
+                    ValidationError.NegativeValueError -> {
                         stringResource(R.string.this_value_cant_be_negative_error)
                     }
-                    ValidationErrorCode.EMAIL_PATTERN_ERROR -> {
+
+                    ValidationError.EmailPatternError -> {
                         stringResource(R.string.email_is_not_valid_error)
                     }
+
                     else -> {
                         stringResource(R.string.unknown_error)
                     }
@@ -481,8 +525,8 @@ fun FromToInfoFields(
     ),
     keyboardActionsFrom: KeyboardActions = KeyboardActions(),
     keyboardActionsTo: KeyboardActions = KeyboardActions(),
-    errorCodeFrom: Int? = null,
-    errorCodeTo: Int? = null
+    errorFrom: ValidationError? = null,
+    errorTo: ValidationError? = null
 ) {
     Column(modifier = modifier) {
         Text(
@@ -503,7 +547,7 @@ fun FromToInfoFields(
                     .weight(1f),
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActionsFrom,
-                errorCode = errorCodeFrom,
+                error = errorFrom,
                 maxLines = 1,
                 singleLine = true
             )
@@ -514,7 +558,7 @@ fun FromToInfoFields(
                 modifier = Modifier.weight(1f),
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActionsTo,
-                errorCode = errorCodeTo,
+                error = errorTo,
                 maxLines = 1,
                 singleLine = true
             )

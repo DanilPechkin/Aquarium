@@ -320,21 +320,21 @@ class DwellerEditViewModel @Inject constructor(
             maxGhResult,
             minKhResult,
             maxKhResult
-        ).any { it.errorCode != null }
+        ).any { it.error != null }
 
         if (hasError) {
             state = state.copy(
-                nameErrorCode = nameResult.errorCode,
-                amountErrorCode = amountResult.errorCode,
-                minTemperatureErrorCode = minTemperatureResult.errorCode,
-                maxTemperatureErrorCode = maxTemperatureResult.errorCode,
-                litersErrorCode = litersResult.errorCode,
-                minPhErrorCode = minPhResult.errorCode,
-                maxPhErrorCode = maxPhResult.errorCode,
-                minGhErrorCode = minGhResult.errorCode,
-                maxGhErrorCode = maxGhResult.errorCode,
-                minKhErrorCode = minKhResult.errorCode,
-                maxKhErrorCode = maxKhResult.errorCode
+                nameErrorCode = nameResult.error,
+                amountError = amountResult.error,
+                minTemperatureError = minTemperatureResult.error,
+                maxTemperatureError = maxTemperatureResult.error,
+                litersError = litersResult.error,
+                minPhError = minPhResult.error,
+                maxPhError = maxPhResult.error,
+                minGhError = minGhResult.error,
+                maxGhError = maxGhResult.error,
+                minKhError = minKhResult.error,
+                maxKhError = maxKhResult.error
             )
             return
         }
