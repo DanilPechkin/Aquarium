@@ -30,6 +30,12 @@ fun AquariumSplashScreen(
 
     LaunchedEffect(key1 = LocalContext.current) {
         viewModel.checkAccount()
-        navigator.navigate(AquariumListDestination())
+        viewModel.completeEvents.collect { event ->
+            when (event) {
+                is SplashViewModel.CompleteEvent.Success -> {
+                    navigator.navigate(AquariumListDestination())
+                }
+            }
+        }
     }
 }

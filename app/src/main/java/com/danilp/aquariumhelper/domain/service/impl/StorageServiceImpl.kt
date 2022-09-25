@@ -10,27 +10,7 @@ class StorageServiceImpl @Inject constructor(
 ) : StorageService {
     override fun deleteAllForUser(userId: String, onResult: (Throwable?) -> Unit) {
         Firebase.firestore
-            .collection(AQUARIUMS_COLLECTION)
-            .whereEqualTo(USER_ID, userId)
-            .get()
-            .addOnFailureListener { error -> onResult(error) }
-            .addOnSuccessListener { result ->
-                for (document in result) document.reference.delete()
-                onResult(null)
-            }
-
-        Firebase.firestore
-            .collection(AQUARIUMS_COLLECTION)
-            .whereEqualTo(USER_ID, userId)
-            .get()
-            .addOnFailureListener { error -> onResult(error) }
-            .addOnSuccessListener { result ->
-                for (document in result) document.reference.delete()
-                onResult(null)
-            }
-
-        Firebase.firestore
-            .collection(AQUARIUMS_COLLECTION)
+            .collection(USERS_COLLECTION)
             .whereEqualTo(USER_ID, userId)
             .get()
             .addOnFailureListener { error -> onResult(error) }
@@ -46,7 +26,7 @@ class StorageServiceImpl @Inject constructor(
         onResult: (Throwable?) -> Unit
     ) {
         Firebase.firestore
-            .collection(AQUARIUMS_COLLECTION)
+            .collection(USERS_COLLECTION)
             .whereEqualTo(USER_ID, oldUserId)
             .get()
             .addOnFailureListener { error -> onResult(error) }
@@ -57,10 +37,8 @@ class StorageServiceImpl @Inject constructor(
     }
 
     companion object {
-        private const val AQUARIUMS_COLLECTION = "aquariums"
-        private const val DWELLERS_COLLECTION = "dwellers"
-        private const val PLANTS_COLLECTION = "plants"
-        private const val USER_ID = "userId"
+        private const val USERS_COLLECTION = "users"
+        private const val USER_ID = "id"
     }
 
 }
