@@ -20,8 +20,12 @@ class SplashViewModel @Inject constructor(
     val completeEvents = completeEventChannel.receiveAsFlow()
 
     fun checkAccount() {
-        if (!accountService.hasUser()) {
-            createAnonymousAccount()
+        viewModelScope.launch {
+            if (!accountService.hasUser()) {
+                createAnonymousAccount()
+            } else {
+                completeEventChannel.send(CompleteEvent.Success)
+            }
         }
     }
 

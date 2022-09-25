@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "367604896540",
-    "firebase_url": "https://professional-aquarist-dc450-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "professional-aquarist-dc450",
-    "storage_bucket": "professional-aquarist-dc450.appspot.com"
+    "project_number": "1007574940667",
+    "project_id": "professional-aquarist-1",
+    "storage_bucket": "professional-aquarist-1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:367604896540:android:f704abb42f23b6df1120d9",
+        "mobilesdk_app_id": "1:1007574940667:android:a2809538754d00faac295e",
         "android_client_info": {
           "package_name": "com.danilp.aquariumhelper"
         }
       },
       "oauth_client": [
         {
-          "client_id": "367604896540-p489aes9v5gce44rn0mgignbsh94220h.apps.googleusercontent.com",
+          "client_id": "1007574940667-4i0cl4tl858p7a335v1o2m0ed0kdd59r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBP48LITnjZ2OTch-L2srhXRuGCjHyZ9KA"
+          "current_key": "AIzaSyBBoX-iNGk7s3OWzFnRbo6n-9TmesqoyHE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "367604896540-p489aes9v5gce44rn0mgignbsh94220h.apps.googleusercontent.com",
+              "client_id": "1007574940667-4i0cl4tl858p7a335v1o2m0ed0kdd59r.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
